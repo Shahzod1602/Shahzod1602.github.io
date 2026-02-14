@@ -13,14 +13,31 @@ window.addEventListener('DOMContentLoaded', () => {
 
     updateClock();
     setInterval(updateClock, 1000);
+    updateGreeting();
 });
 
-// ===== Clock =====
+// ===== Clock & Date =====
 function updateClock() {
     const now = new Date();
     const h = now.getHours().toString().padStart(2, '0');
     const m = now.getMinutes().toString().padStart(2, '0');
     document.getElementById('trayClock').textContent = h + ':' + m;
+
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const day = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    document.getElementById('trayDate').textContent = day + ' ' + date + ' ' + month;
+}
+
+function updateGreeting() {
+    const hour = new Date().getHours();
+    let greeting;
+    if (hour < 12) greeting = 'Good morning';
+    else if (hour < 17) greeting = 'Good afternoon';
+    else greeting = 'Good evening';
+    document.getElementById('smGreeting').textContent = greeting + ', Shahzod!';
 }
 
 // ===== Window Management =====
@@ -29,7 +46,6 @@ function openWindow(name) {
     if (!win) return;
 
     if (openWindows[name] && openWindows[name].minimized) {
-        // Restore from minimize
         win.style.display = 'flex';
         win.classList.add('open');
         openWindows[name].minimized = false;
@@ -43,10 +59,9 @@ function openWindow(name) {
         return;
     }
 
-    // Position window
     const offset = Object.keys(openWindows).length * 30;
-    win.style.top = (60 + offset) + 'px';
-    win.style.left = (120 + offset) + 'px';
+    win.style.top = (50 + offset) + 'px';
+    win.style.left = (140 + offset) + 'px';
 
     win.classList.add('open');
     openWindows[name] = { minimized: false, maximized: false };
@@ -68,9 +83,7 @@ function minimizeWindow(name) {
     if (!win) return;
     win.classList.remove('open', 'focused');
     win.style.display = 'none';
-    if (openWindows[name]) {
-        openWindows[name].minimized = true;
-    }
+    if (openWindows[name]) openWindows[name].minimized = true;
     updateTaskbar();
 }
 
@@ -103,14 +116,6 @@ function updateTaskbar() {
     const container = document.getElementById('taskbarItems');
     container.innerHTML = '';
 
-    const iconMap = {
-        about: 'icon-user-sm',
-        projects: 'icon-folder-sm',
-        skills: 'icon-terminal-sm',
-        contact: 'icon-mail-sm',
-        resume: 'icon-notepad-sm'
-    };
-
     const titleMap = {
         about: 'About Me',
         projects: 'My Projects',
@@ -127,12 +132,7 @@ function updateTaskbar() {
             item.classList.add('active');
         }
 
-        const icon = document.createElement('div');
-        icon.className = 'taskbar-item-icon ' + (iconMap[name] || '');
-        item.appendChild(icon);
-
-        const text = document.createTextNode(titleMap[name] || name);
-        item.appendChild(text);
+        item.textContent = titleMap[name] || name;
 
         item.onclick = () => {
             if (openWindows[name] && openWindows[name].minimized) {
@@ -167,38 +167,27 @@ function startDrag(e, windowId) {
         startX: e.clientX - win.offsetLeft,
         startY: e.clientY - win.offsetTop
     };
-
     e.preventDefault();
 }
 
 document.addEventListener('mousemove', (e) => {
     if (!dragData) return;
-    const x = e.clientX - dragData.startX;
-    const y = e.clientY - dragData.startY;
-    dragData.win.style.left = Math.max(0, x) + 'px';
-    dragData.win.style.top = Math.max(0, y) + 'px';
+    dragData.win.style.left = Math.max(0, e.clientX - dragData.startX) + 'px';
+    dragData.win.style.top = Math.max(0, e.clientY - dragData.startY) + 'px';
 });
 
-document.addEventListener('mouseup', () => {
-    dragData = null;
-});
+document.addEventListener('mouseup', () => { dragData = null; });
 
-// Focus window on click
 document.addEventListener('mousedown', (e) => {
     const win = e.target.closest('.window');
-    if (win && win.id) {
-        const name = win.id.replace('window-', '');
-        focusWindow(name);
-    }
+    if (win && win.id) focusWindow(win.id.replace('window-', ''));
 });
 
 // ===== Start Menu =====
 function toggleStartMenu() {
-    const menu = document.getElementById('startMenu');
-    menu.classList.toggle('open');
+    document.getElementById('startMenu').classList.toggle('open');
 }
 
-// Close start menu when clicking elsewhere
 document.addEventListener('click', (e) => {
     const menu = document.getElementById('startMenu');
     const btn = document.getElementById('startBtn');
@@ -207,48 +196,36 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ===== Projects Detail =====
+// ===== Projects =====
 const projects = [
     {
         name: 'Web App',
         desc: 'A modern web application built with React and Node.js. Features responsive design, authentication, and real-time data updates.',
         tags: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
-        github: '#',
-        demo: '#'
+        github: '#', demo: '#'
     },
     {
         name: 'API Server',
         desc: 'RESTful API server with authentication, rate limiting, and comprehensive documentation. Built with Express and PostgreSQL.',
         tags: ['Express', 'PostgreSQL', 'JWT', 'Swagger'],
-        github: '#',
-        demo: '#'
+        github: '#', demo: '#'
     },
     {
         name: 'CLI Tool',
         desc: 'A command-line tool that automates development workflows. Supports multiple configurations and plugin system.',
         tags: ['Python', 'Click', 'Open Source'],
-        github: '#',
-        demo: '#'
+        github: '#', demo: '#'
     }
 ];
 
-function openProjectDetail(index) {
-    const project = projects[index];
-    if (!project) return;
-
-    const content = document.getElementById('detailContent');
-    content.innerHTML = `
-        <h3>${project.name}</h3>
-        <p>${project.desc}</p>
-        <div class="detail-tags">
-            ${project.tags.map(t => '<span>' + t + '</span>').join('')}
-        </div>
-        <div class="detail-links">
-            <a href="${project.github}" target="_blank">View Code</a>
-            <a href="${project.demo}" target="_blank">Live Demo</a>
-        </div>
-    `;
-
+function openProjectDetail(i) {
+    const p = projects[i];
+    if (!p) return;
+    document.getElementById('detailContent').innerHTML =
+        '<h3>' + p.name + '</h3>' +
+        '<p>' + p.desc + '</p>' +
+        '<div class="detail-tags">' + p.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        '<div class="detail-links"><a href="' + p.github + '" target="_blank">View Code</a><a href="' + p.demo + '" target="_blank">Live Demo</a></div>';
     document.getElementById('projectDetail').classList.add('show');
 }
 
@@ -259,13 +236,12 @@ function closeProjectDetail() {
 // ===== Shut Down =====
 function shutDown() {
     toggleStartMenu();
-    const overlay = document.createElement('div');
-    overlay.className = 'shutdown-overlay';
-    overlay.innerHTML = '<p>Shutting down...</p>';
-    document.body.appendChild(overlay);
-
+    const o = document.createElement('div');
+    o.className = 'shutdown-overlay';
+    o.innerHTML = '<div class="win-logo-boot" style="margin-bottom:24px"><div class="wl-quad wl-blue"></div><div class="wl-quad wl-blue"></div><div class="wl-quad wl-blue"></div><div class="wl-quad wl-blue"></div></div><p>Shutting down...</p>';
+    document.body.appendChild(o);
     setTimeout(() => {
-        overlay.innerHTML = '<p style="color:#555">Click anywhere to restart</p>';
-        overlay.onclick = () => location.reload();
-    }, 2000);
+        o.innerHTML = '<p style="color:#555;cursor:pointer">Click anywhere to restart</p>';
+        o.onclick = () => location.reload();
+    }, 2500);
 }

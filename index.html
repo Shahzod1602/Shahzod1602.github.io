@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shahzod Nematov — Desktop</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Boot Screen -->
     <div class="boot-screen" id="bootScreen">
         <div class="boot-logo">
-            <div class="win-orbs">
-                <span class="orb orb-red"></span>
-                <span class="orb orb-green"></span>
-                <span class="orb orb-blue"></span>
-                <span class="orb orb-yellow"></span>
+            <div class="win-logo-boot">
+                <div class="wl-quad wl-red"></div>
+                <div class="wl-quad wl-green"></div>
+                <div class="wl-quad wl-blue"></div>
+                <div class="wl-quad wl-yellow"></div>
             </div>
         </div>
-        <p class="boot-text">Starting Windows...</p>
-        <div class="boot-loader">
-            <div class="boot-loader-bar"></div>
+        <div class="boot-dots">
+            <span></span><span></span><span></span><span></span><span></span>
         </div>
     </div>
 
@@ -30,28 +29,40 @@
 
         <!-- Desktop Icons -->
         <div class="desktop-icons">
-            <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')">
-                <div class="icon-img icon-user"></div>
+            <div class="desktop-icon" ondblclick="openWindow('about')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="6" y="8" width="36" height="28" rx="2" fill="#1a1a2e" stroke="#555" stroke-width="1.5"/><rect x="8" y="10" width="32" height="22" rx="1" fill="#3b82c4"/><rect x="14" y="36" width="20" height="3" rx="1" fill="#888"/><rect x="10" y="39" width="28" height="2" rx="1" fill="#777"/><circle cx="24" cy="21" r="5" fill="#fff" opacity="0.9"/><rect x="16" y="27" width="16" height="3" rx="1.5" fill="#fff" opacity="0.6"/></svg>
+                </div>
                 <span>About Me</span>
             </div>
-            <div class="desktop-icon" data-window="projects" ondblclick="openWindow('projects')">
-                <div class="icon-img icon-folder"></div>
+            <div class="desktop-icon" ondblclick="openWindow('projects')">
+                <div class="di-icon di-folder">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg>
+                </div>
                 <span>My Projects</span>
             </div>
-            <div class="desktop-icon" data-window="skills" ondblclick="openWindow('skills')">
-                <div class="icon-img icon-terminal"></div>
+            <div class="desktop-icon" ondblclick="openWindow('skills')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="2" y="4" width="44" height="36" rx="3" fill="#1a1a2e"/><rect x="4" y="6" width="40" height="28" rx="1" fill="#0c0c0c"/><text x="12" y="24" fill="#0f0" font-family="monospace" font-size="12">C:\&gt;_</text><rect x="10" y="40" width="28" height="4" rx="1" fill="#333"/></svg>
+                </div>
                 <span>Skills</span>
             </div>
-            <div class="desktop-icon" data-window="contact" ondblclick="openWindow('contact')">
-                <div class="icon-img icon-mail"></div>
+            <div class="desktop-icon" ondblclick="openWindow('contact')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="4" y="10" width="40" height="28" rx="3" fill="#4a90d9"/><path d="M4 13l20 14 20-14" fill="none" stroke="#fff" stroke-width="2.5" opacity="0.8"/></svg>
+                </div>
                 <span>Contact</span>
             </div>
-            <div class="desktop-icon" data-window="resume" ondblclick="openWindow('resume')">
-                <div class="icon-img icon-notepad"></div>
+            <div class="desktop-icon" ondblclick="openWindow('resume')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="8" y="2" width="28" height="38" rx="2" fill="#fff" stroke="#bbb" stroke-width="1.5"/><path d="M28 2v8h8" fill="#ddd" stroke="#bbb" stroke-width="1"/><line x1="14" y1="14" x2="30" y2="14" stroke="#999" stroke-width="1.5"/><line x1="14" y1="19" x2="28" y2="19" stroke="#ccc" stroke-width="1"/><line x1="14" y1="24" x2="30" y2="24" stroke="#ccc" stroke-width="1"/><line x1="14" y1="29" x2="26" y2="29" stroke="#ccc" stroke-width="1"/><rect x="12" y="38" width="20" height="8" rx="1" fill="#2196f3"/><text x="15" y="45" fill="#fff" font-size="6" font-family="sans-serif">Resume</text></svg>
+                </div>
                 <span>Resume.txt</span>
             </div>
             <div class="desktop-icon" ondblclick="window.open('https://github.com/Shahzod1602','_blank')">
-                <div class="icon-img icon-github"></div>
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="20" fill="#24292e"/><path d="M24 8c-8.837 0-16 7.163-16 16 0 7.069 4.585 13.067 10.943 15.182.8.147 1.092-.347 1.092-.77 0-.381-.014-1.386-.022-2.721-4.451.967-5.389-2.145-5.389-2.145-.728-1.848-1.776-2.34-1.776-2.34-1.452-.993.11-.973.11-.973 1.606.113 2.451 1.649 2.451 1.649 1.427 2.444 3.744 1.738 4.656 1.329.145-1.034.558-1.739 1.015-2.138-3.553-.404-7.289-1.776-7.289-7.907 0-1.747.623-3.174 1.646-4.292-.165-.404-.713-2.031.157-4.234 0 0 1.342-.43 4.398 1.641A15.31 15.31 0 0124 17.805c1.36.006 2.728.184 4.006.539 3.054-2.07 4.394-1.641 4.394-1.641.872 2.203.324 3.83.159 4.234 1.025 1.118 1.644 2.545 1.644 4.292 0 6.146-3.741 7.498-7.305 7.893.575.507 1.087 1.508 1.087 3.04 0 2.195-.02 3.966-.02 4.505 0 .426.288.923 1.1.767C35.42 37.06 40 31.064 40 24c0-8.837-7.163-16-16-16z" fill="#fff"/></svg>
+                </div>
                 <span>GitHub</span>
             </div>
         </div>
@@ -61,18 +72,16 @@
         <!-- About Me Window -->
         <div class="window" id="window-about" style="width:560px;height:420px;">
             <div class="window-titlebar" onmousedown="startDrag(event,'window-about')">
-                <div class="window-title">
-                    <div class="window-title-icon icon-user-sm"></div>
-                    About Me
-                </div>
+                <div class="window-title"><span class="wt-icon">👤</span> About Me</div>
                 <div class="window-controls">
-                    <button class="win-btn win-minimize" onclick="minimizeWindow('about')">&#8211;</button>
-                    <button class="win-btn win-maximize" onclick="maximizeWindow('about')">&#9633;</button>
-                    <button class="win-btn win-close" onclick="closeWindow('about')">&times;</button>
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('about')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('about')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('about')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
                 </div>
             </div>
             <div class="window-toolbar">
-                <span class="toolbar-path">C:\Users\Shahzod\About Me</span>
+                <div class="toolbar-btns"><button class="tb-btn">←</button><button class="tb-btn">→</button></div>
+                <div class="toolbar-path"><span class="tp-icon">📁</span> C:\Users\Shahzod\About Me</div>
             </div>
             <div class="window-body">
                 <div class="about-card">
@@ -80,23 +89,11 @@
                     <div class="about-info">
                         <h2>Shahzod Nematov</h2>
                         <p class="about-role">Software Developer</p>
-                        <p class="about-desc">
-                            I'm a passionate software developer who loves building things for the web.
-                            I focus on creating clean, efficient, and user-friendly applications that solve real problems.
-                        </p>
-                        <p class="about-desc">
-                            With experience in both frontend and backend development, I enjoy working across the full stack
-                            to bring ideas to life.
-                        </p>
+                        <p class="about-desc">I'm a passionate software developer who loves building things for the web. I focus on creating clean, efficient, and user-friendly applications that solve real problems.</p>
+                        <p class="about-desc">With experience in both frontend and backend development, I enjoy working across the full stack to bring ideas to life.</p>
                         <div class="about-meta">
-                            <div class="meta-item">
-                                <span class="meta-label">Location:</span>
-                                <span>Uzbekistan</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">Status:</span>
-                                <span class="status-available">Available for work</span>
-                            </div>
+                            <div class="meta-item"><span class="meta-label">📍 Location:</span> Uzbekistan</div>
+                            <div class="meta-item"><span class="meta-label">💼 Status:</span> <span class="status-available">Available for work</span></div>
                         </div>
                     </div>
                 </div>
@@ -106,204 +103,182 @@
         <!-- Projects Window -->
         <div class="window" id="window-projects" style="width:650px;height:480px;">
             <div class="window-titlebar" onmousedown="startDrag(event,'window-projects')">
-                <div class="window-title">
-                    <div class="window-title-icon icon-folder-sm"></div>
-                    My Projects
-                </div>
+                <div class="window-title"><span class="wt-icon">📁</span> My Projects</div>
                 <div class="window-controls">
-                    <button class="win-btn win-minimize" onclick="minimizeWindow('projects')">&#8211;</button>
-                    <button class="win-btn win-maximize" onclick="maximizeWindow('projects')">&#9633;</button>
-                    <button class="win-btn win-close" onclick="closeWindow('projects')">&times;</button>
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('projects')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('projects')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('projects')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
                 </div>
             </div>
             <div class="window-toolbar">
-                <span class="toolbar-path">C:\Users\Shahzod\Projects</span>
+                <div class="toolbar-btns"><button class="tb-btn">←</button><button class="tb-btn">→</button></div>
+                <div class="toolbar-path"><span class="tp-icon">📁</span> C:\Users\Shahzod\Projects</div>
             </div>
             <div class="window-body">
                 <div class="explorer-sidebar">
                     <div class="sidebar-section">
-                        <div class="sidebar-header">Favorites</div>
-                        <div class="sidebar-item active">Projects</div>
-                        <div class="sidebar-item">Desktop</div>
-                        <div class="sidebar-item">Downloads</div>
+                        <div class="sidebar-item active"><span class="si-arrow">▸</span> ⭐ Favorites</div>
+                        <div class="sidebar-item sub">📁 Projects</div>
+                        <div class="sidebar-item sub">🖥️ Desktop</div>
+                        <div class="sidebar-item sub">📥 Downloads</div>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-item"><span class="si-arrow">▸</span> 💻 This PC</div>
                     </div>
                 </div>
                 <div class="explorer-content">
-                    <div class="file-grid">
+                    <div class="file-grid" id="fileGrid">
                         <div class="file-item" ondblclick="openProjectDetail(0)">
-                            <div class="file-icon icon-folder-lg"></div>
+                            <svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg>
                             <span>Web App</span>
                         </div>
                         <div class="file-item" ondblclick="openProjectDetail(1)">
-                            <div class="file-icon icon-folder-lg"></div>
+                            <svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg>
                             <span>API Server</span>
                         </div>
                         <div class="file-item" ondblclick="openProjectDetail(2)">
-                            <div class="file-icon icon-folder-lg"></div>
+                            <svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg>
                             <span>CLI Tool</span>
                         </div>
                         <div class="file-item">
-                            <div class="file-icon icon-file-lg"></div>
+                            <svg viewBox="0 0 48 48" width="40" height="44"><rect x="8" y="2" width="28" height="38" rx="2" fill="#fff" stroke="#bbb" stroke-width="1.5"/><path d="M28 2v8h8" fill="#ddd" stroke="#bbb" stroke-width="1"/><line x1="14" y1="14" x2="30" y2="14" stroke="#999" stroke-width="1.2"/><line x1="14" y1="19" x2="28" y2="19" stroke="#ccc" stroke-width="1"/><line x1="14" y1="24" x2="30" y2="24" stroke="#ccc" stroke-width="1"/></svg>
                             <span>README.txt</span>
                         </div>
                     </div>
-                    <!-- Project detail panel -->
                     <div class="project-detail" id="projectDetail">
-                        <button class="detail-back" onclick="closeProjectDetail()">&larr; Back</button>
+                        <button class="detail-back" onclick="closeProjectDetail()">← Back</button>
                         <div class="detail-content" id="detailContent"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Skills Window -->
-        <div class="window" id="window-skills" style="width:520px;height:440px;">
-            <div class="window-titlebar" onmousedown="startDrag(event,'window-skills')">
-                <div class="window-title">
-                    <div class="window-title-icon icon-terminal-sm"></div>
-                    Skills — Command Prompt
-                </div>
+        <!-- Skills Window (CMD) -->
+        <div class="window" id="window-skills" style="width:560px;height:440px;">
+            <div class="window-titlebar titlebar-dark" onmousedown="startDrag(event,'window-skills')">
+                <div class="window-title"><span class="wt-icon">⬛</span> C:\Windows\System32\cmd.exe</div>
                 <div class="window-controls">
-                    <button class="win-btn win-minimize" onclick="minimizeWindow('skills')">&#8211;</button>
-                    <button class="win-btn win-maximize" onclick="maximizeWindow('skills')">&#9633;</button>
-                    <button class="win-btn win-close" onclick="closeWindow('skills')">&times;</button>
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('skills')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#999" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('skills')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#999" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('skills')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
                 </div>
             </div>
             <div class="window-body terminal-body">
                 <div class="terminal" id="terminal">
-                    <div class="term-line">Microsoft Windows [Version 7.0.2026]</div>
-                    <div class="term-line">(c) Shahzod Nematov. All rights reserved.</div>
-                    <div class="term-line">&nbsp;</div>
-                    <div class="term-line">C:\Users\Shahzod&gt; skills --list</div>
-                    <div class="term-line">&nbsp;</div>
-                    <div class="term-line term-category">== FRONTEND ==</div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:90%">HTML / CSS</span> <span class="term-pct">90%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">JavaScript</span> <span class="term-pct">85%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:80%">React</span> <span class="term-pct">80%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">TypeScript</span> <span class="term-pct">75%</span></div>
-                    <div class="term-line">&nbsp;</div>
-                    <div class="term-line term-category">== BACKEND ==</div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">Node.js</span> <span class="term-pct">85%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">Python</span> <span class="term-pct">75%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:70%">Databases</span> <span class="term-pct">70%</span></div>
-                    <div class="term-line">&nbsp;</div>
-                    <div class="term-line term-category">== TOOLS ==</div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:90%">Git / GitHub</span> <span class="term-pct">90%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:80%">Docker</span> <span class="term-pct">80%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">VS Code</span> <span class="term-pct">85%</span></div>
-                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">Linux</span> <span class="term-pct">75%</span></div>
-                    <div class="term-line">&nbsp;</div>
-                    <div class="term-line term-prompt">C:\Users\Shahzod&gt; <span class="term-cursor">_</span></div>
+                    <div class="tl">Microsoft Windows [Version 7.0.2026]</div>
+                    <div class="tl">(c) Shahzod Nematov. All rights reserved.</div>
+                    <div class="tl">&nbsp;</div>
+                    <div class="tl">C:\Users\Shahzod&gt; skills --list --all</div>
+                    <div class="tl">&nbsp;</div>
+                    <div class="tl tc">═══ FRONTEND ═══</div>
+                    <div class="tl ts"><span class="tb" style="--w:92%">HTML / CSS</span><span class="tp">████████████████████░░ 92%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:88%">JavaScript</span><span class="tp">██████████████████░░░░ 88%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:82%">React</span><span class="tp">████████████████░░░░░░ 82%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:78%">TypeScript</span><span class="tp">███████████████░░░░░░░ 78%</span></div>
+                    <div class="tl">&nbsp;</div>
+                    <div class="tl tc">═══ BACKEND ═══</div>
+                    <div class="tl ts"><span class="tb" style="--w:85%">Node.js</span><span class="tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:78%">Python</span><span class="tp">███████████████░░░░░░░ 78%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:72%">Databases</span><span class="tp">██████████████░░░░░░░░ 72%</span></div>
+                    <div class="tl">&nbsp;</div>
+                    <div class="tl tc">═══ TOOLS ═══</div>
+                    <div class="tl ts"><span class="tb" style="--w:90%">Git / GitHub</span><span class="tp">████████████████████░░ 90%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:80%">Docker</span><span class="tp">████████████████░░░░░░ 80%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:85%">VS Code</span><span class="tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="tl ts"><span class="tb" style="--w:75%">Linux</span><span class="tp">███████████████░░░░░░░ 75%</span></div>
+                    <div class="tl">&nbsp;</div>
+                    <div class="tl">C:\Users\Shahzod&gt; <span class="cursor">_</span></div>
                 </div>
             </div>
         </div>
 
         <!-- Contact Window -->
-        <div class="window" id="window-contact" style="width:480px;height:380px;">
+        <div class="window" id="window-contact" style="width:480px;height:400px;">
             <div class="window-titlebar" onmousedown="startDrag(event,'window-contact')">
-                <div class="window-title">
-                    <div class="window-title-icon icon-mail-sm"></div>
-                    Contact — Address Book
-                </div>
+                <div class="window-title"><span class="wt-icon">✉️</span> Contacts</div>
                 <div class="window-controls">
-                    <button class="win-btn win-minimize" onclick="minimizeWindow('contact')">&#8211;</button>
-                    <button class="win-btn win-maximize" onclick="maximizeWindow('contact')">&#9633;</button>
-                    <button class="win-btn win-close" onclick="closeWindow('contact')">&times;</button>
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('contact')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('contact')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('contact')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
                 </div>
             </div>
             <div class="window-toolbar">
-                <span class="toolbar-path">C:\Users\Shahzod\Contacts</span>
+                <div class="toolbar-btns"><button class="tb-btn">←</button><button class="tb-btn">→</button></div>
+                <div class="toolbar-path"><span class="tp-icon">📁</span> C:\Users\Shahzod\Contacts</div>
             </div>
             <div class="window-body">
                 <div class="contact-list">
                     <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" class="contact-item">
-                        <div class="contact-icon contact-linkedin">in</div>
-                        <div class="contact-info">
-                            <div class="contact-name">LinkedIn</div>
-                            <div class="contact-value">shahzod-nematov</div>
-                        </div>
+                        <div class="ci-icon ci-linkedin">in</div>
+                        <div class="ci-info"><div class="ci-name">LinkedIn</div><div class="ci-val">shahzod-nematov</div></div>
+                        <div class="ci-arrow">→</div>
                     </a>
                     <a href="https://github.com/Shahzod1602" target="_blank" class="contact-item">
-                        <div class="contact-icon contact-github">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-name">GitHub</div>
-                            <div class="contact-value">Shahzod1602</div>
-                        </div>
+                        <div class="ci-icon ci-github"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div>
+                        <div class="ci-info"><div class="ci-name">GitHub</div><div class="ci-val">Shahzod1602</div></div>
+                        <div class="ci-arrow">→</div>
                     </a>
-                    <a href="https://t.me/shahzodnematov" target="_blank" class="contact-item">
-                        <div class="contact-icon contact-telegram">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-name">Telegram</div>
-                            <div class="contact-value">@shahzodnematov</div>
-                        </div>
+                    <a href="https://t.me/Shahzod_pc" target="_blank" class="contact-item">
+                        <div class="ci-icon ci-telegram"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
+                        <div class="ci-info"><div class="ci-name">Telegram</div><div class="ci-val">@Shahzod_pc</div></div>
+                        <div class="ci-arrow">→</div>
                     </a>
-                    <a href="mailto:shahzodnematov@gmail.com" class="contact-item">
-                        <div class="contact-icon contact-email">@</div>
-                        <div class="contact-info">
-                            <div class="contact-name">Email</div>
-                            <div class="contact-value">shahzodnematov@gmail.com</div>
-                        </div>
+                    <a href="mailto:shaxzodnematov1602@gmail.com" class="contact-item">
+                        <div class="ci-icon ci-email">✉</div>
+                        <div class="ci-info"><div class="ci-name">Email</div><div class="ci-val">shaxzodnematov1602@gmail.com</div></div>
+                        <div class="ci-arrow">→</div>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Resume Window -->
+        <!-- Resume Window (Notepad) -->
         <div class="window" id="window-resume" style="width:520px;height:440px;">
             <div class="window-titlebar" onmousedown="startDrag(event,'window-resume')">
-                <div class="window-title">
-                    <div class="window-title-icon icon-notepad-sm"></div>
-                    Resume.txt — Notepad
-                </div>
+                <div class="window-title"><span class="wt-icon">📝</span> Resume.txt — Notepad</div>
                 <div class="window-controls">
-                    <button class="win-btn win-minimize" onclick="minimizeWindow('resume')">&#8211;</button>
-                    <button class="win-btn win-maximize" onclick="maximizeWindow('resume')">&#9633;</button>
-                    <button class="win-btn win-close" onclick="closeWindow('resume')">&times;</button>
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('resume')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('resume')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('resume')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
                 </div>
             </div>
             <div class="window-menubar">
                 <span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span>
             </div>
             <div class="window-body notepad-body">
-                <pre class="notepad-text">
-╔══════════════════════════════════════╗
-║         SHAHZOD NEMATOV              ║
-║         Software Developer           ║
-╚══════════════════════════════════════╝
+                <pre class="notepad-text">╔══════════════════════════════════════════╗
+║          SHAHZOD NEMATOV                 ║
+║          Software Developer              ║
+╚══════════════════════════════════════════╝
 
 ABOUT
-─────────────────────────────────────
+───────────────────────────────────────────
 Passionate software developer with
 experience in building web applications.
 I love clean code and great UX.
 
 EXPERIENCE
-─────────────────────────────────────
+───────────────────────────────────────────
 ► Full-Stack Web Development
-► RESTful API Design & Implementation
-► Database Architecture & Management
-► UI/UX Design & Responsive Layouts
+► RESTful API Design &amp; Implementation
+► Database Architecture &amp; Management
+► UI/UX Design &amp; Responsive Layouts
 
 EDUCATION
-─────────────────────────────────────
+───────────────────────────────────────────
 ► Computer Science
-► Self-taught & Online Courses
+► Self-taught &amp; Online Courses
 ► Continuous Learning
 
 LANGUAGES
-─────────────────────────────────────
+───────────────────────────────────────────
 ► Uzbek    — Native
 ► Russian  — Fluent
 ► English  — Professional
 
-─────────────────────────────────────
+───────────────────────────────────────────
   "Code is poetry." — Shahzod
-─────────────────────────────────────
-                </pre>
+───────────────────────────────────────────</pre>
             </div>
         </div>
 
@@ -312,60 +287,88 @@ LANGUAGES
     <!-- Taskbar -->
     <div class="taskbar" id="taskbar">
         <button class="start-btn" id="startBtn" onclick="toggleStartMenu()">
-            <div class="start-orb">
-                <span class="mini-orb orb-red"></span>
-                <span class="mini-orb orb-green"></span>
-                <span class="mini-orb orb-blue"></span>
-                <span class="mini-orb orb-yellow"></span>
+            <div class="start-win-logo">
+                <div class="sw-q sw-r"></div>
+                <div class="sw-q sw-g"></div>
+                <div class="sw-q sw-b"></div>
+                <div class="sw-q sw-y"></div>
             </div>
-            Start
         </button>
         <div class="taskbar-items" id="taskbarItems"></div>
         <div class="system-tray">
-            <span class="tray-clock" id="trayClock"></span>
+            <div class="tray-icons">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="tray-datetime">
+                <span class="tray-clock" id="trayClock"></span>
+                <span class="tray-date" id="trayDate"></span>
+            </div>
         </div>
     </div>
 
-    <!-- Start Menu -->
+    <!-- Start Menu — Classic Win7 -->
     <div class="start-menu" id="startMenu">
-        <div class="start-header">
-            <div class="start-avatar">SN</div>
-            <span>Shahzod Nematov</span>
+        <!-- User banner -->
+        <div class="sm-banner">
+            <div class="sm-avatar">SN</div>
+            <span class="sm-username">Shahzod Nematov</span>
         </div>
-        <div class="start-body">
-            <div class="start-left">
-                <div class="start-item" onclick="openWindow('about');toggleStartMenu()">
-                    <div class="start-item-icon icon-user-sm"></div>
-                    About Me
+        <div class="sm-body">
+            <!-- Left: Programs list -->
+            <div class="sm-left">
+                <div class="sm-prog" onclick="openWindow('about');toggleStartMenu()">
+                    <span class="sp-icon sp-blue">👤</span> About Me
                 </div>
-                <div class="start-item" onclick="openWindow('projects');toggleStartMenu()">
-                    <div class="start-item-icon icon-folder-sm"></div>
-                    My Projects
+                <div class="sm-prog" onclick="openWindow('projects');toggleStartMenu()">
+                    <span class="sp-icon sp-yellow">📁</span> My Projects
                 </div>
-                <div class="start-item" onclick="openWindow('skills');toggleStartMenu()">
-                    <div class="start-item-icon icon-terminal-sm"></div>
-                    Skills
+                <div class="sm-prog" onclick="openWindow('skills');toggleStartMenu()">
+                    <span class="sp-icon sp-dark">⬛</span> Skills (CMD)
                 </div>
-                <div class="start-item" onclick="openWindow('contact');toggleStartMenu()">
-                    <div class="start-item-icon icon-mail-sm"></div>
-                    Contact
+                <div class="sm-prog" onclick="openWindow('contact');toggleStartMenu()">
+                    <span class="sp-icon sp-purple">✉️</span> Contact
                 </div>
-                <div class="start-item" onclick="openWindow('resume');toggleStartMenu()">
-                    <div class="start-item-icon icon-notepad-sm"></div>
-                    Resume.txt
+                <div class="sm-prog" onclick="openWindow('resume');toggleStartMenu()">
+                    <span class="sp-icon sp-white">📝</span> Resume.txt
+                </div>
+                <div class="sm-separator"></div>
+                <div class="sm-prog" onclick="window.open('https://github.com/Shahzod1602','_blank');toggleStartMenu()">
+                    <span class="sp-icon sp-dark">🐙</span> GitHub
+                </div>
+                <div class="sm-prog" onclick="window.open('https://www.linkedin.com/in/shahzod-nematov-b7b965278/','_blank');toggleStartMenu()">
+                    <span class="sp-icon sp-linkedin">in</span> LinkedIn
+                </div>
+                <div class="sm-prog" onclick="window.open('https://t.me/Shahzod_pc','_blank');toggleStartMenu()">
+                    <span class="sp-icon sp-tg">✈</span> Telegram
+                </div>
+                <div class="sm-separator"></div>
+                <div class="sm-prog sm-back">
+                    <span class="sp-icon sp-back">◀</span> Back
                 </div>
             </div>
-            <div class="start-right">
-                <div class="start-item" onclick="window.open('https://github.com/Shahzod1602','_blank');toggleStartMenu()">GitHub</div>
-                <div class="start-item" onclick="window.open('https://www.linkedin.com/in/shahzod-nematov-b7b965278/','_blank');toggleStartMenu()">LinkedIn</div>
-                <div class="start-item" onclick="window.open('https://t.me/shahzodnematov','_blank');toggleStartMenu()">Telegram</div>
+            <!-- Right: Places -->
+            <div class="sm-right">
+                <div class="sm-place" onclick="openWindow('projects');toggleStartMenu()">Documents</div>
+                <div class="sm-place" onclick="openWindow('projects');toggleStartMenu()">Downloads</div>
+                <div class="sm-place" onclick="openWindow('about');toggleStartMenu()">Pictures</div>
+                <div class="sm-place" onclick="openWindow('skills');toggleStartMenu()">Music</div>
+                <div class="sm-place-sep"></div>
+                <div class="sm-place" onclick="openWindow('about');toggleStartMenu()">Control Panel</div>
+                <div class="sm-place" onclick="openWindow('contact');toggleStartMenu()">Devices and Printers</div>
+                <div class="sm-place" onclick="toggleStartMenu()">Default Programs</div>
+                <div class="sm-place" onclick="toggleStartMenu()">Help and Support</div>
             </div>
         </div>
-        <div class="start-footer">
-            <button class="shutdown-btn" onclick="shutDown()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
-                Shut down
-            </button>
+        <!-- Footer: Search + Shutdown -->
+        <div class="sm-footer">
+            <div class="sm-search">
+                <input type="text" class="sm-search-input" placeholder="Search programs and files" readonly>
+                <svg class="sm-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+            </div>
+            <div class="sm-shutdown">
+                <button class="shutdown-btn" onclick="shutDown()">Shut down</button>
+                <button class="shutdown-arrow" onclick="shutDown()">▸</button>
+            </div>
         </div>
     </div>
 
