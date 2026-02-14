@@ -3,231 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shahzod Nematov — Software Developer</title>
+    <title>Shahzod Nematov — Desktop</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">SN</a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+
+    <!-- Boot Screen -->
+    <div class="boot-screen" id="bootScreen">
+        <div class="boot-logo">
+            <div class="win-orbs">
+                <span class="orb orb-red"></span>
+                <span class="orb orb-green"></span>
+                <span class="orb orb-blue"></span>
+                <span class="orb orb-yellow"></span>
+            </div>
+        </div>
+        <p class="boot-text">Starting Windows...</p>
+        <div class="boot-loader">
+            <div class="boot-loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div class="desktop" id="desktop">
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')">
+                <div class="icon-img icon-user"></div>
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" data-window="projects" ondblclick="openWindow('projects')">
+                <div class="icon-img icon-folder"></div>
+                <span>My Projects</span>
+            </div>
+            <div class="desktop-icon" data-window="skills" ondblclick="openWindow('skills')">
+                <div class="icon-img icon-terminal"></div>
+                <span>Skills</span>
+            </div>
+            <div class="desktop-icon" data-window="contact" ondblclick="openWindow('contact')">
+                <div class="icon-img icon-mail"></div>
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" data-window="resume" ondblclick="openWindow('resume')">
+                <div class="icon-img icon-notepad"></div>
+                <span>Resume.txt</span>
+            </div>
+            <div class="desktop-icon" ondblclick="window.open('https://github.com/Shahzod1602','_blank')">
+                <div class="icon-img icon-github"></div>
+                <span>GitHub</span>
+            </div>
+        </div>
+
+        <!-- ====== WINDOWS ====== -->
+
+        <!-- About Me Window -->
+        <div class="window" id="window-about" style="width:560px;height:420px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-about')">
+                <div class="window-title">
+                    <div class="window-title-icon icon-user-sm"></div>
+                    About Me
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('about')">&#8211;</button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('about')">&#9633;</button>
+                    <button class="win-btn win-close" onclick="closeWindow('about')">&times;</button>
+                </div>
+            </div>
+            <div class="window-toolbar">
+                <span class="toolbar-path">C:\Users\Shahzod\About Me</span>
+            </div>
+            <div class="window-body">
+                <div class="about-card">
+                    <div class="about-avatar">SN</div>
+                    <div class="about-info">
+                        <h2>Shahzod Nematov</h2>
+                        <p class="about-role">Software Developer</p>
+                        <p class="about-desc">
+                            I'm a passionate software developer who loves building things for the web.
+                            I focus on creating clean, efficient, and user-friendly applications that solve real problems.
+                        </p>
+                        <p class="about-desc">
+                            With experience in both frontend and backend development, I enjoy working across the full stack
+                            to bring ideas to life.
+                        </p>
+                        <div class="about-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Location:</span>
+                                <span>Uzbekistan</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Status:</span>
+                                <span class="status-available">Available for work</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Window -->
+        <div class="window" id="window-projects" style="width:650px;height:480px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-projects')">
+                <div class="window-title">
+                    <div class="window-title-icon icon-folder-sm"></div>
+                    My Projects
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('projects')">&#8211;</button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('projects')">&#9633;</button>
+                    <button class="win-btn win-close" onclick="closeWindow('projects')">&times;</button>
+                </div>
+            </div>
+            <div class="window-toolbar">
+                <span class="toolbar-path">C:\Users\Shahzod\Projects</span>
+            </div>
+            <div class="window-body">
+                <div class="explorer-sidebar">
+                    <div class="sidebar-section">
+                        <div class="sidebar-header">Favorites</div>
+                        <div class="sidebar-item active">Projects</div>
+                        <div class="sidebar-item">Desktop</div>
+                        <div class="sidebar-item">Downloads</div>
+                    </div>
+                </div>
+                <div class="explorer-content">
+                    <div class="file-grid">
+                        <div class="file-item" ondblclick="openProjectDetail(0)">
+                            <div class="file-icon icon-folder-lg"></div>
+                            <span>Web App</span>
+                        </div>
+                        <div class="file-item" ondblclick="openProjectDetail(1)">
+                            <div class="file-icon icon-folder-lg"></div>
+                            <span>API Server</span>
+                        </div>
+                        <div class="file-item" ondblclick="openProjectDetail(2)">
+                            <div class="file-icon icon-folder-lg"></div>
+                            <span>CLI Tool</span>
+                        </div>
+                        <div class="file-item">
+                            <div class="file-icon icon-file-lg"></div>
+                            <span>README.txt</span>
+                        </div>
+                    </div>
+                    <!-- Project detail panel -->
+                    <div class="project-detail" id="projectDetail">
+                        <button class="detail-back" onclick="closeProjectDetail()">&larr; Back</button>
+                        <div class="detail-content" id="detailContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Window -->
+        <div class="window" id="window-skills" style="width:520px;height:440px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-skills')">
+                <div class="window-title">
+                    <div class="window-title-icon icon-terminal-sm"></div>
+                    Skills — Command Prompt
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('skills')">&#8211;</button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('skills')">&#9633;</button>
+                    <button class="win-btn win-close" onclick="closeWindow('skills')">&times;</button>
+                </div>
+            </div>
+            <div class="window-body terminal-body">
+                <div class="terminal" id="terminal">
+                    <div class="term-line">Microsoft Windows [Version 7.0.2026]</div>
+                    <div class="term-line">(c) Shahzod Nematov. All rights reserved.</div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line">C:\Users\Shahzod&gt; skills --list</div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-category">== FRONTEND ==</div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:90%">HTML / CSS</span> <span class="term-pct">90%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">JavaScript</span> <span class="term-pct">85%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:80%">React</span> <span class="term-pct">80%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">TypeScript</span> <span class="term-pct">75%</span></div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-category">== BACKEND ==</div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">Node.js</span> <span class="term-pct">85%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">Python</span> <span class="term-pct">75%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:70%">Databases</span> <span class="term-pct">70%</span></div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-category">== TOOLS ==</div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:90%">Git / GitHub</span> <span class="term-pct">90%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:80%">Docker</span> <span class="term-pct">80%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:85%">VS Code</span> <span class="term-pct">85%</span></div>
+                    <div class="term-line term-skill"><span class="term-bar" style="--w:75%">Linux</span> <span class="term-pct">75%</span></div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-prompt">C:\Users\Shahzod&gt; <span class="term-cursor">_</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Window -->
+        <div class="window" id="window-contact" style="width:480px;height:380px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-contact')">
+                <div class="window-title">
+                    <div class="window-title-icon icon-mail-sm"></div>
+                    Contact — Address Book
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('contact')">&#8211;</button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('contact')">&#9633;</button>
+                    <button class="win-btn win-close" onclick="closeWindow('contact')">&times;</button>
+                </div>
+            </div>
+            <div class="window-toolbar">
+                <span class="toolbar-path">C:\Users\Shahzod\Contacts</span>
+            </div>
+            <div class="window-body">
+                <div class="contact-list">
+                    <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" class="contact-item">
+                        <div class="contact-icon contact-linkedin">in</div>
+                        <div class="contact-info">
+                            <div class="contact-name">LinkedIn</div>
+                            <div class="contact-value">shahzod-nematov</div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Shahzod1602" target="_blank" class="contact-item">
+                        <div class="contact-icon contact-github">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-name">GitHub</div>
+                            <div class="contact-value">Shahzod1602</div>
+                        </div>
+                    </a>
+                    <a href="https://t.me/shahzodnematov" target="_blank" class="contact-item">
+                        <div class="contact-icon contact-telegram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-name">Telegram</div>
+                            <div class="contact-value">@shahzodnematov</div>
+                        </div>
+                    </a>
+                    <a href="mailto:shahzodnematov@gmail.com" class="contact-item">
+                        <div class="contact-icon contact-email">@</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Email</div>
+                            <div class="contact-value">shahzodnematov@gmail.com</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resume Window -->
+        <div class="window" id="window-resume" style="width:520px;height:440px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-resume')">
+                <div class="window-title">
+                    <div class="window-title-icon icon-notepad-sm"></div>
+                    Resume.txt — Notepad
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('resume')">&#8211;</button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('resume')">&#9633;</button>
+                    <button class="win-btn win-close" onclick="closeWindow('resume')">&times;</button>
+                </div>
+            </div>
+            <div class="window-menubar">
+                <span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span>
+            </div>
+            <div class="window-body notepad-body">
+                <pre class="notepad-text">
+╔══════════════════════════════════════╗
+║         SHAHZOD NEMATOV              ║
+║         Software Developer           ║
+╚══════════════════════════════════════╝
+
+ABOUT
+─────────────────────────────────────
+Passionate software developer with
+experience in building web applications.
+I love clean code and great UX.
+
+EXPERIENCE
+─────────────────────────────────────
+► Full-Stack Web Development
+► RESTful API Design & Implementation
+► Database Architecture & Management
+► UI/UX Design & Responsive Layouts
+
+EDUCATION
+─────────────────────────────────────
+► Computer Science
+► Self-taught & Online Courses
+► Continuous Learning
+
+LANGUAGES
+─────────────────────────────────────
+► Uzbek    — Native
+► Russian  — Fluent
+► English  — Professional
+
+─────────────────────────────────────
+  "Code is poetry." — Shahzod
+─────────────────────────────────────
+                </pre>
+            </div>
+        </div>
+
+    </div><!-- /desktop -->
+
+    <!-- Taskbar -->
+    <div class="taskbar" id="taskbar">
+        <button class="start-btn" id="startBtn" onclick="toggleStartMenu()">
+            <div class="start-orb">
+                <span class="mini-orb orb-red"></span>
+                <span class="mini-orb orb-green"></span>
+                <span class="mini-orb orb-blue"></span>
+                <span class="mini-orb orb-yellow"></span>
+            </div>
+            Start
+        </button>
+        <div class="taskbar-items" id="taskbarItems"></div>
+        <div class="system-tray">
+            <span class="tray-clock" id="trayClock"></span>
+        </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-header">
+            <div class="start-avatar">SN</div>
+            <span>Shahzod Nematov</span>
+        </div>
+        <div class="start-body">
+            <div class="start-left">
+                <div class="start-item" onclick="openWindow('about');toggleStartMenu()">
+                    <div class="start-item-icon icon-user-sm"></div>
+                    About Me
+                </div>
+                <div class="start-item" onclick="openWindow('projects');toggleStartMenu()">
+                    <div class="start-item-icon icon-folder-sm"></div>
+                    My Projects
+                </div>
+                <div class="start-item" onclick="openWindow('skills');toggleStartMenu()">
+                    <div class="start-item-icon icon-terminal-sm"></div>
+                    Skills
+                </div>
+                <div class="start-item" onclick="openWindow('contact');toggleStartMenu()">
+                    <div class="start-item-icon icon-mail-sm"></div>
+                    Contact
+                </div>
+                <div class="start-item" onclick="openWindow('resume');toggleStartMenu()">
+                    <div class="start-item-icon icon-notepad-sm"></div>
+                    Resume.txt
+                </div>
+            </div>
+            <div class="start-right">
+                <div class="start-item" onclick="window.open('https://github.com/Shahzod1602','_blank');toggleStartMenu()">GitHub</div>
+                <div class="start-item" onclick="window.open('https://www.linkedin.com/in/shahzod-nematov-b7b965278/','_blank');toggleStartMenu()">LinkedIn</div>
+                <div class="start-item" onclick="window.open('https://t.me/shahzodnematov','_blank');toggleStartMenu()">Telegram</div>
+            </div>
+        </div>
+        <div class="start-footer">
+            <button class="shutdown-btn" onclick="shutDown()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                Shut down
             </button>
-            <button class="mobile-menu" id="mobileMenu" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
         </div>
-    </nav>
-
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <p class="hero-greeting">Hello, I'm</p>
-            <h1 class="hero-name">Shahzod Nematov</h1>
-            <p class="hero-title">Software Developer</p>
-            <p class="hero-description">I build modern web applications with clean code and great user experience.</p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            </div>
-            <div class="hero-socials">
-                <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" aria-label="LinkedIn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                </a>
-                <a href="https://github.com/shahzodnematov" target="_blank" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                </a>
-                <a href="https://t.me/shahzodnematov" target="_blank" aria-label="Telegram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                </a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="code-window">
-                <div class="code-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                    <span class="code-title">about.js</span>
-                </div>
-                <pre class="code-body"><code><span class="keyword">const</span> <span class="variable">developer</span> = {
-  <span class="property">name</span>: <span class="string">"Shahzod Nematov"</span>,
-  <span class="property">role</span>: <span class="string">"Software Developer"</span>,
-  <span class="property">loves</span>: [
-    <span class="string">"Clean Code"</span>,
-    <span class="string">"Web Development"</span>,
-    <span class="string">"Problem Solving"</span>
-  ],
-  <span class="property">available</span>: <span class="boolean">true</span>
-};</code></pre>
-            </div>
-        </div>
-    </section>
-
-    <section class="about" id="about">
-        <div class="section-container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <p>I'm a passionate software developer who loves building things for the web. I focus on creating clean, efficient, and user-friendly applications that solve real problems.</p>
-                <p>With experience in both frontend and backend development, I enjoy working across the full stack to bring ideas to life. I'm always eager to learn new technologies and improve my craft.</p>
-                <div class="about-stats">
-                    <div class="stat">
-                        <span class="stat-number" data-target="10">0</span><span class="stat-suffix">+</span>
-                        <span class="stat-label">Projects</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number" data-target="5">0</span><span class="stat-suffix">+</span>
-                        <span class="stat-label">Technologies</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
-                        <span class="stat-label">Dedication</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="skills" id="skills">
-        <div class="section-container">
-            <h2 class="section-title">Skills & Technologies</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    </div>
-                    <h3>Frontend</h3>
-                    <p>HTML, CSS, JavaScript, React, TypeScript</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-                    </div>
-                    <h3>Backend</h3>
-                    <p>Node.js, Python, REST APIs, Databases</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-                    </div>
-                    <h3>Tools</h3>
-                    <p>Git, VS Code, Docker, Linux, CI/CD</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </div>
-                    <h3>Other</h3>
-                    <p>Problem Solving, Team Work, Agile</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="projects" id="projects">
-        <div class="section-container">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Project One</h3>
-                        <p>A web application built with modern technologies. Features responsive design and clean architecture.</p>
-                        <div class="project-tags">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">View Code</a>
-                            <a href="#" class="project-link">Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Project Two</h3>
-                        <p>A full-stack application with authentication, API integration, and real-time features.</p>
-                        <div class="project-tags">
-                            <span>TypeScript</span>
-                            <span>Express</span>
-                            <span>PostgreSQL</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">View Code</a>
-                            <a href="#" class="project-link">Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Project Three</h3>
-                        <p>An open-source tool designed to improve developer workflow and productivity.</p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>CLI</span>
-                            <span>Open Source</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">View Code</a>
-                            <a href="#" class="project-link">Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact" id="contact">
-        <div class="section-container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="contact-description">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
-            <div class="contact-links">
-                <a href="mailto:shahzodnematov@example.com" class="contact-card">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <span>Email</span>
-                </a>
-                <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" class="contact-card">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/shahzodnematov" target="_blank" class="contact-card">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://t.me/shahzodnematov" target="_blank" class="contact-card">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    <span>Telegram</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p>&copy; 2026 Shahzod Nematov. All rights reserved.</p>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
