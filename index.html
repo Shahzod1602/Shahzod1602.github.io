@@ -59,6 +59,18 @@
                 </div>
                 <span>Resume.txt</span>
             </div>
+            <div class="desktop-icon" ondblclick="openWindow('music')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="4" y="4" width="40" height="40" rx="4" fill="#1a1a2e"/><circle cx="18" cy="32" r="6" fill="none" stroke="#4fc3f7" stroke-width="2"/><circle cx="34" cy="28" r="6" fill="none" stroke="#4fc3f7" stroke-width="2"/><line x1="24" y1="32" x2="24" y2="10" stroke="#4fc3f7" stroke-width="2"/><line x1="40" y1="28" x2="40" y2="8" stroke="#4fc3f7" stroke-width="2"/><line x1="24" y1="10" x2="40" y2="8" stroke="#4fc3f7" stroke-width="2"/></svg>
+                </div>
+                <span>Music</span>
+            </div>
+            <div class="desktop-icon" ondblclick="openWindow('gallery')">
+                <div class="di-icon">
+                    <svg viewBox="0 0 48 48" width="40" height="40"><rect x="4" y="6" width="40" height="32" rx="3" fill="#fff" stroke="#bbb" stroke-width="1.5"/><rect x="7" y="9" width="34" height="24" rx="1" fill="#87ceeb"/><circle cx="16" cy="18" r="4" fill="#ffd700"/><path d="M7 33l12-10 8 6 6-4 8 8H7z" fill="#4caf50"/><rect x="14" y="38" width="20" height="4" rx="1" fill="#ddd"/></svg>
+                </div>
+                <span>Pictures</span>
+            </div>
             <div class="desktop-icon" ondblclick="window.open('https://github.com/Shahzod1602','_blank')">
                 <div class="di-icon">
                     <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="20" fill="#24292e"/><path d="M24 8c-8.837 0-16 7.163-16 16 0 7.069 4.585 13.067 10.943 15.182.8.147 1.092-.347 1.092-.77 0-.381-.014-1.386-.022-2.721-4.451.967-5.389-2.145-5.389-2.145-.728-1.848-1.776-2.34-1.776-2.34-1.452-.993.11-.973.11-.973 1.606.113 2.451 1.649 2.451 1.649 1.427 2.444 3.744 1.738 4.656 1.329.145-1.034.558-1.739 1.015-2.138-3.553-.404-7.289-1.776-7.289-7.907 0-1.747.623-3.174 1.646-4.292-.165-.404-.713-2.031.157-4.234 0 0 1.342-.43 4.398 1.641A15.31 15.31 0 0124 17.805c1.36.006 2.728.184 4.006.539 3.054-2.07 4.394-1.641 4.394-1.641.872 2.203.324 3.83.159 4.234 1.025 1.118 1.644 2.545 1.644 4.292 0 6.146-3.741 7.498-7.305 7.893.575.507 1.087 1.508 1.087 3.04 0 2.195-.02 3.966-.02 4.505 0 .426.288.923 1.1.767C35.42 37.06 40 31.064 40 24c0-8.837-7.163-16-16-16z" fill="#fff"/></svg>
@@ -70,7 +82,7 @@
         <!-- ====== WINDOWS ====== -->
 
         <!-- About Me Window -->
-        <div class="window" id="window-about" style="width:560px;height:420px;">
+        <div class="window" id="window-about" style="width:620px;height:520px;">
             <div class="window-titlebar" onmousedown="startDrag(event,'window-about')">
                 <div class="window-title"><span class="wt-icon">👤</span> About Me</div>
                 <div class="window-controls">
@@ -88,12 +100,56 @@
                     <div class="about-avatar">SN</div>
                     <div class="about-info">
                         <h2>Shahzod Nematov</h2>
-                        <p class="about-role">Software Developer</p>
-                        <p class="about-desc">I'm a passionate software developer who loves building things for the web. I focus on creating clean, efficient, and user-friendly applications that solve real problems.</p>
-                        <p class="about-desc">With experience in both frontend and backend development, I enjoy working across the full stack to bring ideas to life.</p>
+                        <p class="about-role">AI/ML Engineer &amp; Full-Stack Developer</p>
+                        <p class="about-desc">AI/ML engineer with hands-on experience building intelligent systems — from AI-powered logistics platforms to real-time computer vision applications. I combine deep learning expertise with full-stack development skills to ship production-ready products.</p>
                         <div class="about-meta">
                             <div class="meta-item"><span class="meta-label">📍 Location:</span> Uzbekistan</div>
                             <div class="meta-item"><span class="meta-label">💼 Status:</span> <span class="status-available">Available for work</span></div>
+                        </div>
+                        <div class="experience-timeline">
+                            <h3 class="exp-heading">Experience</h3>
+                            <div class="exp-item">
+                                <div class="exp-dot"></div>
+                                <div class="exp-content">
+                                    <div class="exp-title">AI Engineer</div>
+                                    <div class="exp-company">Abstract IT Group</div>
+                                    <div class="exp-date">Mar 2025 — Present</div>
+                                    <div class="exp-desc">AI-powered logistics platform</div>
+                                </div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-dot"></div>
+                                <div class="exp-content">
+                                    <div class="exp-title">AI/ML Developer</div>
+                                    <div class="exp-company">Aytishnik</div>
+                                    <div class="exp-date">Feb 2025 — Apr 2025</div>
+                                    <div class="exp-desc">AI football commentary, OpenCV, VLM</div>
+                                </div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-dot"></div>
+                                <div class="exp-content">
+                                    <div class="exp-title">Developer</div>
+                                    <div class="exp-company">Odoo</div>
+                                    <div class="exp-date">Jun 2025 — Sep 2025</div>
+                                </div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-dot"></div>
+                                <div class="exp-content">
+                                    <div class="exp-title">Assistant</div>
+                                    <div class="exp-company">American University of Technology</div>
+                                    <div class="exp-date">Oct 2025 — Present</div>
+                                </div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-dot"></div>
+                                <div class="exp-content">
+                                    <div class="exp-title">Co-Founder</div>
+                                    <div class="exp-company">Vikatoday</div>
+                                    <div class="exp-date">Jun 2025 — Present</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -248,21 +304,28 @@
             <div class="window-body notepad-body">
                 <pre class="notepad-text">╔══════════════════════════════════════════╗
 ║          SHAHZOD NEMATOV                 ║
-║          Software Developer              ║
+║    AI/ML Engineer &amp; Full-Stack Dev       ║
 ╚══════════════════════════════════════════╝
 
 ABOUT
 ───────────────────────────────────────────
-Passionate software developer with
-experience in building web applications.
-I love clean code and great UX.
+AI/ML engineer building intelligent
+systems — from logistics AI to real-time
+computer vision apps. Full-stack skills
+for production-ready products.
 
 EXPERIENCE
 ───────────────────────────────────────────
-► Full-Stack Web Development
-► RESTful API Design &amp; Implementation
-► Database Architecture &amp; Management
-► UI/UX Design &amp; Responsive Layouts
+► Abstract IT Group — AI Engineer
+  Mar 2025 - Present
+► Aytishnik — AI/ML Developer
+  Feb 2025 - Apr 2025
+► Odoo — Developer
+  Jun 2025 - Sep 2025
+► American Univ. of Tech — Assistant
+  Oct 2025 - Present
+► Vikatoday — Co-Founder
+  Jun 2025 - Present
 
 EDUCATION
 ───────────────────────────────────────────
@@ -279,6 +342,84 @@ LANGUAGES
 ───────────────────────────────────────────
   "Code is poetry." — Shahzod
 ───────────────────────────────────────────</pre>
+            </div>
+        </div>
+
+        <!-- Music Player Window -->
+        <div class="window" id="window-music" style="width:480px;height:540px;">
+            <div class="window-titlebar titlebar-dark" onmousedown="startDrag(event,'window-music')">
+                <div class="window-title"><span class="wt-icon">🎵</span> Windows Media Player</div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('music')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#999" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('music')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#999" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('music')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
+                </div>
+            </div>
+            <div class="window-body music-player">
+                <div class="music-visualizer" id="musicVisualizer">
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div>
+                </div>
+                <div class="music-track-name" id="musicTrackName">No tracks loaded</div>
+                <div class="music-time">
+                    <span id="musicCurrentTime">0:00</span>
+                    <span id="musicDuration">0:00</span>
+                </div>
+                <div class="music-progress" id="musicProgress">
+                    <div class="music-progress-fill" id="musicProgressFill"></div>
+                </div>
+                <div class="music-controls">
+                    <button class="mc-btn" onclick="musicPrev()" title="Previous">⏮</button>
+                    <button class="mc-btn mc-play" onclick="musicTogglePlay()" id="musicPlayBtn" title="Play">▶</button>
+                    <button class="mc-btn" onclick="musicNext()" title="Next">⏭</button>
+                    <div class="music-volume">
+                        <span class="vol-icon">🔊</span>
+                        <input type="range" class="vol-slider" id="musicVolume" min="0" max="100" value="80" oninput="musicSetVolume(this.value)">
+                    </div>
+                </div>
+                <div class="music-playlist" id="musicPlaylist">
+                    <div class="playlist-header">Playlist</div>
+                    <div class="playlist-items" id="playlistItems">
+                        <div class="playlist-empty">No tracks — add MP3 files to music/ folder</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery Window -->
+        <div class="window" id="window-gallery" style="width:640px;height:520px;">
+            <div class="window-titlebar" onmousedown="startDrag(event,'window-gallery')">
+                <div class="window-title"><span class="wt-icon">🖼️</span> Windows Photo Viewer</div>
+                <div class="window-controls">
+                    <button class="win-btn win-minimize" onclick="minimizeWindow('gallery')"><svg width="10" height="1"><line x1="0" y1="0" x2="10" y2="0" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-maximize" onclick="maximizeWindow('gallery')"><svg width="10" height="10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="#333" stroke-width="1.5"/></svg></button>
+                    <button class="win-btn win-close" onclick="closeWindow('gallery')"><svg width="10" height="10"><line x1="0" y1="0" x2="10" y2="10" stroke="#fff" stroke-width="1.5"/><line x1="10" y1="0" x2="0" y2="10" stroke="#fff" stroke-width="1.5"/></svg></button>
+                </div>
+            </div>
+            <div class="window-toolbar gallery-toolbar">
+                <button class="tb-btn" onclick="galleryPrev()" title="Previous">←</button>
+                <button class="tb-btn" onclick="galleryNext()" title="Next">→</button>
+                <div class="toolbar-sep"></div>
+                <button class="tb-btn" onclick="galleryZoomIn()" title="Zoom In">+</button>
+                <button class="tb-btn" onclick="galleryZoomOut()" title="Zoom Out">−</button>
+                <button class="tb-btn" onclick="galleryResetZoom()" title="Fit to Window">⊡</button>
+                <div class="toolbar-sep"></div>
+                <button class="tb-btn" onclick="gallerySlideshow()" id="slideshowBtn" title="Slideshow">▶</button>
+                <div class="toolbar-path" style="flex:1"><span class="tp-icon">🖼️</span> <span id="galleryFileName">No images</span></div>
+            </div>
+            <div class="window-body gallery-body">
+                <div class="gallery-viewer" id="galleryViewer">
+                    <div class="gallery-empty" id="galleryEmpty">No images — add files to images/ folder</div>
+                    <img class="gallery-main-img" id="galleryMainImg" style="display:none" alt="Gallery image">
+                    <button class="gallery-nav gallery-nav-left" onclick="galleryPrev()">‹</button>
+                    <button class="gallery-nav gallery-nav-right" onclick="galleryNext()">›</button>
+                </div>
+                <div class="gallery-thumbstrip" id="galleryThumbstrip"></div>
             </div>
         </div>
 
@@ -331,6 +472,12 @@ LANGUAGES
                 <div class="sm-prog" onclick="openWindow('resume');toggleStartMenu()">
                     <span class="sp-icon sp-white">📝</span> Resume.txt
                 </div>
+                <div class="sm-prog" onclick="openWindow('music');toggleStartMenu()">
+                    <span class="sp-icon sp-dark">🎵</span> Music Player
+                </div>
+                <div class="sm-prog" onclick="openWindow('gallery');toggleStartMenu()">
+                    <span class="sp-icon sp-blue">🖼️</span> Pictures
+                </div>
                 <div class="sm-separator"></div>
                 <div class="sm-prog" onclick="window.open('https://github.com/Shahzod1602','_blank');toggleStartMenu()">
                     <span class="sp-icon sp-dark">🐙</span> GitHub
@@ -350,8 +497,8 @@ LANGUAGES
             <div class="sm-right">
                 <div class="sm-place" onclick="openWindow('projects');toggleStartMenu()">Documents</div>
                 <div class="sm-place" onclick="openWindow('projects');toggleStartMenu()">Downloads</div>
-                <div class="sm-place" onclick="openWindow('about');toggleStartMenu()">Pictures</div>
-                <div class="sm-place" onclick="openWindow('skills');toggleStartMenu()">Music</div>
+                <div class="sm-place" onclick="openWindow('gallery');toggleStartMenu()">Pictures</div>
+                <div class="sm-place" onclick="openWindow('music');toggleStartMenu()">Music</div>
                 <div class="sm-place-sep"></div>
                 <div class="sm-place" onclick="openWindow('about');toggleStartMenu()">Control Panel</div>
                 <div class="sm-place" onclick="openWindow('contact');toggleStartMenu()">Devices and Printers</div>
