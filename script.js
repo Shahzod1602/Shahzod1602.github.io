@@ -237,9 +237,9 @@ function closeProjectDetail() {
 
 // ===== Music Player =====
 const musicPlaylist = [
-    { title: 'Track 1', src: 'music/6438814619_1.mp3' },
-    { title: 'Track 2', src: 'music/s6438814619_1.mp3' },
-    { title: 'Track 3', src: 'music/6438814619s_1.mp3' },
+    { title: 'Track 1', src: 'music/track1.mp3' },
+    { title: 'Track 2', src: 'music/track2.mp3' },
+    { title: 'Track 3', src: 'music/track3.mp3' },
 ];
 
 let musicAudio = new Audio();
@@ -343,10 +343,10 @@ musicInit();
 
 // ===== Photo Gallery =====
 const galleryImages = [
-    { src: 'images/2026-02-17 18.38.17.jpg', name: 'Study' },
-    { src: 'images/2026-02-17 18.38.29.jpg', name: 'Presentation' },
-    { src: 'images/2026-02-17 18.38.35.jpg', name: 'Friends' },
-    { src: 'images/2026-02-17 18.38.58.jpg', name: 'Chill' },
+    { src: 'images/study.jpg', name: 'Study' },
+    { src: 'images/presentation.jpg', name: 'Presentation' },
+    { src: 'images/friends.jpg', name: 'Friends' },
+    { src: 'images/chill.jpg', name: 'Chill' },
 ];
 
 let galleryCurrentIndex = 0;
