@@ -10,6 +10,8 @@ COPY nginx.conf /etc/nginx/conf.d/
 COPY index.html /usr/share/nginx/html/
 COPY style.css /usr/share/nginx/html/
 COPY script.js /usr/share/nginx/html/
+COPY music/ /usr/share/nginx/html/music/
+COPY images/ /usr/share/nginx/html/images/
 
 EXPOSE 80
 
