@@ -123,7 +123,8 @@ function updateTaskbar() {
         contact: 'Contact',
         resume: 'Resume.txt',
         music: 'Music Player',
-        gallery: 'Pictures'
+        gallery: 'Pictures',
+        csgo: 'CS 1.6'
     };
 
     for (const name in openWindows) {
@@ -201,32 +202,76 @@ document.addEventListener('click', (e) => {
 // ===== Projects =====
 const projects = [
     {
-        name: 'Web App',
-        desc: 'A modern web application built with React and Node.js. Features responsive design, authentication, and real-time data updates.',
-        tags: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
-        github: '#', demo: '#'
+        name: 'Multilevel',
+        desc: 'Multilevel marketing platformasi. Ko\'p bosqichli tizim bilan ishlash imkoniyati.',
+        tags: ['Web', 'Platform'],
+        github: '#', demo: '#',
+        images: [
+            'projects/Multilevel/multilevel-1.png',
+            'projects/Multilevel/multilevel-2.png',
+            'projects/Multilevel/multilevel-3.png',
+            'projects/Multilevel/multilevel-4.png',
+            'projects/Multilevel/multilevel-5.png',
+            'projects/Multilevel/multilevel-6.png'
+        ]
     },
     {
-        name: 'API Server',
-        desc: 'RESTful API server with authentication, rate limiting, and comprehensive documentation. Built with Express and PostgreSQL.',
-        tags: ['Express', 'PostgreSQL', 'JWT', 'Swagger'],
-        github: '#', demo: '#'
+        name: 'IELTS Peak',
+        desc: 'IELTS imtihoniga tayyorlanish platformasi. Speaking, Writing, Reading va Listening bo\'limlari.',
+        tags: ['Education', 'IELTS', 'Platform'],
+        github: '#', demo: '#',
+        images: [
+            'projects/ieltspeak/ieltspeak-1.png',
+            'projects/ieltspeak/ieltspeak-2.png',
+            'projects/ieltspeak/ieltspeak-3.png',
+            'projects/ieltspeak/ieltspeak-4.png',
+            'projects/ieltspeak/ieltspeak-5.png',
+            'projects/ieltspeak/ieltspeak-6.png',
+            'projects/ieltspeak/ieltspeak-7.png'
+        ]
     },
     {
-        name: 'CLI Tool',
-        desc: 'A command-line tool that automates development workflows. Supports multiple configurations and plugin system.',
-        tags: ['Python', 'Click', 'Open Source'],
-        github: '#', demo: '#'
+        name: 'Identify',
+        desc: 'Identifikatsiya va autentifikatsiya tizimi. Foydalanuvchilarni aniqlash va tasdiqlash.',
+        tags: ['Auth', 'Security'],
+        github: '#', demo: '#',
+        images: [
+            'projects/identify/identify-1.png',
+            'projects/identify/identify-2.png',
+            'projects/identify/identify-3.png',
+            'projects/identify/identify-photo-1.jpg',
+            'projects/identify/identify-photo-2.jpg',
+            'projects/identify/identify-photo-3.jpg'
+        ]
+    },
+    {
+        name: 'AutPlatform',
+        desc: 'Avtomatlashtirish platformasi. Jarayonlarni avtomatlashtirish va boshqarish tizimi.',
+        tags: ['Automation', 'Platform'],
+        github: '#', demo: '#',
+        images: [
+            'projects/autplatform/autplatform-1.png',
+            'projects/autplatform/autplatform-2.png',
+            'projects/autplatform/autplatform-3.png',
+            'projects/autplatform/autplatform-4.png'
+        ]
     }
 ];
 
 function openProjectDetail(i) {
     const p = projects[i];
     if (!p) return;
+    let imagesHtml = '';
+    if (p.images && p.images.length > 0) {
+        imagesHtml = '<div class="project-images">' +
+            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            '</div>';
+    }
     document.getElementById('detailContent').innerHTML =
         '<h3>' + p.name + '</h3>' +
         '<p>' + p.desc + '</p>' +
         '<div class="detail-tags">' + p.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        imagesHtml +
         '<div class="detail-links"><a href="' + p.github + '" target="_blank">View Code</a><a href="' + p.demo + '" target="_blank">Live Demo</a></div>';
     document.getElementById('projectDetail').classList.add('show');
 }
@@ -422,6 +467,421 @@ function gallerySlideshow() {
 }
 
 galleryInit();
+
+// ===== CS 1.6 Aim Trainer =====
+let csGame = null;
+
+function csStartGame() {
+    const canvas = document.getElementById('csCanvas');
+    const menu = document.getElementById('csMenu');
+    const hud = document.getElementById('csHud');
+    menu.style.display = 'none';
+    canvas.style.display = 'block';
+    hud.style.display = 'flex';
+
+    const ctx = canvas.getContext('2d');
+    const parent = canvas.parentElement;
+
+    function resize() {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight - 40;
+    }
+    resize();
+
+    const state = {
+        kills: 0,
+        ammo: 30,
+        hp: 100,
+        armor: 100,
+        money: 800,
+        timeLeft: 30,
+        round: 1,
+        enemies: [],
+        particles: [],
+        muzzleFlash: 0,
+        running: true,
+        best: csGame ? csGame.best : 0,
+        mouseX: 0,
+        mouseY: 0
+    };
+
+    // Spawn enemy
+    function spawnEnemy() {
+        const size = 30 + Math.random() * 20;
+        const speed = 0.3 + Math.random() * 0.7 + state.round * 0.1;
+        const fromLeft = Math.random() > 0.5;
+        state.enemies.push({
+            x: fromLeft ? -size : canvas.width + size,
+            y: 40 + Math.random() * (canvas.height - 120),
+            w: size,
+            h: size * 1.8,
+            speed: fromLeft ? speed : -speed,
+            alive: true,
+            deathTimer: 0,
+            type: Math.floor(Math.random() * 3) // 0=terrorist, 1=CT, 2=sniper
+        });
+    }
+
+    // Draw background (de_dust2 style)
+    function drawBg() {
+        // Sky
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.35);
+        skyGrad.addColorStop(0, '#87a5c4');
+        skyGrad.addColorStop(1, '#c4b99a');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height * 0.35);
+
+        // Walls
+        ctx.fillStyle = '#b89f7a';
+        ctx.fillRect(0, canvas.height * 0.35, canvas.width, canvas.height * 0.65);
+
+        // Wall details
+        ctx.fillStyle = '#a08860';
+        for (let i = 0; i < canvas.width; i += 80) {
+            ctx.fillRect(i, canvas.height * 0.35, 2, canvas.height * 0.65);
+        }
+        // Ground
+        ctx.fillStyle = '#8b7355';
+        ctx.fillRect(0, canvas.height - 60, canvas.width, 60);
+        ctx.fillStyle = '#7a6548';
+        ctx.fillRect(0, canvas.height - 62, canvas.width, 3);
+
+        // Boxes/crates
+        ctx.fillStyle = '#6d5a3a';
+        ctx.fillRect(30, canvas.height - 110, 60, 50);
+        ctx.strokeStyle = '#4a3d28';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(30, canvas.height - 110, 60, 50);
+        ctx.beginPath();
+        ctx.moveTo(30, canvas.height - 110);
+        ctx.lineTo(90, canvas.height - 60);
+        ctx.moveTo(90, canvas.height - 110);
+        ctx.lineTo(30, canvas.height - 60);
+        ctx.stroke();
+
+        ctx.fillStyle = '#6d5a3a';
+        ctx.fillRect(canvas.width - 120, canvas.height - 130, 70, 70);
+        ctx.strokeRect(canvas.width - 120, canvas.height - 130, 70, 70);
+        ctx.fillRect(canvas.width - 110, canvas.height - 175, 50, 45);
+        ctx.strokeRect(canvas.width - 110, canvas.height - 175, 50, 45);
+
+        // Arch/door in middle
+        ctx.fillStyle = '#3d3222';
+        ctx.fillRect(canvas.width / 2 - 40, canvas.height * 0.35, 80, canvas.height * 0.3);
+        ctx.fillStyle = '#2a2218';
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height * 0.35 + canvas.height * 0.3, 40, Math.PI, 0);
+        ctx.fill();
+    }
+
+    // Draw enemy (CT/T stick figure with CS 1.6 style)
+    function drawEnemy(e) {
+        const cx = e.x + e.w / 2;
+        const headR = e.w * 0.3;
+        const bodyTop = e.y + headR * 2;
+        const bodyBot = e.y + e.h * 0.65;
+
+        if (!e.alive) {
+            ctx.globalAlpha = Math.max(0, 1 - e.deathTimer / 30);
+            // death - fall over
+            ctx.save();
+            ctx.translate(cx, e.y + e.h);
+            ctx.rotate(e.deathTimer * 0.05);
+            ctx.translate(-cx, -(e.y + e.h));
+        }
+
+        // Body
+        const colors = ['#5a7a3a', '#3a5a7a', '#6a5a3a']; // T, CT, sniper
+        ctx.fillStyle = colors[e.type];
+        ctx.fillRect(cx - e.w * 0.3, bodyTop, e.w * 0.6, bodyBot - bodyTop);
+
+        // Head
+        ctx.fillStyle = e.type === 1 ? '#2a4a6a' : '#4a5a2a';
+        ctx.beginPath();
+        ctx.arc(cx, e.y + headR, headR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Helmet line
+        ctx.strokeStyle = '#222';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(cx, e.y + headR - 2, headR + 1, Math.PI * 1.1, Math.PI * 1.9);
+        ctx.stroke();
+
+        // Gun
+        ctx.fillStyle = '#333';
+        const gunDir = e.speed > 0 ? 1 : -1;
+        ctx.fillRect(cx + gunDir * e.w * 0.2, bodyTop + 10, gunDir * e.w * 0.5, 4);
+
+        // Legs
+        ctx.fillStyle = '#444';
+        ctx.fillRect(cx - e.w * 0.2, bodyBot, 6, e.h * 0.3);
+        ctx.fillRect(cx + e.w * 0.1, bodyBot, 6, e.h * 0.3);
+
+        if (!e.alive) {
+            ctx.restore();
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    // Crosshair
+    function drawCrosshair(x, y) {
+        ctx.strokeStyle = '#0f0';
+        ctx.lineWidth = 1.5;
+        const gap = 4, len = 12;
+        ctx.beginPath();
+        ctx.moveTo(x - gap - len, y); ctx.lineTo(x - gap, y);
+        ctx.moveTo(x + gap, y); ctx.lineTo(x + gap + len, y);
+        ctx.moveTo(x, y - gap - len); ctx.lineTo(x, y - gap);
+        ctx.moveTo(x, y + gap); ctx.lineTo(x, y + gap + len);
+        ctx.stroke();
+    }
+
+    // Particles
+    function drawParticles() {
+        for (let i = state.particles.length - 1; i >= 0; i--) {
+            const p = state.particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.3;
+            p.life--;
+            if (p.life <= 0) { state.particles.splice(i, 1); continue; }
+            ctx.globalAlpha = p.life / p.maxLife;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+        }
+        ctx.globalAlpha = 1;
+    }
+
+    // Spawn particles on hit
+    function spawnHitParticles(x, y) {
+        for (let i = 0; i < 8; i++) {
+            state.particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 1) * 5,
+                life: 15 + Math.random() * 10,
+                maxLife: 25,
+                size: 2 + Math.random() * 3,
+                color: Math.random() > 0.5 ? '#c00' : '#f44'
+            });
+        }
+    }
+
+    // Click handler
+    function onCanvasClick(e) {
+        if (!state.running) return;
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+
+        state.muzzleFlash = 3;
+
+        if (state.ammo <= 0) return;
+        state.ammo--;
+        document.getElementById('csAmmo').textContent = state.ammo;
+
+        let hit = false;
+        for (let i = state.enemies.length - 1; i >= 0; i--) {
+            const en = state.enemies[i];
+            if (!en.alive) continue;
+            if (mx >= en.x && mx <= en.x + en.w && my >= en.y && my <= en.y + en.h) {
+                en.alive = false;
+                en.deathTimer = 0;
+                state.kills++;
+                state.money += 300;
+                document.getElementById('csKills').textContent = state.kills;
+                document.getElementById('csMoney').textContent = state.money;
+                spawnHitParticles(mx, my);
+                hit = true;
+                break;
+            }
+        }
+
+        // Wall dust particles on miss
+        if (!hit) {
+            for (let i = 0; i < 4; i++) {
+                state.particles.push({
+                    x: mx, y: my,
+                    vx: (Math.random() - 0.5) * 3,
+                    vy: (Math.random() - 0.5) * 3,
+                    life: 10 + Math.random() * 5,
+                    maxLife: 15,
+                    size: 2 + Math.random() * 2,
+                    color: '#b89f7a'
+                });
+            }
+        }
+    }
+
+    function onCanvasMove(e) {
+        const rect = canvas.getBoundingClientRect();
+        state.mouseX = e.clientX - rect.left;
+        state.mouseY = e.clientY - rect.top;
+    }
+
+    canvas.addEventListener('click', onCanvasClick);
+    canvas.addEventListener('mousemove', onCanvasMove);
+
+    // Timer
+    const timerInterval = setInterval(() => {
+        if (!state.running) return;
+        state.timeLeft--;
+        const m = Math.floor(state.timeLeft / 60);
+        const s = state.timeLeft % 60;
+        document.getElementById('csTimer').textContent = m + ':' + s.toString().padStart(2, '0');
+
+        if (state.timeLeft <= 0) {
+            // Next round or game over
+            if (state.round < 3) {
+                state.round++;
+                state.timeLeft = 30;
+                state.ammo = 30;
+                state.hp = 100;
+                document.getElementById('csRound').textContent = state.round;
+                document.getElementById('csAmmo').textContent = state.ammo;
+                document.getElementById('csHp').textContent = state.hp;
+            } else {
+                state.running = false;
+                if (state.kills > state.best) state.best = state.kills;
+            }
+        }
+
+        // Enemies can hurt player
+        state.enemies.forEach(en => {
+            if (en.alive && Math.random() < 0.03) {
+                const dmg = 3 + Math.floor(Math.random() * 5);
+                if (state.armor > 0) {
+                    state.armor = Math.max(0, state.armor - dmg);
+                    document.getElementById('csArmor').textContent = state.armor;
+                } else {
+                    state.hp = Math.max(0, state.hp - dmg);
+                    document.getElementById('csHp').textContent = state.hp;
+                    if (state.hp <= 0) {
+                        state.running = false;
+                        if (state.kills > state.best) state.best = state.kills;
+                    }
+                }
+            }
+        });
+    }, 1000);
+
+    // Spawn timer
+    const spawnInterval = setInterval(() => {
+        if (!state.running) return;
+        if (state.enemies.filter(e => e.alive).length < 3 + state.round) {
+            spawnEnemy();
+        }
+    }, 800);
+
+    // Reload on R key
+    function onKeyDown(e) {
+        if (e.key === 'r' || e.key === 'R') {
+            state.ammo = 30;
+            document.getElementById('csAmmo').textContent = 30;
+        }
+    }
+    document.addEventListener('keydown', onKeyDown);
+
+    // Game loop
+    let animId;
+    function gameLoop() {
+        resize();
+        drawBg();
+
+        // Move & draw enemies
+        for (let i = state.enemies.length - 1; i >= 0; i--) {
+            const en = state.enemies[i];
+            if (en.alive) {
+                en.x += en.speed;
+                if (en.x > canvas.width + 60 || en.x < -80) {
+                    state.enemies.splice(i, 1);
+                    continue;
+                }
+            } else {
+                en.deathTimer++;
+                if (en.deathTimer > 40) {
+                    state.enemies.splice(i, 1);
+                    continue;
+                }
+            }
+            drawEnemy(en);
+        }
+
+        drawParticles();
+
+        // Muzzle flash
+        if (state.muzzleFlash > 0) {
+            ctx.fillStyle = 'rgba(255,200,50,0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            state.muzzleFlash--;
+        }
+
+        drawCrosshair(state.mouseX, state.mouseY);
+
+        // Game over screen
+        if (!state.running) {
+            ctx.fillStyle = 'rgba(0,0,0,0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ff6600';
+            ctx.font = 'bold 28px Consolas, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(state.hp <= 0 ? 'YOU DIED' : 'GAME OVER', canvas.width / 2, canvas.height / 2 - 40);
+            ctx.fillStyle = '#fff';
+            ctx.font = '18px Consolas, monospace';
+            ctx.fillText('Kills: ' + state.kills, canvas.width / 2, canvas.height / 2);
+            ctx.fillText('Best: ' + state.best, canvas.width / 2, canvas.height / 2 + 28);
+            ctx.fillStyle = '#888';
+            ctx.font = '14px Consolas, monospace';
+            ctx.fillText('Click to return to menu', canvas.width / 2, canvas.height / 2 + 65);
+            ctx.textAlign = 'start';
+
+            // One-time click to go back to menu
+            canvas.onclick = function returnToMenu() {
+                canvas.onclick = null;
+                clearInterval(timerInterval);
+                clearInterval(spawnInterval);
+                document.removeEventListener('keydown', onKeyDown);
+                canvas.removeEventListener('mousemove', onCanvasMove);
+                cancelAnimationFrame(animId);
+                canvas.style.display = 'none';
+                document.getElementById('csHud').style.display = 'none';
+                document.getElementById('csMenu').style.display = 'flex';
+                document.getElementById('csMenuBest').textContent = 'Best: ' + state.best + ' kills';
+                csGame = { best: state.best };
+            };
+        }
+
+        animId = requestAnimationFrame(gameLoop);
+    }
+
+    // Initial spawn
+    for (let i = 0; i < 3; i++) spawnEnemy();
+    gameLoop();
+
+    csGame = {
+        stop: () => {
+            state.running = false;
+            clearInterval(timerInterval);
+            clearInterval(spawnInterval);
+            document.removeEventListener('keydown', onKeyDown);
+            canvas.removeEventListener('click', onCanvasClick);
+            canvas.removeEventListener('mousemove', onCanvasMove);
+            cancelAnimationFrame(animId);
+        },
+        best: state.best
+    };
+}
+
+function csStopGame() {
+    if (csGame && csGame.stop) csGame.stop();
+    const canvas = document.getElementById('csCanvas');
+    const menu = document.getElementById('csMenu');
+    const hud = document.getElementById('csHud');
+    if (canvas) canvas.style.display = 'none';
+    if (hud) hud.style.display = 'none';
+    if (menu) menu.style.display = 'flex';
+}
 
 // ===== Shut Down =====
 function shutDown() {

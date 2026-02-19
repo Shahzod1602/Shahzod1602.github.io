@@ -144,6 +144,9 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .detail-links{display:flex;gap:12px;margin-top:12px}
 .detail-links a{font-size:12px;color:#1565c0;text-decoration:none;font-weight:600}
 .detail-links a:hover{text-decoration:underline}
+.project-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:12px 0}
+.project-images img{width:100%;border-radius:6px;border:1px solid #d0d0d0;cursor:pointer;transition:transform .2s}
+.project-images img:hover{transform:scale(1.03);box-shadow:0 2px 8px rgba(0,0,0,.15)}
 
 /* ===== Terminal ===== */
 .terminal-body{background:#0c0c0c!important}
@@ -373,6 +376,35 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .gallery-thumb{width:56px;height:56px;object-fit:cover;border-radius:3px;cursor:pointer;border:2px solid transparent;transition:border-color .15s,opacity .15s;opacity:0.6;flex-shrink:0}
 .gallery-thumb:hover{opacity:0.9}
 .gallery-thumb.active{border-color:#4fc3f7;opacity:1}
+
+/* ===== CS 1.6 Game ===== */
+.cs-game-body{background:#1a1a1a!important;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.cs-game-body canvas{width:100%;flex:1;cursor:crosshair;display:block}
+
+/* Menu */
+.cs-menu{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#1a1a0a 0%,#2a2a1a 50%,#1a1a0a 100%);position:relative}
+.cs-menu::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.1) 2px,rgba(0,0,0,0.1) 4px);pointer-events:none}
+.cs-menu-title{font-family:'Consolas','Courier New',monospace;font-size:36px;font-weight:bold;color:#ff6600;text-shadow:0 0 20px rgba(255,102,0,0.5),0 2px 4px rgba(0,0,0,0.8);letter-spacing:3px}
+.cs-menu-ver{font-family:'Consolas',monospace;font-size:12px;color:#888;margin-bottom:32px}
+.cs-menu-items{display:flex;flex-direction:column;gap:4px;z-index:1}
+.cs-menu-item{font-family:'Consolas',monospace;font-size:15px;color:#ccc;padding:8px 40px;cursor:pointer;transition:color .1s,background .1s;border-left:3px solid transparent}
+.cs-menu-item:hover{color:#ff6600;background:rgba(255,102,0,0.08);border-left-color:#ff6600}
+.cs-menu-quit{color:#888}
+.cs-menu-quit:hover{color:#c44}
+.cs-menu-footer{position:absolute;bottom:12px;font-family:'Consolas',monospace;font-size:11px;color:#555}
+
+/* HUD */
+.cs-hud{position:absolute;bottom:0;left:0;right:0;height:40px;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-family:'Consolas',monospace;font-size:13px;z-index:2}
+.cs-hud-left,.cs-hud-right{display:flex;gap:16px;align-items:center}
+.cs-hud-center{display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.cs-hp{color:#4caf50;font-weight:bold}
+.cs-hp-icon{color:#fff;background:#c00;border-radius:2px;padding:0 3px;font-size:11px;font-weight:bold}
+.cs-armor{color:#4fc3f7}
+.cs-round{color:#888;font-size:11px}
+.cs-timer{color:#ff6600;font-weight:bold;font-size:16px}
+.cs-kills{color:#ffd700;font-weight:bold}
+.cs-ammo{color:#ccc}
+.cs-money{color:#4caf50}
 
 /* ===== Mobile ===== */
 @media(max-width:768px){
