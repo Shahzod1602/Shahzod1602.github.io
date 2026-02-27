@@ -12,6 +12,7 @@ COPY style.css /usr/share/nginx/html/
 COPY script.js /usr/share/nginx/html/
 COPY music/ /usr/share/nginx/html/music/
 COPY images/ /usr/share/nginx/html/images/
+COPY projects/ /usr/share/nginx/html/projects/
 
 EXPOSE 80
 
