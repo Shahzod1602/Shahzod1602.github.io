@@ -3,18 +3,769 @@ const openWindows = {};
 let highestZ = 10;
 let dragData = null;
 
-// ===== Boot Sequence =====
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        document.getElementById('bootScreen').classList.add('hidden');
-        document.getElementById('desktop').classList.add('visible');
-        document.getElementById('taskbar').classList.add('visible');
-    }, 3000);
+// ===== macOS State =====
+const macOpenWindows = {};
+let macHighestZ = 10;
+let macDragData = null;
 
+// ===== Ubuntu State =====
+const ubOpenWindows = {};
+let ubHighestZ = 10;
+let ubDragData = null;
+let ubCsGame = null;
+let ubMusicAudio = new Audio();
+let ubMusicCurrentIndex = -1;
+let ubMusicIsPlaying = false;
+let ubGalleryCurrentIndex = 0;
+let macCsGame = null;
+let macMusicAudio = new Audio();
+let macMusicCurrentIndex = -1;
+let macMusicIsPlaying = false;
+let macGalleryCurrentIndex = 0;
+
+// ===== OS Select =====
+window.addEventListener('DOMContentLoaded', () => {
     updateClock();
     setInterval(updateClock, 1000);
-    updateGreeting();
+    updateMacClock();
+    setInterval(updateMacClock, 1000);
+    updateUbClock();
+    setInterval(updateUbClock, 1000);
 });
+
+function selectOS(os) {
+    const select = document.getElementById('osSelect');
+    select.classList.add('fade-out');
+    setTimeout(() => {
+        select.style.display = 'none';
+        if (os === 'windows') {
+            const boot = document.getElementById('bootScreen');
+            boot.style.display = 'flex';
+            setTimeout(() => {
+                boot.classList.add('hidden');
+                document.getElementById('desktop').classList.add('visible');
+                document.getElementById('taskbar').classList.add('visible');
+                try { updateGreeting(); } catch(e) {}
+            }, 3000);
+        } else if (os === 'ubuntu') {
+            const ubBoot = document.getElementById('ubBoot');
+            ubBoot.style.display = 'flex';
+            let dots = 0;
+            const iv = setInterval(() => {
+                dots++;
+                if (dots >= 12) {
+                    clearInterval(iv);
+                    setTimeout(() => {
+                        ubBoot.style.opacity = '0';
+                        setTimeout(() => {
+                            ubBoot.style.display = 'none';
+                            document.getElementById('ubDesktop').classList.add('visible');
+                            ubGalleryInit();
+                            ubMusicInit();
+                        }, 800);
+                    }, 400);
+                }
+            }, 200);
+        } else {
+            const macBoot = document.getElementById('macBoot');
+            macBoot.style.display = 'flex';
+            const bar = document.getElementById('macBootBar');
+            let w = 0;
+            const iv = setInterval(() => {
+                w += Math.random() * 7 + 2;
+                if (w >= 100) {
+                    w = 100;
+                    bar.style.width = '100%';
+                    clearInterval(iv);
+                    setTimeout(() => {
+                        macBoot.style.opacity = '0';
+                        setTimeout(() => {
+                            macBoot.style.display = 'none';
+                            document.getElementById('macDesktop').classList.add('visible');
+                            macGalleryInit();
+                            macMusicInit();
+                        }, 800);
+                    }, 400);
+                } else {
+                    bar.style.width = w + '%';
+                }
+            }, 110);
+        }
+    }, 500);
+}
+
+// ===== macOS Clock =====
+function updateMacClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const el = document.getElementById('macClock');
+    if (el) el.textContent = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()] + '  ' + h + ':' + m;
+}
+
+// ===== macOS Window Management =====
+function macOpenWindow(name) {
+    const win = document.getElementById('mac-win-' + name);
+    if (!win) return;
+    if (macOpenWindows[name] && macOpenWindows[name].minimized) {
+        win.style.display = 'flex';
+        win.classList.add('open');
+        macOpenWindows[name].minimized = false;
+        macFocusWindow(name);
+        macUpdateDock();
+        return;
+    }
+    if (macOpenWindows[name]) { macFocusWindow(name); return; }
+    const offset = Object.keys(macOpenWindows).length * 30;
+    win.style.top = (56 + offset) + 'px';
+    win.style.left = (80 + offset) + 'px';
+    win.classList.add('open');
+    macOpenWindows[name] = { minimized: false, maximized: false };
+    macFocusWindow(name);
+    macUpdateDock();
+    // Update menu bar app name
+    const titles = { about:'About Me', projects:'Finder', skills:'Terminal', contact:'Contacts', resume:'TextEdit', music:'Music', gallery:'Photos', csgo:'Counter-Strike' };
+    const appEl = document.getElementById('macActiveApp');
+    if (appEl) appEl.textContent = titles[name] || 'Finder';
+}
+
+function macCloseWindow(name) {
+    const win = document.getElementById('mac-win-' + name);
+    if (!win) return;
+    win.classList.remove('open','focused','maximized');
+    win.style.display = 'none';
+    delete macOpenWindows[name];
+    macUpdateDock();
+}
+
+function macMinimizeWindow(name) {
+    const win = document.getElementById('mac-win-' + name);
+    if (!win) return;
+    win.classList.remove('open','focused');
+    win.style.display = 'none';
+    if (macOpenWindows[name]) macOpenWindows[name].minimized = true;
+    macUpdateDock();
+}
+
+function macMaximizeWindow(name) {
+    const win = document.getElementById('mac-win-' + name);
+    if (!win) return;
+    if (win.classList.contains('maximized')) {
+        win.classList.remove('maximized');
+        if (macOpenWindows[name]) macOpenWindows[name].maximized = false;
+    } else {
+        win.classList.add('maximized');
+        if (macOpenWindows[name]) macOpenWindows[name].maximized = true;
+    }
+    macFocusWindow(name);
+}
+
+function macFocusWindow(name) {
+    document.querySelectorAll('.mac-window').forEach(w => w.classList.remove('focused'));
+    const win = document.getElementById('mac-win-' + name);
+    if (win) {
+        macHighestZ++;
+        win.style.zIndex = macHighestZ;
+        win.classList.add('focused');
+    }
+}
+
+function macUpdateDock() {
+    document.querySelectorAll('.dock-item').forEach((item, i) => {
+        const names = ['about','projects','skills','contact','resume','music','gallery','csgo'];
+        if (i < names.length) {
+            const name = names[i];
+            item.classList.toggle('running', !!macOpenWindows[name] && !macOpenWindows[name].minimized);
+        }
+    });
+}
+
+// macOS drag
+function macStartDrag(e, windowId) {
+    // Don't drag when clicking traffic light buttons
+    if (e.target.closest('.mac-traffic')) return;
+    const win = document.getElementById(windowId);
+    if (!win || win.classList.contains('maximized')) return;
+    const name = windowId.replace('mac-win-','');
+    macFocusWindow(name);
+    macDragData = { win, startX: e.clientX - win.offsetLeft, startY: e.clientY - win.offsetTop };
+    e.preventDefault();
+}
+
+// Prevent traffic light drag interference
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.mac-btn-close, .mac-btn-minimize, .mac-btn-maximize').forEach(btn => {
+        btn.addEventListener('mousedown', e => e.stopPropagation());
+    });
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (macDragData) {
+        macDragData.win.style.left = Math.max(0, e.clientX - macDragData.startX) + 'px';
+        macDragData.win.style.top = Math.max(28, e.clientY - macDragData.startY) + 'px';
+    }
+});
+document.addEventListener('mouseup', () => { macDragData = null; });
+document.addEventListener('mousedown', (e) => {
+    const mw = e.target.closest('.mac-window');
+    if (mw && mw.id) macFocusWindow(mw.id.replace('mac-win-',''));
+});
+
+// ===== macOS Projects =====
+function macOpenProjectDetail(i) {
+    const p = projects[i];
+    if (!p) return;
+    let imagesHtml = '';
+    if (p.images && p.images.length > 0) {
+        imagesHtml = '<div class="project-images">' +
+            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            '</div>';
+    }
+    document.getElementById('mac-detailContent').innerHTML =
+        '<h3>' + p.name + '</h3>' +
+        '<p>' + p.desc + '</p>' +
+        '<div class="detail-tags">' + p.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        imagesHtml +
+        '<div class="detail-links"><a href="' + p.github + '" target="_blank">View Code</a><a href="' + p.demo + '" target="_blank">Live Demo</a></div>';
+    document.getElementById('mac-projectDetail').classList.add('show');
+}
+function macCloseProjectDetail() {
+    document.getElementById('mac-projectDetail').classList.remove('show');
+}
+
+// ===== macOS Music Player =====
+function macMusicInit() {
+    const itemsEl = document.getElementById('m-playlistItems');
+    if (!itemsEl || musicPlaylist.length === 0) return;
+    itemsEl.innerHTML = '';
+    musicPlaylist.forEach((track, i) => {
+        const div = document.createElement('div');
+        div.className = 'playlist-item';
+        div.innerHTML = '<span class="playlist-item-num">' + (i+1) + '</span>' + track.title;
+        div.onclick = () => macMusicPlayTrack(i);
+        itemsEl.appendChild(div);
+    });
+}
+
+function macMusicPlayTrack(index) {
+    if (musicPlaylist.length === 0) return;
+    macMusicCurrentIndex = index;
+    const track = musicPlaylist[index];
+    macMusicAudio.src = track.src;
+    macMusicAudio.play();
+    macMusicIsPlaying = true;
+    const btn = document.getElementById('m-musicPlayBtn');
+    if (btn) btn.textContent = '⏸';
+    const tn = document.getElementById('m-musicTrackName');
+    if (tn) tn.textContent = track.title;
+    const mp = document.getElementById('mac-musicPlayer');
+    if (mp) mp.classList.add('playing');
+    macMusicUpdatePlaylistUI();
+}
+
+function macMusicTogglePlay() {
+    if (musicPlaylist.length === 0) return;
+    if (macMusicCurrentIndex === -1) { macMusicPlayTrack(0); return; }
+    const btn = document.getElementById('m-musicPlayBtn');
+    const mp = document.getElementById('mac-musicPlayer');
+    if (macMusicIsPlaying) {
+        macMusicAudio.pause();
+        macMusicIsPlaying = false;
+        if (btn) btn.textContent = '▶';
+        if (mp) mp.classList.remove('playing');
+    } else {
+        macMusicAudio.play();
+        macMusicIsPlaying = true;
+        if (btn) btn.textContent = '⏸';
+        if (mp) mp.classList.add('playing');
+    }
+}
+
+function macMusicNext() {
+    if (musicPlaylist.length === 0) return;
+    macMusicPlayTrack((macMusicCurrentIndex + 1) % musicPlaylist.length);
+}
+function macMusicPrev() {
+    if (musicPlaylist.length === 0) return;
+    macMusicPlayTrack(macMusicCurrentIndex <= 0 ? musicPlaylist.length - 1 : macMusicCurrentIndex - 1);
+}
+function macMusicSetVolume(val) { macMusicAudio.volume = val / 100; }
+function macMusicUpdatePlaylistUI() {
+    const items = document.querySelectorAll('#m-playlistItems .playlist-item');
+    items.forEach((item, i) => item.classList.toggle('active', i === macMusicCurrentIndex));
+}
+
+macMusicAudio.addEventListener('timeupdate', () => {
+    const fill = document.getElementById('m-musicProgressFill');
+    const cur = document.getElementById('m-musicCurrentTime');
+    const dur = document.getElementById('m-musicDuration');
+    if (macMusicAudio.duration && fill && cur && dur) {
+        fill.style.width = (macMusicAudio.currentTime / macMusicAudio.duration * 100) + '%';
+        cur.textContent = formatTime(macMusicAudio.currentTime);
+        dur.textContent = formatTime(macMusicAudio.duration);
+    }
+});
+macMusicAudio.addEventListener('ended', () => macMusicNext());
+document.addEventListener('click', (e) => {
+    const prog = document.getElementById('m-musicProgress');
+    if (prog && prog.contains(e.target) && macMusicAudio.duration) {
+        const rect = prog.getBoundingClientRect();
+        macMusicAudio.currentTime = ((e.clientX - rect.left) / rect.width) * macMusicAudio.duration;
+    }
+});
+macMusicAudio.volume = 0.8;
+
+// ===== macOS Gallery =====
+function macGalleryInit() {
+    const strip = document.getElementById('m-galleryThumbstrip');
+    if (!strip || galleryImages.length === 0) return;
+    document.getElementById('m-galleryEmpty').style.display = 'none';
+    document.getElementById('m-galleryMainImg').style.display = 'block';
+    strip.innerHTML = '';
+    galleryImages.forEach((img, i) => {
+        const thumb = document.createElement('img');
+        thumb.className = 'gallery-thumb';
+        thumb.src = img.src;
+        thumb.alt = img.name;
+        thumb.onclick = () => macGalleryShowImage(i);
+        strip.appendChild(thumb);
+    });
+    macGalleryShowImage(0);
+}
+function macGalleryShowImage(index) {
+    if (galleryImages.length === 0) return;
+    macGalleryCurrentIndex = index;
+    const img = galleryImages[index];
+    const mainImg = document.getElementById('m-galleryMainImg');
+    if (mainImg) { mainImg.src = img.src; mainImg.style.transform = 'scale(1)'; }
+    const fn = document.getElementById('m-galleryFileName');
+    if (fn) fn.textContent = img.name;
+    document.querySelectorAll('#m-galleryThumbstrip .gallery-thumb').forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+    });
+}
+function macGalleryNext() {
+    if (galleryImages.length === 0) return;
+    macGalleryShowImage((macGalleryCurrentIndex + 1) % galleryImages.length);
+}
+function macGalleryPrev() {
+    if (galleryImages.length === 0) return;
+    macGalleryShowImage(macGalleryCurrentIndex <= 0 ? galleryImages.length - 1 : macGalleryCurrentIndex - 1);
+}
+
+// ===== macOS CS 1.6 =====
+function macCsStartGame() {
+    const canvas = document.getElementById('m-csCanvas');
+    const menu = document.getElementById('m-csMenu');
+    const hud = document.getElementById('m-csHud');
+    menu.style.display = 'none';
+    canvas.style.display = 'block';
+    hud.style.display = 'flex';
+
+    const ctx = canvas.getContext('2d');
+    const parent = canvas.parentElement;
+    function resize() { canvas.width = parent.clientWidth; canvas.height = parent.clientHeight - 40; }
+    resize();
+
+    const state = {
+        kills:0, ammo:30, hp:100, armor:100, money:800,
+        timeLeft:30, round:1, enemies:[], particles:[],
+        muzzleFlash:0, running:true,
+        best: macCsGame ? macCsGame.best : 0,
+        mouseX:0, mouseY:0
+    };
+
+    function spawnEnemy() {
+        const size = 30 + Math.random() * 20;
+        const speed = 0.3 + Math.random() * 0.7 + state.round * 0.1;
+        const fromLeft = Math.random() > 0.5;
+        state.enemies.push({ x: fromLeft ? -size : canvas.width+size, y: 40+Math.random()*(canvas.height-120), w:size, h:size*1.8, speed: fromLeft?speed:-speed, alive:true, deathTimer:0, type:Math.floor(Math.random()*3) });
+    }
+    function drawBg() {
+        const skyGrad = ctx.createLinearGradient(0,0,0,canvas.height*.35);
+        skyGrad.addColorStop(0,'#87a5c4'); skyGrad.addColorStop(1,'#c4b99a');
+        ctx.fillStyle=skyGrad; ctx.fillRect(0,0,canvas.width,canvas.height*.35);
+        ctx.fillStyle='#b89f7a'; ctx.fillRect(0,canvas.height*.35,canvas.width,canvas.height*.65);
+        ctx.fillStyle='#a08860';
+        for(let i=0;i<canvas.width;i+=80) ctx.fillRect(i,canvas.height*.35,2,canvas.height*.65);
+        ctx.fillStyle='#8b7355'; ctx.fillRect(0,canvas.height-60,canvas.width,60);
+        ctx.fillStyle='#7a6548'; ctx.fillRect(0,canvas.height-62,canvas.width,3);
+        ctx.fillStyle='#6d5a3a'; ctx.fillRect(30,canvas.height-110,60,50);
+        ctx.strokeStyle='#4a3d28'; ctx.lineWidth=2; ctx.strokeRect(30,canvas.height-110,60,50);
+        ctx.fillStyle='#6d5a3a'; ctx.fillRect(canvas.width-120,canvas.height-130,70,70);
+        ctx.strokeRect(canvas.width-120,canvas.height-130,70,70);
+        ctx.fillStyle='#3d3222'; ctx.fillRect(canvas.width/2-40,canvas.height*.35,80,canvas.height*.3);
+        ctx.fillStyle='#2a2218'; ctx.beginPath(); ctx.arc(canvas.width/2,canvas.height*.35+canvas.height*.3,40,Math.PI,0); ctx.fill();
+    }
+    function drawEnemy(e) {
+        const cx=e.x+e.w/2, headR=e.w*.3, bodyTop=e.y+headR*2, bodyBot=e.y+e.h*.65;
+        if(!e.alive){ctx.globalAlpha=Math.max(0,1-e.deathTimer/30);ctx.save();ctx.translate(cx,e.y+e.h);ctx.rotate(e.deathTimer*.05);ctx.translate(-cx,-(e.y+e.h));}
+        const colors=['#5a7a3a','#3a5a7a','#6a5a3a'];
+        ctx.fillStyle=colors[e.type]; ctx.fillRect(cx-e.w*.3,bodyTop,e.w*.6,bodyBot-bodyTop);
+        ctx.fillStyle=e.type===1?'#2a4a6a':'#4a5a2a'; ctx.beginPath(); ctx.arc(cx,e.y+headR,headR,0,Math.PI*2); ctx.fill();
+        ctx.strokeStyle='#222'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,e.y+headR-2,headR+1,Math.PI*1.1,Math.PI*1.9); ctx.stroke();
+        ctx.fillStyle='#333'; const gd=e.speed>0?1:-1; ctx.fillRect(cx+gd*e.w*.2,bodyTop+10,gd*e.w*.5,4);
+        ctx.fillStyle='#444'; ctx.fillRect(cx-e.w*.2,bodyBot,6,e.h*.3); ctx.fillRect(cx+e.w*.1,bodyBot,6,e.h*.3);
+        if(!e.alive){ctx.restore();ctx.globalAlpha=1;}
+    }
+    function drawCrosshair(x,y){ctx.strokeStyle='#0f0';ctx.lineWidth=1.5;const gap=4,len=12;ctx.beginPath();ctx.moveTo(x-gap-len,y);ctx.lineTo(x-gap,y);ctx.moveTo(x+gap,y);ctx.lineTo(x+gap+len,y);ctx.moveTo(x,y-gap-len);ctx.lineTo(x,y-gap);ctx.moveTo(x,y+gap);ctx.lineTo(x,y+gap+len);ctx.stroke();}
+    function drawParticles(){for(let i=state.particles.length-1;i>=0;i--){const p=state.particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.life--;if(p.life<=0){state.particles.splice(i,1);continue;}ctx.globalAlpha=p.life/p.maxLife;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);}ctx.globalAlpha=1;}
+    function spawnHitParticles(x,y){for(let i=0;i<8;i++)state.particles.push({x,y,vx:(Math.random()-.5)*6,vy:(Math.random()-1)*5,life:15+Math.random()*10,maxLife:25,size:2+Math.random()*3,color:Math.random()>.5?'#c00':'#f44'});}
+
+    function onCanvasClick(e){
+        if(!state.running) return;
+        const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+        state.muzzleFlash=3;
+        if(state.ammo<=0) return;
+        state.ammo--; document.getElementById('m-csAmmo').textContent=state.ammo;
+        let hit=false;
+        for(let i=state.enemies.length-1;i>=0;i--){const en=state.enemies[i];if(!en.alive) continue;if(mx>=en.x&&mx<=en.x+en.w&&my>=en.y&&my<=en.y+en.h){en.alive=false;en.deathTimer=0;state.kills++;state.money+=300;document.getElementById('m-csKills').textContent=state.kills;document.getElementById('m-csMoney').textContent=state.money;spawnHitParticles(mx,my);hit=true;break;}}
+        if(!hit) for(let i=0;i<4;i++) state.particles.push({x:mx,y:my,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:10+Math.random()*5,maxLife:15,size:2+Math.random()*2,color:'#b89f7a'});
+    }
+    function onCanvasMove(e){const rect=canvas.getBoundingClientRect();state.mouseX=e.clientX-rect.left;state.mouseY=e.clientY-rect.top;}
+    canvas.addEventListener('click',onCanvasClick);
+    canvas.addEventListener('mousemove',onCanvasMove);
+
+    const timerInterval=setInterval(()=>{
+        if(!state.running) return;
+        state.timeLeft--;
+        const m2=Math.floor(state.timeLeft/60),s2=state.timeLeft%60;
+        document.getElementById('m-csTimer').textContent=m2+':'+s2.toString().padStart(2,'0');
+        if(state.timeLeft<=0){if(state.round<3){state.round++;state.timeLeft=30;state.ammo=30;state.hp=100;document.getElementById('m-csRound').textContent=state.round;document.getElementById('m-csAmmo').textContent=state.ammo;document.getElementById('m-csHp').textContent=state.hp;}else{state.running=false;if(state.kills>state.best)state.best=state.kills;}}
+        state.enemies.forEach(en=>{if(en.alive&&Math.random()<.03){const dmg=3+Math.floor(Math.random()*5);if(state.armor>0){state.armor=Math.max(0,state.armor-dmg);document.getElementById('m-csArmor').textContent=state.armor;}else{state.hp=Math.max(0,state.hp-dmg);document.getElementById('m-csHp').textContent=state.hp;if(state.hp<=0){state.running=false;if(state.kills>state.best)state.best=state.kills;}}}});
+    },1000);
+
+    const spawnInterval=setInterval(()=>{if(!state.running) return;if(state.enemies.filter(e=>e.alive).length<3+state.round) spawnEnemy();},800);
+
+    function onKeyDown(e){if(e.key==='r'||e.key==='R'){state.ammo=30;document.getElementById('m-csAmmo').textContent=30;}}
+    document.addEventListener('keydown',onKeyDown);
+
+    let animId;
+    function gameLoop(){
+        resize(); drawBg();
+        for(let i=state.enemies.length-1;i>=0;i--){const en=state.enemies[i];if(en.alive){en.x+=en.speed;if(en.x>canvas.width+60||en.x<-80){state.enemies.splice(i,1);continue;}}else{en.deathTimer++;if(en.deathTimer>40){state.enemies.splice(i,1);continue;}}drawEnemy(en);}
+        drawParticles();
+        if(state.muzzleFlash>0){ctx.fillStyle='rgba(255,200,50,0.15)';ctx.fillRect(0,0,canvas.width,canvas.height);state.muzzleFlash--;}
+        drawCrosshair(state.mouseX,state.mouseY);
+        if(!state.running){
+            ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle='#ff6600';ctx.font='bold 28px Consolas, monospace';ctx.textAlign='center';
+            ctx.fillText(state.hp<=0?'YOU DIED':'GAME OVER',canvas.width/2,canvas.height/2-40);
+            ctx.fillStyle='#fff';ctx.font='18px Consolas, monospace';
+            ctx.fillText('Kills: '+state.kills,canvas.width/2,canvas.height/2);
+            ctx.fillText('Best: '+state.best,canvas.width/2,canvas.height/2+28);
+            ctx.fillStyle='#888';ctx.font='14px Consolas, monospace';
+            ctx.fillText('Click to return to menu',canvas.width/2,canvas.height/2+65);
+            ctx.textAlign='start';
+            canvas.onclick=function returnToMenu(){
+                canvas.onclick=null;clearInterval(timerInterval);clearInterval(spawnInterval);
+                document.removeEventListener('keydown',onKeyDown);canvas.removeEventListener('mousemove',onCanvasMove);
+                cancelAnimationFrame(animId);
+                canvas.style.display='none';document.getElementById('m-csHud').style.display='none';
+                document.getElementById('m-csMenu').style.display='flex';
+                document.getElementById('m-csMenuBest').textContent='Best: '+state.best+' kills';
+                macCsGame={best:state.best};
+            };
+        }
+        animId=requestAnimationFrame(gameLoop);
+    }
+    for(let i=0;i<3;i++) spawnEnemy();
+    gameLoop();
+    macCsGame={stop:()=>{state.running=false;clearInterval(timerInterval);clearInterval(spawnInterval);document.removeEventListener('keydown',onKeyDown);canvas.removeEventListener('click',onCanvasClick);canvas.removeEventListener('mousemove',onCanvasMove);cancelAnimationFrame(animId);},best:state.best};
+}
+
+function macCsStopGame(){
+    if(macCsGame&&macCsGame.stop) macCsGame.stop();
+    const c=document.getElementById('m-csCanvas'),m=document.getElementById('m-csMenu'),h=document.getElementById('m-csHud');
+    if(c) c.style.display='none';if(h) h.style.display='none';if(m) m.style.display='flex';
+}
+
+// ===== Ubuntu Functions =====
+function updateUbClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const el = document.getElementById('ubClock');
+    if (el) el.textContent = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()] + '  ' + h + ':' + m;
+}
+
+function ubToggleActivities() {
+    const ov = document.getElementById('ubActivities');
+    ov.classList.toggle('open');
+    document.querySelector('.ub-activities').classList.toggle('active', ov.classList.contains('open'));
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const ov = document.getElementById('ubActivities');
+        if (ov && ov.classList.contains('open')) {
+            ov.classList.remove('open');
+            document.querySelector('.ub-activities') && document.querySelector('.ub-activities').classList.remove('active');
+        }
+    }
+});
+
+function ubOpenWindow(name) {
+    const win = document.getElementById('ub-win-' + name);
+    if (!win) return;
+    if (ubOpenWindows[name] && ubOpenWindows[name].minimized) {
+        win.style.display = 'flex';
+        win.classList.add('open');
+        ubOpenWindows[name].minimized = false;
+        ubFocusWindow(name);
+        ubUpdateDock();
+        return;
+    }
+    if (ubOpenWindows[name]) { ubFocusWindow(name); return; }
+    const offset = Object.keys(ubOpenWindows).length * 30;
+    win.style.top = (64 + offset) + 'px';
+    win.style.left = (90 + offset) + 'px';
+    win.classList.add('open');
+    ubOpenWindows[name] = { minimized: false, maximized: false };
+    ubFocusWindow(name);
+    ubUpdateDock();
+}
+
+function ubCloseWindow(name) {
+    const win = document.getElementById('ub-win-' + name);
+    if (!win) return;
+    win.classList.remove('open','focused','maximized');
+    win.style.display = 'none';
+    delete ubOpenWindows[name];
+    ubUpdateDock();
+}
+
+function ubMinimizeWindow(name) {
+    const win = document.getElementById('ub-win-' + name);
+    if (!win) return;
+    win.classList.remove('open','focused');
+    win.style.display = 'none';
+    if (ubOpenWindows[name]) ubOpenWindows[name].minimized = true;
+    ubUpdateDock();
+}
+
+function ubMaximizeWindow(name) {
+    const win = document.getElementById('ub-win-' + name);
+    if (!win) return;
+    if (win.classList.contains('maximized')) {
+        win.classList.remove('maximized');
+        if (ubOpenWindows[name]) ubOpenWindows[name].maximized = false;
+    } else {
+        win.classList.add('maximized');
+        if (ubOpenWindows[name]) ubOpenWindows[name].maximized = true;
+    }
+    ubFocusWindow(name);
+}
+
+function ubFocusWindow(name) {
+    document.querySelectorAll('.ub-window').forEach(w => w.classList.remove('focused'));
+    const win = document.getElementById('ub-win-' + name);
+    if (win) {
+        ubHighestZ++;
+        win.style.zIndex = ubHighestZ;
+        win.classList.add('focused');
+    }
+}
+
+function ubUpdateDock() {
+    ['about','projects','skills','contact','resume','music','gallery','csgo'].forEach(name => {
+        const dot = document.getElementById('ubdot-' + name);
+        if (dot) dot.parentElement.classList.toggle('running', !!ubOpenWindows[name] && !ubOpenWindows[name].minimized);
+    });
+}
+
+function ubStartDrag(e, windowId) {
+    if (e.target.closest('.ub-traffic')) return;
+    const win = document.getElementById(windowId);
+    if (!win || win.classList.contains('maximized')) return;
+    const name = windowId.replace('ub-win-','');
+    ubFocusWindow(name);
+    ubDragData = { win, startX: e.clientX - win.offsetLeft, startY: e.clientY - win.offsetTop };
+    e.preventDefault();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.ub-btn-close,.ub-btn-minimize,.ub-btn-maximize').forEach(btn => {
+        btn.addEventListener('mousedown', e => e.stopPropagation());
+    });
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (ubDragData) {
+        ubDragData.win.style.left = Math.max(58, e.clientX - ubDragData.startX) + 'px';
+        ubDragData.win.style.top = Math.max(32, e.clientY - ubDragData.startY) + 'px';
+    }
+});
+document.addEventListener('mouseup', () => { ubDragData = null; });
+document.addEventListener('mousedown', (e) => {
+    const uw = e.target.closest('.ub-window');
+    if (uw && uw.id) ubFocusWindow(uw.id.replace('ub-win-',''));
+});
+
+function ubShutDown() {
+    const overlay = document.createElement('div');
+    overlay.className = 'shutdown-overlay';
+    overlay.innerHTML = '<div style="font-size:15px;color:#ccc">Shutting down Ubuntu...</div>';
+    document.body.appendChild(overlay);
+    setTimeout(() => location.reload(), 2500);
+}
+
+// Ubuntu Projects
+function ubOpenProjectDetail(i) {
+    const p = projects[i];
+    if (!p) return;
+    let imagesHtml = '';
+    if (p.images && p.images.length > 0) {
+        imagesHtml = '<div class="project-images">' +
+            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            '</div>';
+    }
+    document.getElementById('ub-detailContent').innerHTML =
+        '<h3>' + p.name + '</h3>' +
+        '<p>' + p.desc + '</p>' +
+        '<div class="detail-tags">' + p.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        imagesHtml +
+        '<div class="detail-links"><a href="' + p.github + '" target="_blank">View Code</a><a href="' + p.demo + '" target="_blank">Live Demo</a></div>';
+    document.getElementById('ub-projectDetail').classList.add('show');
+}
+function ubCloseProjectDetail() {
+    document.getElementById('ub-projectDetail').classList.remove('show');
+}
+
+// Ubuntu Music
+function ubMusicInit() {
+    const itemsEl = document.getElementById('ub-playlistItems');
+    if (!itemsEl || musicPlaylist.length === 0) return;
+    itemsEl.innerHTML = '';
+    musicPlaylist.forEach((track, i) => {
+        const div = document.createElement('div');
+        div.className = 'playlist-item';
+        div.innerHTML = '<span class="playlist-item-num">' + (i+1) + '</span>' + track.title;
+        div.onclick = () => ubMusicPlayTrack(i);
+        itemsEl.appendChild(div);
+    });
+}
+function ubMusicPlayTrack(index) {
+    if (musicPlaylist.length === 0) return;
+    ubMusicCurrentIndex = index;
+    const track = musicPlaylist[index];
+    ubMusicAudio.src = track.src;
+    ubMusicAudio.play();
+    ubMusicIsPlaying = true;
+    const btn = document.getElementById('ub-musicPlayBtn');
+    if (btn) btn.textContent = '⏸';
+    const tn = document.getElementById('ub-musicTrackName');
+    if (tn) tn.textContent = track.title;
+    const mp = document.getElementById('ub-musicPlayer');
+    if (mp) mp.classList.add('playing');
+    document.querySelectorAll('#ub-playlistItems .playlist-item').forEach((item, i) => item.classList.toggle('active', i === index));
+}
+function ubMusicTogglePlay() {
+    if (musicPlaylist.length === 0) return;
+    if (ubMusicCurrentIndex === -1) { ubMusicPlayTrack(0); return; }
+    const btn = document.getElementById('ub-musicPlayBtn');
+    const mp = document.getElementById('ub-musicPlayer');
+    if (ubMusicIsPlaying) {
+        ubMusicAudio.pause(); ubMusicIsPlaying = false;
+        if (btn) btn.textContent = '▶';
+        if (mp) mp.classList.remove('playing');
+    } else {
+        ubMusicAudio.play(); ubMusicIsPlaying = true;
+        if (btn) btn.textContent = '⏸';
+        if (mp) mp.classList.add('playing');
+    }
+}
+function ubMusicNext() { if (musicPlaylist.length) ubMusicPlayTrack((ubMusicCurrentIndex + 1) % musicPlaylist.length); }
+function ubMusicPrev() { if (musicPlaylist.length) ubMusicPlayTrack(ubMusicCurrentIndex <= 0 ? musicPlaylist.length - 1 : ubMusicCurrentIndex - 1); }
+function ubMusicSetVolume(val) { ubMusicAudio.volume = val / 100; }
+ubMusicAudio.addEventListener('timeupdate', () => {
+    const fill = document.getElementById('ub-musicProgressFill');
+    const cur = document.getElementById('ub-musicCurrentTime');
+    const dur = document.getElementById('ub-musicDuration');
+    if (ubMusicAudio.duration && fill && cur && dur) {
+        fill.style.width = (ubMusicAudio.currentTime / ubMusicAudio.duration * 100) + '%';
+        cur.textContent = formatTime(ubMusicAudio.currentTime);
+        dur.textContent = formatTime(ubMusicAudio.duration);
+    }
+});
+ubMusicAudio.addEventListener('ended', () => ubMusicNext());
+document.addEventListener('click', (e) => {
+    const prog = document.getElementById('ub-musicProgress');
+    if (prog && prog.contains(e.target) && ubMusicAudio.duration) {
+        const rect = prog.getBoundingClientRect();
+        ubMusicAudio.currentTime = ((e.clientX - rect.left) / rect.width) * ubMusicAudio.duration;
+    }
+});
+ubMusicAudio.volume = 0.8;
+
+// Ubuntu Gallery
+function ubGalleryInit() {
+    const strip = document.getElementById('ub-galleryThumbstrip');
+    if (!strip || galleryImages.length === 0) return;
+    document.getElementById('ub-galleryEmpty').style.display = 'none';
+    document.getElementById('ub-galleryMainImg').style.display = 'block';
+    strip.innerHTML = '';
+    galleryImages.forEach((img, i) => {
+        const thumb = document.createElement('img');
+        thumb.className = 'gallery-thumb';
+        thumb.src = img.src; thumb.alt = img.name;
+        thumb.onclick = () => ubGalleryShowImage(i);
+        strip.appendChild(thumb);
+    });
+    ubGalleryShowImage(0);
+}
+function ubGalleryShowImage(index) {
+    if (!galleryImages.length) return;
+    ubGalleryCurrentIndex = index;
+    const img = galleryImages[index];
+    const mainImg = document.getElementById('ub-galleryMainImg');
+    if (mainImg) { mainImg.src = img.src; mainImg.style.transform = 'scale(1)'; }
+    const fn = document.getElementById('ub-galleryFileName');
+    if (fn) fn.textContent = img.name;
+    document.querySelectorAll('#ub-galleryThumbstrip .gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === index));
+}
+function ubGalleryNext() { if (galleryImages.length) ubGalleryShowImage((ubGalleryCurrentIndex + 1) % galleryImages.length); }
+function ubGalleryPrev() { if (galleryImages.length) ubGalleryShowImage(ubGalleryCurrentIndex <= 0 ? galleryImages.length - 1 : ubGalleryCurrentIndex - 1); }
+
+// Ubuntu CS 1.6
+function ubCsStartGame() {
+    const canvas = document.getElementById('ub-csCanvas');
+    const menu = document.getElementById('ub-csMenu');
+    const hud = document.getElementById('ub-csHud');
+    menu.style.display = 'none'; canvas.style.display = 'block'; hud.style.display = 'flex';
+    const ctx = canvas.getContext('2d');
+    const parent = canvas.parentElement;
+    function resize() { canvas.width = parent.clientWidth; canvas.height = parent.clientHeight - 40; }
+    resize();
+    const state = { kills:0, ammo:30, hp:100, armor:100, money:800, timeLeft:30, round:1, enemies:[], particles:[], muzzleFlash:0, running:true, best: ubCsGame ? ubCsGame.best : 0, mouseX:0, mouseY:0 };
+    function spawnEnemy() { const size=30+Math.random()*20,speed=0.3+Math.random()*0.7+state.round*.1,fromLeft=Math.random()>.5; state.enemies.push({x:fromLeft?-size:canvas.width+size,y:40+Math.random()*(canvas.height-120),w:size,h:size*1.8,speed:fromLeft?speed:-speed,alive:true,deathTimer:0,type:Math.floor(Math.random()*3)}); }
+    function drawBg() { const sg=ctx.createLinearGradient(0,0,0,canvas.height*.35); sg.addColorStop(0,'#87a5c4'); sg.addColorStop(1,'#c4b99a'); ctx.fillStyle=sg; ctx.fillRect(0,0,canvas.width,canvas.height*.35); ctx.fillStyle='#b89f7a'; ctx.fillRect(0,canvas.height*.35,canvas.width,canvas.height*.65); ctx.fillStyle='#a08860'; for(let i=0;i<canvas.width;i+=80) ctx.fillRect(i,canvas.height*.35,2,canvas.height*.65); ctx.fillStyle='#8b7355'; ctx.fillRect(0,canvas.height-60,canvas.width,60); ctx.fillStyle='#7a6548'; ctx.fillRect(0,canvas.height-62,canvas.width,3); ctx.fillStyle='#6d5a3a'; ctx.fillRect(30,canvas.height-110,60,50); ctx.strokeStyle='#4a3d28'; ctx.lineWidth=2; ctx.strokeRect(30,canvas.height-110,60,50); ctx.fillStyle='#6d5a3a'; ctx.fillRect(canvas.width-120,canvas.height-130,70,70); ctx.strokeRect(canvas.width-120,canvas.height-130,70,70); ctx.fillStyle='#3d3222'; ctx.fillRect(canvas.width/2-40,canvas.height*.35,80,canvas.height*.3); ctx.fillStyle='#2a2218'; ctx.beginPath(); ctx.arc(canvas.width/2,canvas.height*.35+canvas.height*.3,40,Math.PI,0); ctx.fill(); }
+    function drawEnemy(e) { const cx=e.x+e.w/2,headR=e.w*.3,bodyTop=e.y+headR*2,bodyBot=e.y+e.h*.65; if(!e.alive){ctx.globalAlpha=Math.max(0,1-e.deathTimer/30);ctx.save();ctx.translate(cx,e.y+e.h);ctx.rotate(e.deathTimer*.05);ctx.translate(-cx,-(e.y+e.h));} const colors=['#5a7a3a','#3a5a7a','#6a5a3a']; ctx.fillStyle=colors[e.type]; ctx.fillRect(cx-e.w*.3,bodyTop,e.w*.6,bodyBot-bodyTop); ctx.fillStyle=e.type===1?'#2a4a6a':'#4a5a2a'; ctx.beginPath(); ctx.arc(cx,e.y+headR,headR,0,Math.PI*2); ctx.fill(); ctx.strokeStyle='#222'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,e.y+headR-2,headR+1,Math.PI*1.1,Math.PI*1.9); ctx.stroke(); ctx.fillStyle='#333'; const gd=e.speed>0?1:-1; ctx.fillRect(cx+gd*e.w*.2,bodyTop+10,gd*e.w*.5,4); ctx.fillStyle='#444'; ctx.fillRect(cx-e.w*.2,bodyBot,6,e.h*.3); ctx.fillRect(cx+e.w*.1,bodyBot,6,e.h*.3); if(!e.alive){ctx.restore();ctx.globalAlpha=1;} }
+    function drawCrosshair(x,y){ctx.strokeStyle='#0f0';ctx.lineWidth=1.5;const gap=4,len=12;ctx.beginPath();ctx.moveTo(x-gap-len,y);ctx.lineTo(x-gap,y);ctx.moveTo(x+gap,y);ctx.lineTo(x+gap+len,y);ctx.moveTo(x,y-gap-len);ctx.lineTo(x,y-gap);ctx.moveTo(x,y+gap);ctx.lineTo(x,y+gap+len);ctx.stroke();}
+    function drawParticles(){for(let i=state.particles.length-1;i>=0;i--){const p=state.particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.life--;if(p.life<=0){state.particles.splice(i,1);continue;}ctx.globalAlpha=p.life/p.maxLife;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);}ctx.globalAlpha=1;}
+    function spawnHit(x,y){for(let i=0;i<8;i++)state.particles.push({x,y,vx:(Math.random()-.5)*6,vy:(Math.random()-1)*5,life:15+Math.random()*10,maxLife:25,size:2+Math.random()*3,color:Math.random()>.5?'#c00':'#f44'});}
+    function onCanvasClick(e){if(!state.running)return;const rect=canvas.getBoundingClientRect();const mx=e.clientX-rect.left,my=e.clientY-rect.top;state.muzzleFlash=3;if(state.ammo<=0)return;state.ammo--;document.getElementById('ub-csAmmo').textContent=state.ammo;let hit=false;for(let i=state.enemies.length-1;i>=0;i--){const en=state.enemies[i];if(!en.alive)continue;if(mx>=en.x&&mx<=en.x+en.w&&my>=en.y&&my<=en.y+en.h){en.alive=false;en.deathTimer=0;state.kills++;state.money+=300;document.getElementById('ub-csKills').textContent=state.kills;document.getElementById('ub-csMoney').textContent=state.money;spawnHit(mx,my);hit=true;break;}}if(!hit)for(let i=0;i<4;i++)state.particles.push({x:mx,y:my,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:10+Math.random()*5,maxLife:15,size:2+Math.random()*2,color:'#b89f7a'});}
+    function onCanvasMove(e){const rect=canvas.getBoundingClientRect();state.mouseX=e.clientX-rect.left;state.mouseY=e.clientY-rect.top;}
+    canvas.addEventListener('click',onCanvasClick); canvas.addEventListener('mousemove',onCanvasMove);
+    const timerInterval=setInterval(()=>{if(!state.running)return;state.timeLeft--;const m2=Math.floor(state.timeLeft/60),s2=state.timeLeft%60;document.getElementById('ub-csTimer').textContent=m2+':'+s2.toString().padStart(2,'0');if(state.timeLeft<=0){if(state.round<3){state.round++;state.timeLeft=30;state.ammo=30;state.hp=100;document.getElementById('ub-csRound').textContent=state.round;document.getElementById('ub-csAmmo').textContent=state.ammo;document.getElementById('ub-csHp').textContent=state.hp;}else{state.running=false;if(state.kills>state.best)state.best=state.kills;}}state.enemies.forEach(en=>{if(en.alive&&Math.random()<.03){const dmg=3+Math.floor(Math.random()*5);if(state.armor>0){state.armor=Math.max(0,state.armor-dmg);document.getElementById('ub-csArmor').textContent=state.armor;}else{state.hp=Math.max(0,state.hp-dmg);document.getElementById('ub-csHp').textContent=state.hp;if(state.hp<=0){state.running=false;if(state.kills>state.best)state.best=state.kills;}}}});},1000);
+    const spawnInterval=setInterval(()=>{if(!state.running)return;if(state.enemies.filter(e=>e.alive).length<3+state.round)spawnEnemy();},800);
+    function onKeyDown(e){if(e.key==='r'||e.key==='R'){state.ammo=30;document.getElementById('ub-csAmmo').textContent=30;}}
+    document.addEventListener('keydown',onKeyDown);
+    let animId;
+    function gameLoop(){resize();drawBg();for(let i=state.enemies.length-1;i>=0;i--){const en=state.enemies[i];if(en.alive){en.x+=en.speed;if(en.x>canvas.width+60||en.x<-80){state.enemies.splice(i,1);continue;}}else{en.deathTimer++;if(en.deathTimer>40){state.enemies.splice(i,1);continue;}}drawEnemy(en);}drawParticles();if(state.muzzleFlash>0){ctx.fillStyle='rgba(255,200,50,0.15)';ctx.fillRect(0,0,canvas.width,canvas.height);state.muzzleFlash--;}drawCrosshair(state.mouseX,state.mouseY);if(!state.running){ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#ff6600';ctx.font='bold 28px Consolas, monospace';ctx.textAlign='center';ctx.fillText(state.hp<=0?'YOU DIED':'GAME OVER',canvas.width/2,canvas.height/2-40);ctx.fillStyle='#fff';ctx.font='18px Consolas, monospace';ctx.fillText('Kills: '+state.kills,canvas.width/2,canvas.height/2);ctx.fillText('Best: '+state.best,canvas.width/2,canvas.height/2+28);ctx.fillStyle='#888';ctx.font='14px Consolas, monospace';ctx.fillText('Click to return to menu',canvas.width/2,canvas.height/2+65);ctx.textAlign='start';canvas.onclick=function(){canvas.onclick=null;clearInterval(timerInterval);clearInterval(spawnInterval);document.removeEventListener('keydown',onKeyDown);canvas.removeEventListener('mousemove',onCanvasMove);cancelAnimationFrame(animId);canvas.style.display='none';document.getElementById('ub-csHud').style.display='none';document.getElementById('ub-csMenu').style.display='flex';document.getElementById('ub-csMenuBest').textContent='Best: '+state.best+' kills';ubCsGame={best:state.best};};}animId=requestAnimationFrame(gameLoop);}
+    for(let i=0;i<3;i++) spawnEnemy();
+    gameLoop();
+    ubCsGame={stop:()=>{state.running=false;clearInterval(timerInterval);clearInterval(spawnInterval);document.removeEventListener('keydown',onKeyDown);canvas.removeEventListener('click',onCanvasClick);canvas.removeEventListener('mousemove',onCanvasMove);cancelAnimationFrame(animId);},best:state.best};
+}
+function ubCsStopGame(){
+    if(ubCsGame&&ubCsGame.stop) ubCsGame.stop();
+    const c=document.getElementById('ub-csCanvas'),m=document.getElementById('ub-csMenu'),h=document.getElementById('ub-csHud');
+    if(c) c.style.display='none'; if(h) h.style.display='none'; if(m) m.style.display='flex';
+}
 
 // ===== Clock & Date =====
 function updateClock() {
@@ -37,7 +788,8 @@ function updateGreeting() {
     if (hour < 12) greeting = 'Good morning';
     else if (hour < 17) greeting = 'Good afternoon';
     else greeting = 'Good evening';
-    document.getElementById('smGreeting').textContent = greeting + ', Shahzod!';
+    const el = document.getElementById('smGreeting');
+    if (el) el.textContent = greeting + ', Shahzod!';
 }
 
 // ===== Window Management =====

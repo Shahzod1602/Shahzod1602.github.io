@@ -4,13 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shahzod Nematov — Desktop</title>
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- OS Select Screen -->
+    <div class="os-select" id="osSelect">
+        <div class="os-select-title">Choose your experience</div>
+        <div class="os-options">
+            <div class="os-option" onclick="selectOS('windows')">
+                <div class="os-option-icon os-win-icon">
+                    <div class="os-win-logo">
+                        <div class="os-wl-q" style="background:#f25022"></div>
+                        <div class="os-wl-q" style="background:#7fba00"></div>
+                        <div class="os-wl-q" style="background:#00a4ef"></div>
+                        <div class="os-wl-q" style="background:#ffb900"></div>
+                    </div>
+                </div>
+                <div class="os-option-name">Windows</div>
+                <div class="os-option-ver">Windows 7</div>
+            </div>
+            <div class="os-divider"></div>
+            <div class="os-option" onclick="selectOS('macos')">
+                <div class="os-option-icon os-mac-icon">
+                    <svg viewBox="0 0 24 28" width="48" height="48" fill="rgba(255,255,255,0.85)">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                </div>
+                <div class="os-option-name">macOS</div>
+                <div class="os-option-ver">Sequoia</div>
+            </div>
+            <div class="os-divider"></div>
+            <div class="os-option" onclick="selectOS('ubuntu')">
+                <div class="os-option-icon os-ubuntu-icon">
+                    <svg viewBox="0 0 100 100" width="58" height="58">
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#E95420" stroke-width="6"/>
+                        <circle cx="50" cy="8" r="10" fill="#E95420"/>
+                        <circle cx="8" cy="74" r="10" fill="#E95420"/>
+                        <circle cx="92" cy="74" r="10" fill="#E95420"/>
+                        <line x1="50" y1="18" x2="50" y2="38" stroke="#E95420" stroke-width="5"/>
+                        <line x1="15" y1="67" x2="33" y2="57" stroke="#E95420" stroke-width="5"/>
+                        <line x1="85" y1="67" x2="67" y2="57" stroke="#E95420" stroke-width="5"/>
+                        <circle cx="50" cy="50" r="14" fill="none" stroke="#E95420" stroke-width="5"/>
+                    </svg>
+                </div>
+                <div class="os-option-name">Ubuntu</div>
+                <div class="os-option-ver">24.04 LTS</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Boot Screen -->
-    <div class="boot-screen" id="bootScreen">
+    <div class="boot-screen" id="bootScreen" style="display:none">
         <div class="boot-logo">
             <div class="win-logo-boot">
                 <div class="wl-quad wl-red"></div>
@@ -569,6 +615,836 @@ LANGUAGES
         </div>
     </div>
 
-    <script src="script.js?v=2"></script>
+    <!-- =============================================
+         macOS BOOT SCREEN
+         ============================================= -->
+    <div class="mac-boot" id="macBoot">
+        <svg class="mac-apple-boot" viewBox="0 0 24 28" fill="rgba(255,255,255,0.78)">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div class="mac-boot-bar-wrap">
+            <div class="mac-boot-bar" id="macBootBar"></div>
+        </div>
+    </div>
+
+    <!-- =============================================
+         macOS DESKTOP
+         ============================================= -->
+    <div class="mac-desktop" id="macDesktop">
+
+        <!-- macOS Menu Bar -->
+        <div class="mac-menubar" id="macMenubar">
+            <div class="mac-menu-left">
+                <div class="mac-menu-apple">&#63743;</div>
+                <div class="mac-menu-item bold" id="macActiveApp">Finder</div>
+                <div class="mac-menu-item">File</div>
+                <div class="mac-menu-item">Edit</div>
+                <div class="mac-menu-item">View</div>
+                <div class="mac-menu-item">Window</div>
+                <div class="mac-menu-item">Help</div>
+            </div>
+            <div class="mac-menu-right">
+                <span class="mac-tray-icon">&#x1F50B;</span>
+                <span class="mac-tray-icon">&#x1F4F6;</span>
+                <span class="mac-tray-icon">&#x1F508;</span>
+                <span class="mac-tray-clock" id="macClock"></span>
+            </div>
+        </div>
+
+        <!-- ===== macOS WINDOWS ===== -->
+
+        <!-- About Me -->
+        <div class="mac-window" id="mac-win-about" style="width:620px;height:520px;">
+            <div class="mac-titlebar" onmousedown="macStartDrag(event,'mac-win-about')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('about')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('about')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('about')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">About Me</div>
+            </div>
+            <div class="mac-toolbar">
+                <button class="mac-tb-btn">&#8592;</button>
+                <button class="mac-tb-btn">&#8594;</button>
+                <div class="mac-path-bar">&#127968; /Users/shahzod/about</div>
+            </div>
+            <div class="mac-window-body">
+                <div class="about-card">
+                    <div class="about-avatar">SN</div>
+                    <div class="about-info">
+                        <h2>Shahzod Nematov</h2>
+                        <p class="about-role">AI/ML Engineer &amp; Full-Stack Developer</p>
+                        <p class="about-desc">AI/ML engineer with hands-on experience building intelligent systems — from AI-powered logistics platforms to real-time computer vision applications. I combine deep learning expertise with full-stack development skills to ship production-ready products.</p>
+                        <div class="about-meta">
+                            <div class="meta-item"><span class="meta-label">&#128205; Location:</span> Uzbekistan</div>
+                            <div class="meta-item"><span class="meta-label">&#128188; Status:</span> <span class="status-available">Available for work</span></div>
+                        </div>
+                        <div class="experience-timeline">
+                            <h3 class="exp-heading">Experience</h3>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">AI Engineer</div><div class="exp-company">Abstract IT Group</div><div class="exp-date">Mar 2025 — Present</div><div class="exp-desc">AI-powered logistics platform</div></div></div>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">Assistant</div><div class="exp-company">American University of Technology</div><div class="exp-date">Oct 2025 — Present</div></div></div>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">Co-Founder</div><div class="exp-company">Vikatoday</div><div class="exp-date">Jun 2025 — Present</div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects (Finder style) -->
+        <div class="mac-window" id="mac-win-projects" style="width:650px;height:480px;">
+            <div class="mac-titlebar" onmousedown="macStartDrag(event,'mac-win-projects')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('projects')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('projects')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('projects')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">My Projects</div>
+            </div>
+            <div class="mac-toolbar">
+                <button class="mac-tb-btn">&#8592;</button>
+                <button class="mac-tb-btn">&#8594;</button>
+                <div class="mac-path-bar">&#128193; /Users/shahzod/Projects</div>
+            </div>
+            <div class="mac-window-body mac-finder-body">
+                <div class="mac-finder-sidebar">
+                    <div class="mac-sidebar-label">Favourites</div>
+                    <div class="mac-sidebar-item active">&#127968; Projects</div>
+                    <div class="mac-sidebar-item">&#128229; Downloads</div>
+                    <div class="mac-sidebar-item">&#128444; Desktop</div>
+                    <div class="mac-sidebar-label" style="margin-top:8px">Locations</div>
+                    <div class="mac-sidebar-item">&#128187; MacBook Pro</div>
+                    <div class="mac-sidebar-item">&#9729; iCloud Drive</div>
+                </div>
+                <div class="explorer-content" style="position:relative">
+                    <div class="file-grid" id="mac-fileGrid">
+                        <div class="file-item" onclick="macOpenProjectDetail(0)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>Multilevel</span></div>
+                        <div class="file-item" onclick="macOpenProjectDetail(1)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>IELTS Peak</span></div>
+                        <div class="file-item" onclick="macOpenProjectDetail(2)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>Identify</span></div>
+                        <div class="file-item" onclick="macOpenProjectDetail(3)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>AutPlatform</span></div>
+                    </div>
+                    <div class="project-detail" id="mac-projectDetail">
+                        <button class="detail-back" onclick="macCloseProjectDetail()">&#8592; Back</button>
+                        <div class="detail-content" id="mac-detailContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills (Terminal) -->
+        <div class="mac-window" id="mac-win-skills" style="width:580px;height:460px;">
+            <div class="mac-titlebar mac-titlebar-dark" onmousedown="macStartDrag(event,'mac-win-skills')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('skills')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('skills')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('skills')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Terminal — zsh</div>
+            </div>
+            <div class="mac-window-body mac-term-body">
+                <div class="mac-term">
+                    <div class="mac-tl">Last login: Mon Mar 2 10:00:00 on ttys000</div>
+                    <div class="mac-tl">&nbsp;</div>
+                    <div class="mac-tl"><span class="mac-prompt-u">shahzod</span><span style="color:#cdd6f4">@</span><span class="mac-prompt-h">MacBook-Pro</span> <span class="mac-prompt-p">~</span> <span style="color:#cdd6f4">% </span>skills --list --all</div>
+                    <div class="mac-tl">&nbsp;</div>
+                    <div class="mac-tl mac-tc">══ FRONTEND ══</div>
+                    <div class="mac-ts"><span class="mac-tb2">HTML / CSS</span><span class="mac-tp">████████████████████░░ 92%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">JavaScript</span><span class="mac-tp">██████████████████░░░░ 88%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">React</span><span class="mac-tp">████████████████░░░░░░ 82%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">TypeScript</span><span class="mac-tp">███████████████░░░░░░░ 78%</span></div>
+                    <div class="mac-tl">&nbsp;</div>
+                    <div class="mac-tl mac-tc">══ BACKEND ══</div>
+                    <div class="mac-ts"><span class="mac-tb2">Python</span><span class="mac-tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">Node.js</span><span class="mac-tp">███████████████░░░░░░░ 70%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">Java</span><span class="mac-tp">█████████░░░░░░░░░░░░░ 40%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">C++</span><span class="mac-tp">█████████░░░░░░░░░░░░░ 40%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">C#</span><span class="mac-tp">████░░░░░░░░░░░░░░░░░░ 20%</span></div>
+                    <div class="mac-tl">&nbsp;</div>
+                    <div class="mac-tl mac-tc">══ TOOLS ══</div>
+                    <div class="mac-ts"><span class="mac-tb2">Git / GitHub</span><span class="mac-tp">████████████████████░░ 90%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">Docker</span><span class="mac-tp">████████████████░░░░░░ 80%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">VS Code</span><span class="mac-tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="mac-ts"><span class="mac-tb2">Linux</span><span class="mac-tp">███████████████░░░░░░░ 75%</span></div>
+                    <div class="mac-tl">&nbsp;</div>
+                    <div class="mac-tl"><span class="mac-prompt-u">shahzod</span><span style="color:#cdd6f4">@</span><span class="mac-prompt-h">MacBook-Pro</span> <span class="mac-prompt-p">~</span> <span style="color:#cdd6f4">% <span class="cursor">&#9646;</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="mac-window" id="mac-win-contact" style="width:480px;height:400px;">
+            <div class="mac-titlebar" onmousedown="macStartDrag(event,'mac-win-contact')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('contact')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('contact')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('contact')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Contacts</div>
+            </div>
+            <div class="mac-window-body">
+                <div class="contact-list">
+                    <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" class="contact-item"><div class="ci-icon ci-linkedin">in</div><div class="ci-info"><div class="ci-name">LinkedIn</div><div class="ci-val">shahzod-nematov</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="https://github.com/Shahzod1602" target="_blank" class="contact-item"><div class="ci-icon ci-github"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div><div class="ci-info"><div class="ci-name">GitHub</div><div class="ci-val">Shahzod1602</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="https://t.me/Shahzod_pc" target="_blank" class="contact-item"><div class="ci-icon ci-telegram"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div><div class="ci-info"><div class="ci-name">Telegram</div><div class="ci-val">@Shahzod_pc</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="mailto:shaxzodnematov1602@gmail.com" class="contact-item"><div class="ci-icon ci-email">&#9993;</div><div class="ci-info"><div class="ci-name">Email</div><div class="ci-val">shaxzodnematov1602@gmail.com</div></div><div class="ci-arrow">&#8594;</div></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resume (TextEdit) -->
+        <div class="mac-window" id="mac-win-resume" style="width:520px;height:460px;">
+            <div class="mac-titlebar" onmousedown="macStartDrag(event,'mac-win-resume')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('resume')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('resume')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('resume')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Resume.txt — TextEdit</div>
+            </div>
+            <div class="mac-window-body mac-textedit-body">
+                <pre class="mac-textedit-text">╔══════════════════════════════════════════╗
+║          SHAHZOD NEMATOV                 ║
+║    AI/ML Engineer &amp; Full-Stack Dev       ║
+╚══════════════════════════════════════════╝
+
+ABOUT
+───────────────────────────────────────────
+AI/ML engineer building intelligent systems
+— from logistics AI to real-time computer
+vision applications. Strong full-stack
+background with focus on scalable,
+production-ready AI products.
+
+EXPERIENCE
+───────────────────────────────────────────
+► Abstract IT Group — AI Engineer
+  Mar 2025 - Present
+► American Univ. of Tech — Assistant
+  Oct 2025 - Present
+► Vikatoday — Co-Founder
+  Jun 2025 - Present
+
+SKILLS
+───────────────────────────────────────────
+► Programming: Python, Java, C++
+► AI / ML: Deep Learning, NLP, Computer Vision
+► Frameworks: PyTorch, TensorFlow, OpenCV
+► LLM: GPT API, Prompt Engineering, RAG
+► Backend: FastAPI, Flask, REST APIs
+► Databases: PostgreSQL, MySQL, SQLite
+► Cloud: Render, VPS, Docker, Linux
+► Robotics: Sensor Integration, L298N
+► Automation: Telegram Bots, Web Automation
+► Tools: Git, CLI, Technical Documentation
+
+EDUCATION
+───────────────────────────────────────────
+► Computer Science
+► Self-taught &amp; Online Courses
+► Continuous Learning
+
+LANGUAGES
+───────────────────────────────────────────
+► Uzbek   — Native
+► English — Fluent
+
+───────────────────────────────────────────
+  "Code is poetry." — Shahzod
+───────────────────────────────────────────</pre>
+            </div>
+        </div>
+
+        <!-- Music Player -->
+        <div class="mac-window" id="mac-win-music" style="width:480px;height:540px;">
+            <div class="mac-titlebar mac-titlebar-dark" onmousedown="macStartDrag(event,'mac-win-music')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('music')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('music')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('music')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Music</div>
+            </div>
+            <div class="mac-window-body music-player" id="mac-musicPlayer">
+                <div class="music-visualizer" id="m-musicVisualizer">
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div>
+                </div>
+                <div class="music-track-name" id="m-musicTrackName">No tracks loaded</div>
+                <div class="music-time">
+                    <span id="m-musicCurrentTime">0:00</span>
+                    <span id="m-musicDuration">0:00</span>
+                </div>
+                <div class="music-progress" id="m-musicProgress">
+                    <div class="music-progress-fill" id="m-musicProgressFill"></div>
+                </div>
+                <div class="music-controls">
+                    <button class="mc-btn" onclick="macMusicPrev()" title="Previous">&#9198;</button>
+                    <button class="mc-btn mc-play" onclick="macMusicTogglePlay()" id="m-musicPlayBtn" title="Play">&#9654;</button>
+                    <button class="mc-btn" onclick="macMusicNext()" title="Next">&#9197;</button>
+                    <div class="music-volume">
+                        <span class="vol-icon">&#128266;</span>
+                        <input type="range" class="vol-slider" id="m-musicVolume" min="0" max="100" value="80" oninput="macMusicSetVolume(this.value)">
+                    </div>
+                </div>
+                <div class="music-playlist" id="m-musicPlaylist">
+                    <div class="playlist-header">Playlist</div>
+                    <div class="playlist-items" id="m-playlistItems">
+                        <div class="playlist-empty">No tracks — add MP3 files to music/ folder</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="mac-window" id="mac-win-gallery" style="width:640px;height:520px;">
+            <div class="mac-titlebar" onmousedown="macStartDrag(event,'mac-win-gallery')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('gallery')"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('gallery')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('gallery')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Photos</div>
+            </div>
+            <div class="mac-toolbar">
+                <button class="mac-tb-btn" onclick="macGalleryPrev()">&#8592;</button>
+                <button class="mac-tb-btn" onclick="macGalleryNext()">&#8594;</button>
+                <button class="mac-tb-btn" onclick="galleryZoomIn()">+</button>
+                <button class="mac-tb-btn" onclick="galleryZoomOut()">&#8722;</button>
+                <div class="mac-path-bar">&#128444; <span id="m-galleryFileName">No images</span></div>
+            </div>
+            <div class="mac-window-body gallery-body">
+                <div class="gallery-viewer" id="m-galleryViewer">
+                    <div class="gallery-empty" id="m-galleryEmpty">No images — add files to images/ folder</div>
+                    <img class="gallery-main-img" id="m-galleryMainImg" style="display:none" alt="Gallery image">
+                    <button class="gallery-nav gallery-nav-left" onclick="macGalleryPrev()">&#8249;</button>
+                    <button class="gallery-nav gallery-nav-right" onclick="macGalleryNext()">&#8250;</button>
+                </div>
+                <div class="gallery-thumbstrip" id="m-galleryThumbstrip"></div>
+            </div>
+        </div>
+
+        <!-- CS 1.6 -->
+        <div class="mac-window" id="mac-win-csgo" style="width:700px;height:520px;">
+            <div class="mac-titlebar mac-titlebar-dark" onmousedown="macStartDrag(event,'mac-win-csgo')">
+                <div class="mac-traffic">
+                    <button class="mac-btn-close" onclick="macCloseWindow('csgo');macCsStopGame()"><span class="mac-btn-icon">&#xd7;</span></button>
+                    <button class="mac-btn-minimize" onclick="macMinimizeWindow('csgo')"><span class="mac-btn-icon">&#x2212;</span></button>
+                    <button class="mac-btn-maximize" onclick="macMaximizeWindow('csgo')"><span class="mac-btn-icon">&#x2b;</span></button>
+                </div>
+                <div class="mac-title">Counter-Strike 1.6</div>
+            </div>
+            <div class="mac-window-body cs-game-body">
+                <div class="cs-menu" id="m-csMenu">
+                    <div class="cs-menu-title">Counter-Strike</div>
+                    <div class="cs-menu-ver">version 1.6</div>
+                    <div class="cs-menu-items">
+                        <div class="cs-menu-item" onclick="macCsStartGame()">New Game</div>
+                        <div class="cs-menu-item" id="m-csMenuBest">Best: 0 kills</div>
+                        <div class="cs-menu-item cs-menu-quit" onclick="macCloseWindow('csgo');macCsStopGame()">Quit</div>
+                    </div>
+                    <div class="cs-menu-footer">Aim Trainer — Click enemies to score</div>
+                </div>
+                <canvas id="m-csCanvas" style="display:none"></canvas>
+                <div class="cs-hud" id="m-csHud" style="display:none">
+                    <div class="cs-hud-left"><div class="cs-hp"><span class="cs-hp-icon">+</span> <span id="m-csHp">100</span></div><div class="cs-armor">&#128737; <span id="m-csArmor">100</span></div></div>
+                    <div class="cs-hud-center"><div class="cs-round">Round: <span id="m-csRound">1</span></div><div class="cs-timer" id="m-csTimer">0:30</div></div>
+                    <div class="cs-hud-right"><div class="cs-kills">Kills: <span id="m-csKills">0</span></div><div class="cs-ammo"><span id="m-csAmmo">30</span> / 90</div><div class="cs-money">$<span id="m-csMoney">800</span></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- macOS Dock -->
+        <div class="mac-dock">
+            <div class="mac-dock-inner">
+                <div class="dock-item" onclick="macOpenWindow('about')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#4a90d9,#1565c0)">&#128100;</div>
+                    <div class="dock-label">About Me</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('projects')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#70b8ff,#1e90ff)">&#128193;</div>
+                    <div class="dock-label">Projects</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('skills')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#2d2d2d,#1a1a1a)">&#128187;</div>
+                    <div class="dock-label">Terminal</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('contact')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#ff6b6b,#cc2200)">&#9993;</div>
+                    <div class="dock-label">Contacts</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('resume')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#fff,#e8e8e8)">&#128196;</div>
+                    <div class="dock-label">Resume</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('music')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#ff3b78,#c9004a)">&#9835;</div>
+                    <div class="dock-label">Music</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('gallery')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#ffd700,#ff8c00)">&#128444;</div>
+                    <div class="dock-label">Photos</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-item" onclick="macOpenWindow('csgo')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#2a2a2a,#111)">&#128299;</div>
+                    <div class="dock-label">CS 1.6</div>
+                    <div class="dock-dot"></div>
+                </div>
+                <div class="dock-sep"></div>
+                <div class="dock-item" onclick="window.open('https://github.com/Shahzod1602','_blank')">
+                    <div class="dock-icon" style="background:linear-gradient(145deg,#24292e,#111)"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div>
+                    <div class="dock-label">GitHub</div>
+                    <div class="dock-dot"></div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /mac-desktop -->
+
+    <!-- =============================================
+         UBUNTU BOOT SCREEN
+         ============================================= -->
+    <div class="ub-boot" id="ubBoot">
+        <svg viewBox="0 0 100 100" width="72" height="72" style="margin-bottom:48px">
+            <circle cx="50" cy="50" r="48" fill="none" stroke="#E95420" stroke-width="5"/>
+            <circle cx="50" cy="8" r="9" fill="#E95420"/>
+            <circle cx="8" cy="74" r="9" fill="#E95420"/>
+            <circle cx="92" cy="74" r="9" fill="#E95420"/>
+            <line x1="50" y1="17" x2="50" y2="36" stroke="#E95420" stroke-width="4.5"/>
+            <line x1="16" y1="67" x2="33" y2="57" stroke="#E95420" stroke-width="4.5"/>
+            <line x1="84" y1="67" x2="67" y2="57" stroke="#E95420" stroke-width="4.5"/>
+            <circle cx="50" cy="50" r="13" fill="none" stroke="#E95420" stroke-width="4.5"/>
+        </svg>
+        <div class="ub-boot-dots">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- =============================================
+         UBUNTU DESKTOP
+         ============================================= -->
+    <div class="ub-desktop" id="ubDesktop">
+
+        <!-- Top Panel -->
+        <div class="ub-panel" id="ubPanel">
+            <div class="ub-panel-left">
+                <button class="ub-activities" onclick="ubToggleActivities()">Activities</button>
+            </div>
+            <div class="ub-panel-center">
+                <span class="ub-panel-clock" id="ubClock"></span>
+            </div>
+            <div class="ub-panel-right">
+                <span class="ub-tray-icon">&#x1F4F6;</span>
+                <span class="ub-tray-icon">&#x1F508;</span>
+                <span class="ub-tray-icon">&#x1F50B;</span>
+                <span class="ub-user-menu" onclick="ubShutDown()">&#9587; Shahzod</span>
+            </div>
+        </div>
+
+        <!-- Activities Overlay -->
+        <div class="ub-activities-overlay" id="ubActivities">
+            <div class="ub-activities-search">
+                <input type="text" placeholder="Type to search..." class="ub-search-input" id="ubSearchInput" readonly>
+            </div>
+            <div class="ub-app-grid">
+                <div class="ub-app-icon" onclick="ubOpenWindow('about');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#4a90d9,#1565c0)">&#128100;</div>
+                    <span>About Me</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('projects');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#f6c445,#e5a800)">&#128193;</div>
+                    <span>Files</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('skills');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#2d2d2d,#111)">&#128187;</div>
+                    <span>Terminal</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('contact');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#43a047,#1b5e20)">&#9993;</div>
+                    <span>Contacts</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('resume');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#fff,#ddd)">&#128196;</div>
+                    <span>gedit</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('music');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#e91e63,#880e4f)">&#9835;</div>
+                    <span>Rhythmbox</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('gallery');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#ff9800,#e65100)">&#128444;</div>
+                    <span>Photos</span>
+                </div>
+                <div class="ub-app-icon" onclick="ubOpenWindow('csgo');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#2a2a2a,#111)">&#128299;</div>
+                    <span>CS 1.6</span>
+                </div>
+                <div class="ub-app-icon" onclick="window.open('https://github.com/Shahzod1602','_blank');ubToggleActivities()">
+                    <div class="ub-app-img" style="background:linear-gradient(145deg,#24292e,#111)"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div>
+                    <span>GitHub</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Dock -->
+        <div class="ub-dock">
+            <div class="ub-dock-item" onclick="ubOpenWindow('about')" title="About Me">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#4a90d9,#1565c0)">&#128100;</div>
+                <div class="ub-dock-dot" id="ubdot-about"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('projects')" title="Files">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#f6c445,#e5a800)">&#128193;</div>
+                <div class="ub-dock-dot" id="ubdot-projects"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('skills')" title="Terminal">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#2d2d2d,#111)">&#128187;</div>
+                <div class="ub-dock-dot" id="ubdot-skills"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('contact')" title="Contacts">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#43a047,#1b5e20)">&#9993;</div>
+                <div class="ub-dock-dot" id="ubdot-contact"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('resume')" title="gedit">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#fff,#ddd)">&#128196;</div>
+                <div class="ub-dock-dot" id="ubdot-resume"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('music')" title="Rhythmbox">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#e91e63,#880e4f)">&#9835;</div>
+                <div class="ub-dock-dot" id="ubdot-music"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('gallery')" title="Photos">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#ff9800,#e65100)">&#128444;</div>
+                <div class="ub-dock-dot" id="ubdot-gallery"></div>
+            </div>
+            <div class="ub-dock-item" onclick="ubOpenWindow('csgo')" title="CS 1.6">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#2a2a2a,#111)">&#128299;</div>
+                <div class="ub-dock-dot" id="ubdot-csgo"></div>
+            </div>
+            <div class="ub-dock-sep"></div>
+            <div class="ub-dock-item" onclick="window.open('https://github.com/Shahzod1602','_blank')" title="GitHub">
+                <div class="ub-dock-icon" style="background:linear-gradient(145deg,#24292e,#111)"><svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div>
+                <div class="ub-dock-dot"></div>
+            </div>
+        </div>
+
+        <!-- ===== UBUNTU WINDOWS ===== -->
+
+        <!-- About Me -->
+        <div class="ub-window" id="ub-win-about" style="width:620px;height:520px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-about')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('about')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('about')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('about')">&#x2b;</button>
+                </div>
+                <div class="ub-title">About Me</div>
+            </div>
+            <div class="ub-toolbar">
+                <button class="ub-tb-btn">&#8592;</button>
+                <button class="ub-tb-btn">&#8594;</button>
+                <div class="ub-path-bar">&#127968; /home/shahzod/about</div>
+            </div>
+            <div class="ub-window-body">
+                <div class="about-card">
+                    <div class="about-avatar">SN</div>
+                    <div class="about-info">
+                        <h2>Shahzod Nematov</h2>
+                        <p class="about-role">AI/ML Engineer &amp; Full-Stack Developer</p>
+                        <p class="about-desc">AI/ML engineer with hands-on experience building intelligent systems — from AI-powered logistics platforms to real-time computer vision applications. I combine deep learning expertise with full-stack development skills to ship production-ready products.</p>
+                        <div class="about-meta">
+                            <div class="meta-item"><span class="meta-label">&#128205; Location:</span> Uzbekistan</div>
+                            <div class="meta-item"><span class="meta-label">&#128188; Status:</span> <span class="status-available">Available for work</span></div>
+                        </div>
+                        <div class="experience-timeline">
+                            <h3 class="exp-heading">Experience</h3>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">AI Engineer</div><div class="exp-company">Abstract IT Group</div><div class="exp-date">Mar 2025 — Present</div><div class="exp-desc">AI-powered logistics platform</div></div></div>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">Assistant</div><div class="exp-company">American University of Technology</div><div class="exp-date">Oct 2025 — Present</div></div></div>
+                            <div class="exp-item"><div class="exp-dot"></div><div class="exp-content"><div class="exp-title">Co-Founder</div><div class="exp-company">Vikatoday</div><div class="exp-date">Jun 2025 — Present</div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects (Nautilus style) -->
+        <div class="ub-window" id="ub-win-projects" style="width:650px;height:480px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-projects')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('projects')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('projects')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('projects')">&#x2b;</button>
+                </div>
+                <div class="ub-title">Files — Projects</div>
+            </div>
+            <div class="ub-toolbar">
+                <button class="ub-tb-btn">&#8592;</button>
+                <button class="ub-tb-btn">&#8594;</button>
+                <div class="ub-path-bar">&#128193; /home/shahzod/Projects</div>
+            </div>
+            <div class="ub-window-body mac-finder-body">
+                <div class="mac-finder-sidebar" style="background:#f0f0f0">
+                    <div class="mac-sidebar-label">Places</div>
+                    <div class="mac-sidebar-item active">&#127968; Home</div>
+                    <div class="mac-sidebar-item">&#128193; Projects</div>
+                    <div class="mac-sidebar-item">&#128229; Downloads</div>
+                    <div class="mac-sidebar-label" style="margin-top:8px">Devices</div>
+                    <div class="mac-sidebar-item">&#128187; Computer</div>
+                    <div class="mac-sidebar-item">&#128428; Trash</div>
+                </div>
+                <div class="explorer-content" style="position:relative">
+                    <div class="file-grid" id="ub-fileGrid">
+                        <div class="file-item" onclick="ubOpenProjectDetail(0)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>Multilevel</span></div>
+                        <div class="file-item" onclick="ubOpenProjectDetail(1)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>IELTS Peak</span></div>
+                        <div class="file-item" onclick="ubOpenProjectDetail(2)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>Identify</span></div>
+                        <div class="file-item" onclick="ubOpenProjectDetail(3)"><svg viewBox="0 0 48 48" width="48" height="40"><path d="M4 12h16l4-4h20a2 2 0 012 2v28a2 2 0 01-2 2H4a2 2 0 01-2-2V14a2 2 0 012-2z" fill="#f6c445"/><rect x="2" y="16" width="44" height="24" rx="2" fill="#ffd95a"/></svg><span>AutPlatform</span></div>
+                    </div>
+                    <div class="project-detail" id="ub-projectDetail">
+                        <button class="detail-back" onclick="ubCloseProjectDetail()">&#8592; Back</button>
+                        <div class="detail-content" id="ub-detailContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills (GNOME Terminal) -->
+        <div class="ub-window" id="ub-win-skills" style="width:580px;height:460px;">
+            <div class="ub-titlebar ub-titlebar-dark" onmousedown="ubStartDrag(event,'ub-win-skills')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('skills')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('skills')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('skills')">&#x2b;</button>
+                </div>
+                <div class="ub-title" style="color:#ddd">Terminal</div>
+            </div>
+            <div class="ub-window-body" style="background:#300a24;">
+                <div class="ub-term">
+                    <div class="ub-tl">Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.8.0 x86_64)</div>
+                    <div class="ub-tl">&nbsp;</div>
+                    <div class="ub-tl"><span class="ub-prompt-u">shahzod</span><span style="color:#fff">@</span><span class="ub-prompt-h">ubuntu</span><span style="color:#fff">:</span><span class="ub-prompt-p">~</span><span style="color:#fff">$ </span>skills --list --all</div>
+                    <div class="ub-tl">&nbsp;</div>
+                    <div class="ub-tl ub-tc">══ FRONTEND ══</div>
+                    <div class="ub-ts"><span class="ub-tb">HTML / CSS</span><span class="ub-tp">████████████████████░░ 92%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">JavaScript</span><span class="ub-tp">██████████████████░░░░ 88%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">React</span><span class="ub-tp">████████████████░░░░░░ 82%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">TypeScript</span><span class="ub-tp">███████████████░░░░░░░ 78%</span></div>
+                    <div class="ub-tl">&nbsp;</div>
+                    <div class="ub-tl ub-tc">══ BACKEND ══</div>
+                    <div class="ub-ts"><span class="ub-tb">Python</span><span class="ub-tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">Node.js</span><span class="ub-tp">███████████████░░░░░░░ 70%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">Java</span><span class="ub-tp">█████████░░░░░░░░░░░░░ 40%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">C++</span><span class="ub-tp">█████████░░░░░░░░░░░░░ 40%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">C#</span><span class="ub-tp">████░░░░░░░░░░░░░░░░░░ 20%</span></div>
+                    <div class="ub-tl">&nbsp;</div>
+                    <div class="ub-tl ub-tc">══ TOOLS ══</div>
+                    <div class="ub-ts"><span class="ub-tb">Git / GitHub</span><span class="ub-tp">████████████████████░░ 90%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">Docker</span><span class="ub-tp">████████████████░░░░░░ 80%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">VS Code</span><span class="ub-tp">█████████████████░░░░░ 85%</span></div>
+                    <div class="ub-ts"><span class="ub-tb">Linux</span><span class="ub-tp">███████████████░░░░░░░ 75%</span></div>
+                    <div class="ub-tl">&nbsp;</div>
+                    <div class="ub-tl"><span class="ub-prompt-u">shahzod</span><span style="color:#fff">@</span><span class="ub-prompt-h">ubuntu</span><span style="color:#fff">:</span><span class="ub-prompt-p">~</span><span style="color:#fff">$ <span class="cursor">&#9646;</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="ub-window" id="ub-win-contact" style="width:480px;height:400px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-contact')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('contact')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('contact')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('contact')">&#x2b;</button>
+                </div>
+                <div class="ub-title">Contacts</div>
+            </div>
+            <div class="ub-window-body">
+                <div class="contact-list">
+                    <a href="https://www.linkedin.com/in/shahzod-nematov-b7b965278/" target="_blank" class="contact-item"><div class="ci-icon ci-linkedin">in</div><div class="ci-info"><div class="ci-name">LinkedIn</div><div class="ci-val">shahzod-nematov</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="https://github.com/Shahzod1602" target="_blank" class="contact-item"><div class="ci-icon ci-github"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></div><div class="ci-info"><div class="ci-name">GitHub</div><div class="ci-val">Shahzod1602</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="https://t.me/Shahzod_pc" target="_blank" class="contact-item"><div class="ci-icon ci-telegram"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div><div class="ci-info"><div class="ci-name">Telegram</div><div class="ci-val">@Shahzod_pc</div></div><div class="ci-arrow">&#8594;</div></a>
+                    <a href="mailto:shaxzodnematov1602@gmail.com" class="contact-item"><div class="ci-icon ci-email">&#9993;</div><div class="ci-info"><div class="ci-name">Email</div><div class="ci-val">shaxzodnematov1602@gmail.com</div></div><div class="ci-arrow">&#8594;</div></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resume (gedit) -->
+        <div class="ub-window" id="ub-win-resume" style="width:520px;height:460px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-resume')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('resume')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('resume')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('resume')">&#x2b;</button>
+                </div>
+                <div class="ub-title">Resume.txt — gedit</div>
+            </div>
+            <div class="ub-window-body" style="background:#fff;">
+                <pre class="mac-textedit-text">╔══════════════════════════════════════════╗
+║          SHAHZOD NEMATOV                 ║
+║    AI/ML Engineer &amp; Full-Stack Dev       ║
+╚══════════════════════════════════════════╝
+
+ABOUT
+───────────────────────────────────────────
+AI/ML engineer building intelligent systems
+— from logistics AI to real-time computer
+vision applications. Strong full-stack
+background with focus on scalable,
+production-ready AI products.
+
+EXPERIENCE
+───────────────────────────────────────────
+► Abstract IT Group — AI Engineer
+  Mar 2025 - Present
+► American Univ. of Tech — Assistant
+  Oct 2025 - Present
+► Vikatoday — Co-Founder
+  Jun 2025 - Present
+
+SKILLS
+───────────────────────────────────────────
+► Programming: Python, Java, C++
+► AI / ML: Deep Learning, NLP, Computer Vision
+► Frameworks: PyTorch, TensorFlow, OpenCV
+► LLM: GPT API, Prompt Engineering, RAG
+► Backend: FastAPI, Flask, REST APIs
+► Databases: PostgreSQL, MySQL, SQLite
+► Cloud: Render, VPS, Docker, Linux
+► Robotics: Sensor Integration, L298N
+► Automation: Telegram Bots, Web Automation
+► Tools: Git, CLI, Technical Documentation
+
+EDUCATION
+───────────────────────────────────────────
+► Computer Science
+► Self-taught &amp; Online Courses
+► Continuous Learning
+
+LANGUAGES
+───────────────────────────────────────────
+► Uzbek   — Native
+► English — Fluent
+
+───────────────────────────────────────────
+  "Code is poetry." — Shahzod
+───────────────────────────────────────────</pre>
+            </div>
+        </div>
+
+        <!-- Music (Rhythmbox) -->
+        <div class="ub-window" id="ub-win-music" style="width:480px;height:540px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-music')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('music')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('music')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('music')">&#x2b;</button>
+                </div>
+                <div class="ub-title">Rhythmbox</div>
+            </div>
+            <div class="ub-window-body music-player" id="ub-musicPlayer">
+                <div class="music-visualizer" id="ub-musicVisualizer">
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+                    <div class="viz-bar"></div><div class="viz-bar"></div>
+                </div>
+                <div class="music-track-name" id="ub-musicTrackName">No tracks loaded</div>
+                <div class="music-time">
+                    <span id="ub-musicCurrentTime">0:00</span>
+                    <span id="ub-musicDuration">0:00</span>
+                </div>
+                <div class="music-progress" id="ub-musicProgress">
+                    <div class="music-progress-fill" id="ub-musicProgressFill"></div>
+                </div>
+                <div class="music-controls">
+                    <button class="mc-btn" onclick="ubMusicPrev()">&#9198;</button>
+                    <button class="mc-btn mc-play" onclick="ubMusicTogglePlay()" id="ub-musicPlayBtn">&#9654;</button>
+                    <button class="mc-btn" onclick="ubMusicNext()">&#9197;</button>
+                    <div class="music-volume">
+                        <span class="vol-icon">&#128266;</span>
+                        <input type="range" class="vol-slider" id="ub-musicVolume" min="0" max="100" value="80" oninput="ubMusicSetVolume(this.value)">
+                    </div>
+                </div>
+                <div class="music-playlist">
+                    <div class="playlist-header">Playlist</div>
+                    <div class="playlist-items" id="ub-playlistItems">
+                        <div class="playlist-empty">No tracks — add MP3 files to music/ folder</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery (GNOME Photos) -->
+        <div class="ub-window" id="ub-win-gallery" style="width:640px;height:520px;">
+            <div class="ub-titlebar" onmousedown="ubStartDrag(event,'ub-win-gallery')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('gallery')">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('gallery')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('gallery')">&#x2b;</button>
+                </div>
+                <div class="ub-title">Photos</div>
+            </div>
+            <div class="ub-toolbar">
+                <button class="ub-tb-btn" onclick="ubGalleryPrev()">&#8592;</button>
+                <button class="ub-tb-btn" onclick="ubGalleryNext()">&#8594;</button>
+                <button class="ub-tb-btn" onclick="galleryZoomIn()">+</button>
+                <button class="ub-tb-btn" onclick="galleryZoomOut()">&#8722;</button>
+                <div class="ub-path-bar">&#128444; <span id="ub-galleryFileName">No images</span></div>
+            </div>
+            <div class="ub-window-body gallery-body">
+                <div class="gallery-viewer" id="ub-galleryViewer">
+                    <div class="gallery-empty" id="ub-galleryEmpty">No images — add files to images/ folder</div>
+                    <img class="gallery-main-img" id="ub-galleryMainImg" style="display:none" alt="Gallery image">
+                    <button class="gallery-nav gallery-nav-left" onclick="ubGalleryPrev()">&#8249;</button>
+                    <button class="gallery-nav gallery-nav-right" onclick="ubGalleryNext()">&#8250;</button>
+                </div>
+                <div class="gallery-thumbstrip" id="ub-galleryThumbstrip"></div>
+            </div>
+        </div>
+
+        <!-- CS 1.6 -->
+        <div class="ub-window" id="ub-win-csgo" style="width:700px;height:520px;">
+            <div class="ub-titlebar ub-titlebar-dark" onmousedown="ubStartDrag(event,'ub-win-csgo')">
+                <div class="ub-traffic">
+                    <button class="ub-btn-close" onclick="ubCloseWindow('csgo');ubCsStopGame()">&#xd7;</button>
+                    <button class="ub-btn-minimize" onclick="ubMinimizeWindow('csgo')">&#x2212;</button>
+                    <button class="ub-btn-maximize" onclick="ubMaximizeWindow('csgo')">&#x2b;</button>
+                </div>
+                <div class="ub-title" style="color:#ddd">Counter-Strike 1.6</div>
+            </div>
+            <div class="ub-window-body cs-game-body">
+                <div class="cs-menu" id="ub-csMenu">
+                    <div class="cs-menu-title">Counter-Strike</div>
+                    <div class="cs-menu-ver">version 1.6</div>
+                    <div class="cs-menu-items">
+                        <div class="cs-menu-item" onclick="ubCsStartGame()">New Game</div>
+                        <div class="cs-menu-item" id="ub-csMenuBest">Best: 0 kills</div>
+                        <div class="cs-menu-item cs-menu-quit" onclick="ubCloseWindow('csgo');ubCsStopGame()">Quit</div>
+                    </div>
+                    <div class="cs-menu-footer">Aim Trainer — Click enemies to score</div>
+                </div>
+                <canvas id="ub-csCanvas" style="display:none"></canvas>
+                <div class="cs-hud" id="ub-csHud" style="display:none">
+                    <div class="cs-hud-left"><div class="cs-hp"><span class="cs-hp-icon">+</span> <span id="ub-csHp">100</span></div><div class="cs-armor">&#128737; <span id="ub-csArmor">100</span></div></div>
+                    <div class="cs-hud-center"><div class="cs-round">Round: <span id="ub-csRound">1</span></div><div class="cs-timer" id="ub-csTimer">0:30</div></div>
+                    <div class="cs-hud-right"><div class="cs-kills">Kills: <span id="ub-csKills">0</span></div><div class="cs-ammo"><span id="ub-csAmmo">30</span> / 90</div><div class="cs-money">$<span id="ub-csMoney">800</span></div></div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /ub-desktop -->
+
+    <script src="script.js?v=5"></script>
 </body>
 </html>
