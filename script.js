@@ -986,10 +986,11 @@ const projects = [
     },
     {
         name: 'Identify',
-        desc: 'Identifikatsiya va autentifikatsiya tizimi. Foydalanuvchilarni aniqlash va tasdiqlash.',
-        tags: ['Auth', 'Security'],
-        github: '#', demo: '#',
+        desc: 'Yuzni tanish (Face ID) orqali ishlovchi davomat tizimi. Xodimlarni avtomatik aniqlab, davomatni qayd qiladi. GPS geolokatsiya tekshiruvi — xodimlar faqat belgilangan hududda kirishi mumkin.',
+        tags: ['Face Recognition', 'Attendance', 'AI', 'SaaS'],
+        github: '#', demo: 'https://management.identify.uz',
         images: [
+            'projects/identify/identify-mgmt-1.webp',
             'projects/identify/identify-1.webp',
             'projects/identify/identify-2.webp',
             'projects/identify/identify-3.webp',
@@ -1008,6 +1009,26 @@ const projects = [
             'projects/autplatform/autplatform-2.webp',
             'projects/autplatform/autplatform-3.webp',
             'projects/autplatform/autplatform-4.webp'
+        ]
+    },
+    {
+        name: 'CallMetrics',
+        desc: 'AI yordamida har bir qo\'ng\'iroqni tahlil qiluvchi platforma. Suhbat kayfiyati, sifati va qoidaga muvofiqligini avtomatik baholaydi. CRM integratsiyalari: Bitrix24, amoCRM, OnlinePBX.',
+        tags: ['AI', 'Analytics', 'CRM', 'SaaS'],
+        github: '#', demo: 'https://call.identify.uz',
+        images: [
+            'projects/callmetrics/callmetrics-1.webp',
+            'projects/callmetrics/callmetrics-2.webp'
+        ]
+    },
+    {
+        name: 'SimpleTrucking',
+        desc: 'Yuk tashish va logistika boshqaruv platformasi. Yuklar, haydovchilar va reyslarni yagona tizimda boshqarish.',
+        tags: ['Logistics', 'SaaS', 'Web'],
+        github: '#', demo: 'https://simpletrucking.online',
+        images: [
+            'projects/simpletrucking/simpletrucking-1.webp',
+            'projects/simpletrucking/simpletrucking-2.webp'
         ]
     }
 ];
