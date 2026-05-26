@@ -220,7 +220,7 @@ function macOpenProjectDetail(i) {
     let imagesHtml = '';
     if (p.images && p.images.length > 0) {
         imagesHtml = '<div class="project-images">' +
-            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            p.images.map(src => '<img loading="lazy" decoding="async" src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
             '</div>';
     }
     document.getElementById('mac-detailContent').innerHTML =
@@ -326,6 +326,7 @@ function macGalleryInit() {
     strip.innerHTML = '';
     galleryImages.forEach((img, i) => {
         const thumb = document.createElement('img');
+        thumb.loading = 'lazy';
         thumb.className = 'gallery-thumb';
         thumb.src = img.src;
         thumb.alt = img.name;
@@ -621,7 +622,7 @@ function ubOpenProjectDetail(i) {
     let imagesHtml = '';
     if (p.images && p.images.length > 0) {
         imagesHtml = '<div class="project-images">' +
-            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            p.images.map(src => '<img loading="lazy" decoding="async" src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
             '</div>';
     }
     document.getElementById('ub-detailContent').innerHTML =
@@ -711,6 +712,7 @@ function ubGalleryInit() {
     strip.innerHTML = '';
     galleryImages.forEach((img, i) => {
         const thumb = document.createElement('img');
+        thumb.loading = 'lazy';
         thumb.className = 'gallery-thumb';
         thumb.src = img.src; thumb.alt = img.name;
         thumb.onclick = () => ubGalleryShowImage(i);
@@ -959,12 +961,12 @@ const projects = [
         tags: ['Web', 'Platform'],
         github: '#', demo: '#',
         images: [
-            'projects/Multilevel/multilevel-1.png',
-            'projects/Multilevel/multilevel-2.png',
-            'projects/Multilevel/multilevel-3.png',
-            'projects/Multilevel/multilevel-4.png',
-            'projects/Multilevel/multilevel-5.png',
-            'projects/Multilevel/multilevel-6.png'
+            'projects/Multilevel/multilevel-1.webp',
+            'projects/Multilevel/multilevel-2.webp',
+            'projects/Multilevel/multilevel-3.webp',
+            'projects/Multilevel/multilevel-4.webp',
+            'projects/Multilevel/multilevel-5.webp',
+            'projects/Multilevel/multilevel-6.webp'
         ]
     },
     {
@@ -973,13 +975,13 @@ const projects = [
         tags: ['Education', 'IELTS', 'Platform'],
         github: '#', demo: '#',
         images: [
-            'projects/ieltspeak/ieltspeak-1.png',
-            'projects/ieltspeak/ieltspeak-2.png',
-            'projects/ieltspeak/ieltspeak-3.png',
-            'projects/ieltspeak/ieltspeak-4.png',
-            'projects/ieltspeak/ieltspeak-5.png',
-            'projects/ieltspeak/ieltspeak-6.png',
-            'projects/ieltspeak/ieltspeak-7.png'
+            'projects/ieltspeak/ieltspeak-1.webp',
+            'projects/ieltspeak/ieltspeak-2.webp',
+            'projects/ieltspeak/ieltspeak-3.webp',
+            'projects/ieltspeak/ieltspeak-4.webp',
+            'projects/ieltspeak/ieltspeak-5.webp',
+            'projects/ieltspeak/ieltspeak-6.webp',
+            'projects/ieltspeak/ieltspeak-7.webp'
         ]
     },
     {
@@ -988,12 +990,12 @@ const projects = [
         tags: ['Auth', 'Security'],
         github: '#', demo: '#',
         images: [
-            'projects/identify/identify-1.png',
-            'projects/identify/identify-2.png',
-            'projects/identify/identify-3.png',
-            'projects/identify/identify-photo-1.jpg',
-            'projects/identify/identify-photo-2.jpg',
-            'projects/identify/identify-photo-3.jpg'
+            'projects/identify/identify-1.webp',
+            'projects/identify/identify-2.webp',
+            'projects/identify/identify-3.webp',
+            'projects/identify/identify-photo-1.webp',
+            'projects/identify/identify-photo-2.webp',
+            'projects/identify/identify-photo-3.webp'
         ]
     },
     {
@@ -1002,10 +1004,10 @@ const projects = [
         tags: ['Automation', 'Platform'],
         github: '#', demo: '#',
         images: [
-            'projects/autplatform/autplatform-1.png',
-            'projects/autplatform/autplatform-2.png',
-            'projects/autplatform/autplatform-3.png',
-            'projects/autplatform/autplatform-4.png'
+            'projects/autplatform/autplatform-1.webp',
+            'projects/autplatform/autplatform-2.webp',
+            'projects/autplatform/autplatform-3.webp',
+            'projects/autplatform/autplatform-4.webp'
         ]
     }
 ];
@@ -1016,7 +1018,7 @@ function openProjectDetail(i) {
     let imagesHtml = '';
     if (p.images && p.images.length > 0) {
         imagesHtml = '<div class="project-images">' +
-            p.images.map(src => '<img src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
+            p.images.map(src => '<img loading="lazy" decoding="async" src="' + src + '" alt="' + p.name + '" onclick="window.open(this.src)">').join('') +
             '</div>';
     }
     document.getElementById('detailContent').innerHTML =
@@ -1140,10 +1142,10 @@ musicInit();
 
 // ===== Photo Gallery =====
 const galleryImages = [
-    { src: 'images/study.jpg', name: 'Study' },
-    { src: 'images/presentation.jpg', name: 'Presentation' },
-    { src: 'images/friends.jpg', name: 'Friends' },
-    { src: 'images/chill.jpg', name: 'Chill' },
+    { src: 'images/study.webp', name: 'Study' },
+    { src: 'images/presentation.webp', name: 'Presentation' },
+    { src: 'images/friends.webp', name: 'Friends' },
+    { src: 'images/chill.webp', name: 'Chill' },
 ];
 
 let galleryCurrentIndex = 0;
@@ -1158,6 +1160,7 @@ function galleryInit() {
     strip.innerHTML = '';
     galleryImages.forEach((img, i) => {
         const thumb = document.createElement('img');
+        thumb.loading = 'lazy';
         thumb.className = 'gallery-thumb';
         thumb.src = img.src;
         thumb.alt = img.name;
