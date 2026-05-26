@@ -656,14 +656,16 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .mac-btn-close .mac-btn-icon,
 .mac-btn-minimize .mac-btn-icon,
 .mac-btn-maximize .mac-btn-icon{
-    font-size:9px;font-weight:700;color:rgba(0,0,0,0);
+    font-size:9px;font-weight:700;color:rgba(0,0,0,0.5);
     line-height:1;pointer-events:none;transition:color .1s;
     font-family:system-ui,sans-serif;
 }
+/* hide symbols only when the window is unfocused (grey dots) */
+.mac-window:not(.focused) .mac-btn-icon{color:rgba(0,0,0,0)}
 .mac-traffic:hover .mac-btn-close .mac-btn-icon,
 .mac-traffic:hover .mac-btn-minimize .mac-btn-icon,
 .mac-traffic:hover .mac-btn-maximize .mac-btn-icon{
-    color:rgba(0,0,0,0.5);
+    color:rgba(0,0,0,0.62);
 }
 
 .mac-title{font-size:13px;font-weight:600;color:#333;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
@@ -921,9 +923,12 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .ub-btn-close,.ub-btn-minimize,.ub-btn-maximize{
     width:14px;height:14px;border-radius:50%;border:none;cursor:pointer;
     display:flex;align-items:center;justify-content:center;
-    font-size:9px;font-weight:700;color:transparent;
+    font-size:9px;font-weight:700;color:rgba(0,0,0,.55);
     transition:filter .1s,transform .1s;outline:none;
 }
+.ub-window:not(.focused) .ub-btn-close,
+.ub-window:not(.focused) .ub-btn-minimize,
+.ub-window:not(.focused) .ub-btn-maximize{color:rgba(0,0,0,0)}
 .ub-btn-close{background:#E95420;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)}
 .ub-btn-minimize{background:#f6c445;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.18)}
 .ub-btn-maximize{background:#38a169;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.18)}

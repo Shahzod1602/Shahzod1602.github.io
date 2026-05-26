@@ -23,6 +23,11 @@ let macMusicCurrentIndex = -1;
 let macMusicIsPlaying = false;
 let macGalleryCurrentIndex = 0;
 
+// ===== SVG icon constants (render everywhere, no emoji-font dependency) =====
+const ICON_PLAY  = '<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+const ICON_STOP  = '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>';
+
 // ===== OS Select =====
 window.addEventListener('DOMContentLoaded', () => {
     updateClock();
@@ -257,7 +262,7 @@ function macMusicPlayTrack(index) {
     macMusicAudio.play();
     macMusicIsPlaying = true;
     const btn = document.getElementById('m-musicPlayBtn');
-    if (btn) btn.textContent = '⏸';
+    if (btn) btn.innerHTML = ICON_PAUSE;
     const tn = document.getElementById('m-musicTrackName');
     if (tn) tn.textContent = track.title;
     const mp = document.getElementById('mac-musicPlayer');
@@ -273,12 +278,12 @@ function macMusicTogglePlay() {
     if (macMusicIsPlaying) {
         macMusicAudio.pause();
         macMusicIsPlaying = false;
-        if (btn) btn.textContent = '▶';
+        if (btn) btn.innerHTML = ICON_PLAY;
         if (mp) mp.classList.remove('playing');
     } else {
         macMusicAudio.play();
         macMusicIsPlaying = true;
-        if (btn) btn.textContent = '⏸';
+        if (btn) btn.innerHTML = ICON_PAUSE;
         if (mp) mp.classList.add('playing');
     }
 }
@@ -658,7 +663,7 @@ function ubMusicPlayTrack(index) {
     ubMusicAudio.play();
     ubMusicIsPlaying = true;
     const btn = document.getElementById('ub-musicPlayBtn');
-    if (btn) btn.textContent = '⏸';
+    if (btn) btn.innerHTML = ICON_PAUSE;
     const tn = document.getElementById('ub-musicTrackName');
     if (tn) tn.textContent = track.title;
     const mp = document.getElementById('ub-musicPlayer');
@@ -672,11 +677,11 @@ function ubMusicTogglePlay() {
     const mp = document.getElementById('ub-musicPlayer');
     if (ubMusicIsPlaying) {
         ubMusicAudio.pause(); ubMusicIsPlaying = false;
-        if (btn) btn.textContent = '▶';
+        if (btn) btn.innerHTML = ICON_PLAY;
         if (mp) mp.classList.remove('playing');
     } else {
         ubMusicAudio.play(); ubMusicIsPlaying = true;
-        if (btn) btn.textContent = '⏸';
+        if (btn) btn.innerHTML = ICON_PAUSE;
         if (mp) mp.classList.add('playing');
     }
 }
@@ -1086,7 +1091,7 @@ function musicPlayTrack(index) {
     musicAudio.src = track.src;
     musicAudio.play();
     musicIsPlaying = true;
-    document.getElementById('musicPlayBtn').textContent = '⏸';
+    document.getElementById('musicPlayBtn').innerHTML = ICON_PAUSE;
     document.getElementById('musicTrackName').textContent = track.title;
     document.querySelector('.music-player').classList.add('playing');
     musicUpdatePlaylistUI();
@@ -1098,12 +1103,12 @@ function musicTogglePlay() {
     if (musicIsPlaying) {
         musicAudio.pause();
         musicIsPlaying = false;
-        document.getElementById('musicPlayBtn').textContent = '▶';
+        document.getElementById('musicPlayBtn').innerHTML = ICON_PLAY;
         document.querySelector('.music-player').classList.remove('playing');
     } else {
         musicAudio.play();
         musicIsPlaying = true;
-        document.getElementById('musicPlayBtn').textContent = '⏸';
+        document.getElementById('musicPlayBtn').innerHTML = ICON_PAUSE;
         document.querySelector('.music-player').classList.add('playing');
     }
 }
@@ -1235,10 +1240,10 @@ function gallerySlideshow() {
     if (gallerySlideshowTimer) {
         clearInterval(gallerySlideshowTimer);
         gallerySlideshowTimer = null;
-        document.getElementById('slideshowBtn').textContent = '▶';
+        document.getElementById('slideshowBtn').innerHTML = ICON_PLAY;
     } else {
         gallerySlideshowTimer = setInterval(() => galleryNext(), 3000);
-        document.getElementById('slideshowBtn').textContent = '⏹';
+        document.getElementById('slideshowBtn').innerHTML = ICON_STOP;
     }
 }
 

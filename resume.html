@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahzod Nematov — Resume</title>
+<meta name="description" content="Shahzod Nematov — AI/ML Engineer & Full-Stack Developer. Resume.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a2230;
+    --muted: #5a6678;
+    --faint: #8a94a6;
+    --accent: #2563eb;
+    --accent-soft: #eaf1ff;
+    --line: #e3e8f0;
+    --sidebar-bg: #0f1b2d;
+    --sidebar-ink: #e7edf6;
+    --sidebar-muted: #9aa9c0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    background: #aab3c0;
+    font-size: 10.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* A4 sheet */
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 16px auto;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 66mm 1fr;
+    box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    overflow: hidden;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--sidebar-bg);
+    color: var(--sidebar-ink);
+    padding: 16mm 8mm 12mm;
+  }
+
+  .avatar {
+    width: 30mm; height: 30mm;
+    border-radius: 50%;
+    margin: 0 auto 7mm;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 800; letter-spacing: 1px;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+  }
+
+  .side h2 {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 9mm 0 3.5mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+    font-weight: 700;
+  }
+  .side h2:first-of-type { margin-top: 0; }
+
+  .contact-row {
+    display: flex;
+    gap: 2.5mm;
+    align-items: flex-start;
+    margin-bottom: 3mm;
+    font-size: 9.5px;
+    color: var(--sidebar-muted);
+    word-break: break-word;
+  }
+  .contact-row .ic {
+    flex: 0 0 auto;
+    color: #5b9cff;
+    font-weight: 700;
+    width: 13px;
+  }
+  .contact-row a { color: var(--sidebar-muted); text-decoration: none; }
+
+  .skill-group { margin-bottom: 4mm; }
+  .skill-group .label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #5b9cff;
+    font-weight: 700;
+    margin-bottom: 1.5mm;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+  .chip {
+    font-size: 9px;
+    padding: 1mm 2.2mm;
+    border-radius: 4px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.08);
+    color: var(--sidebar-ink);
+    white-space: nowrap;
+  }
+
+  .lang-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 2mm;
+    font-size: 9.8px;
+  }
+  .lang-row .lvl { color: #5b9cff; font-size: 8.8px; }
+
+  .edu-item { margin-bottom: 2.5mm; font-size: 9.5px; }
+  .edu-item .t { color: #fff; font-weight: 600; }
+  .edu-item .s { color: var(--sidebar-muted); }
+
+  /* ---------- Main ---------- */
+  .main { padding: 16mm 12mm 12mm 11mm; }
+
+  .name {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .role {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 1.5mm;
+    letter-spacing: .2px;
+  }
+  .badges { margin-top: 3mm; display: flex; gap: 2mm; flex-wrap: wrap; }
+  .badge {
+    font-size: 8.8px;
+    font-weight: 600;
+    padding: 1mm 2.5mm;
+    border-radius: 20px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .sec { margin-top: 7mm; }
+  .sec-title {
+    display: flex; align-items: center; gap: 3mm;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 3.5mm;
+  }
+  .sec-title::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+  .sec-title .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex: 0 0 auto;
+  }
+
+  .summary { color: var(--muted); font-size: 10.5px; line-height: 1.6; }
+
+  /* Experience */
+  .exp { position: relative; padding-left: 6mm; padding-bottom: 4mm; }
+  .exp::before {
+    content: ""; position: absolute; left: 0; top: 4px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #fff; border: 2px solid var(--accent);
+  }
+  .exp:not(:last-child)::after {
+    content: ""; position: absolute; left: 3px; top: 13px; bottom: 0;
+    width: 1.5px; background: var(--line);
+  }
+  .exp-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 4mm;
+  }
+  .exp-role { font-size: 11.5px; font-weight: 700; color: var(--ink); }
+  .exp-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--faint); white-space: nowrap;
+  }
+  .exp-org { font-size: 10px; font-weight: 600; color: var(--accent); }
+  .exp-desc { font-size: 9.8px; color: var(--muted); margin-top: .8mm; }
+
+  /* Projects */
+  .proj-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 5mm;
+  }
+  .proj { padding-bottom: .5mm; }
+  .proj-head {
+    display: flex; align-items: baseline; gap: 2mm; flex-wrap: wrap;
+  }
+  .proj-name { font-size: 10.5px; font-weight: 700; color: var(--ink); }
+  .proj-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; color: var(--accent); text-decoration: none;
+  }
+  .proj-desc { font-size: 9.3px; color: var(--muted); margin-top: .6mm; line-height: 1.45; }
+  .proj-tags { font-size: 8.2px; color: var(--faint); margin-top: 1mm; letter-spacing: .3px; }
+
+  /* ---------- Print ---------- */
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; width: 210mm; min-height: 0; height: 296mm; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <!-- Sidebar -->
+    <aside class="side">
+      <div class="avatar">SN</div>
+
+      <h2>Contact</h2>
+      <div class="contact-row"><span class="ic">@</span><a href="mailto:shaxzodnematov1602@gmail.com">shaxzodnematov1602@gmail.com</a></div>
+      <div class="contact-row"><span class="ic">in</span><a href="https://www.linkedin.com/in/shahzod-nematov">linkedin.com/in/shahzod-nematov</a></div>
+      <div class="contact-row"><span class="ic">gh</span><a href="https://github.com/Shahzod1602">github.com/Shahzod1602</a></div>
+      <div class="contact-row"><span class="ic">tg</span><a href="https://t.me/Shahzod_pc">@Shahzod_pc</a></div>
+      <div class="contact-row"><span class="ic">◍</span><span>Uzbekistan · Available for work</span></div>
+
+      <h2>Skills</h2>
+      <div class="skill-group">
+        <div class="label">AI / ML</div>
+        <div class="chips">
+          <span class="chip">Deep Learning</span>
+          <span class="chip">Computer Vision</span>
+          <span class="chip">NLP</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">TensorFlow</span>
+          <span class="chip">OpenCV</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">LLM</div>
+        <div class="chips">
+          <span class="chip">GPT API</span>
+          <span class="chip">Prompt Eng.</span>
+          <span class="chip">RAG</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Backend</div>
+        <div class="chips">
+          <span class="chip">Python</span>
+          <span class="chip">FastAPI</span>
+          <span class="chip">Flask</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Frontend</div>
+        <div class="chips">
+          <span class="chip">JavaScript</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">React</span>
+          <span class="chip">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Data &amp; Cloud</div>
+        <div class="chips">
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Linux</span>
+          <span class="chip">Git</span>
+          <span class="chip">VPS</span>
+        </div>
+      </div>
+
+      <h2>Languages</h2>
+      <div class="lang-row"><span>Uzbek</span><span class="lvl">Native</span></div>
+      <div class="lang-row"><span>English</span><span class="lvl">Fluent</span></div>
+
+      <h2>Education</h2>
+      <div class="edu-item">
+        <div class="t">Computer Science</div>
+        <div class="s">Self-taught &amp; online courses</div>
+      </div>
+      <div class="edu-item">
+        <div class="t">Continuous Learning</div>
+        <div class="s">AI, ML &amp; software engineering</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="name">Shahzod Nematov</div>
+      <div class="role">AI/ML Engineer &amp; Full-Stack Developer</div>
+      <div class="badges">
+        <span class="badge">Computer Vision</span>
+        <span class="badge">LLM / AI Products</span>
+        <span class="badge">SaaS Platforms</span>
+      </div>
+
+      <section class="sec">
+        <div class="sec-title"><span class="dot"></span>Summary</div>
+        <p class="summary">AI/ML engineer with hands-on experience building intelligent systems — from AI-powered logistics platforms to real-time computer vision applications. I combine deep learning expertise with full-stack development skills to ship production-ready products end to end.</p>
+      </section>
+
+      <section class="sec">
+        <div class="sec-title"><span class="dot"></span>Experience</div>
+
+        <div class="exp">
+          <div class="exp-head">
+            <span class="exp-role">AI Engineer</span>
+            <span class="exp-date">Mar 2025 — Present</span>
+          </div>
+          <div class="exp-org">Abstract IT Group</div>
+          <div class="exp-desc">Building an AI-powered logistics platform — designing and shipping production ML features.</div>
+        </div>
+
+        <div class="exp">
+          <div class="exp-head">
+            <span class="exp-role">Assistant</span>
+            <span class="exp-date">Oct 2025 — Present</span>
+          </div>
+          <div class="exp-org">American University of Technology</div>
+          <div class="exp-desc">Supporting academic and technical work in AI and software engineering.</div>
+        </div>
+
+        <div class="exp">
+          <div class="exp-head">
+            <span class="exp-role">Co-Founder</span>
+            <span class="exp-date">Jun 2025 — Present</span>
+          </div>
+          <div class="exp-org">Vikatoday</div>
+          <div class="exp-desc">Co-founded and helped build the product and engineering direction.</div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-title"><span class="dot"></span>Selected Projects</div>
+        <div class="proj-grid">
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">Identify</span><a class="proj-link" href="https://management.identify.uz">management.identify.uz</a></div>
+            <div class="proj-desc">Face-recognition (Face ID) attendance system that auto-identifies employees and logs attendance, with GPS geofencing so check-in is allowed only within a designated area.</div>
+            <div class="proj-tags">Computer Vision · AI · Attendance · SaaS</div>
+          </div>
+
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">CallMetrics</span><a class="proj-link" href="https://call.identify.uz">call.identify.uz</a></div>
+            <div class="proj-desc">AI platform that analyzes every call — scoring sentiment, quality, and compliance automatically. CRM integrations: Bitrix24, amoCRM, OnlinePBX.</div>
+            <div class="proj-tags">AI · Analytics · CRM · SaaS</div>
+          </div>
+
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">SimpleTrucking</span><a class="proj-link" href="https://simpletrucking.online">simpletrucking.online</a></div>
+            <div class="proj-desc">Trucking &amp; logistics management platform to manage loads, drivers, and trips in a single system.</div>
+            <div class="proj-tags">Logistics · SaaS · Web</div>
+          </div>
+
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">IELTS Peak</span></div>
+            <div class="proj-desc">IELTS exam-prep platform covering Speaking, Writing, Reading, and Listening sections.</div>
+            <div class="proj-tags">Education · Platform</div>
+          </div>
+
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">AutPlatform</span></div>
+            <div class="proj-desc">Automation platform for orchestrating and managing business processes.</div>
+            <div class="proj-tags">Automation · Platform</div>
+          </div>
+
+          <div class="proj">
+            <div class="proj-head"><span class="proj-name">Multilevel</span></div>
+            <div class="proj-desc">Multilevel-marketing platform with multi-tier structure and management.</div>
+            <div class="proj-tags">Web · Platform</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-title"><span class="dot"></span>Also Works With</div>
+        <p class="summary">Java · C++ · C# · SQLite · Render · Robotics (sensor integration, L298N motor drivers) · Telegram bots &amp; web automation · CLI tooling · technical documentation.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
