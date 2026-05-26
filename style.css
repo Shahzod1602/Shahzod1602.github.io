@@ -22,21 +22,30 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .boot-dots span:nth-child(5){animation-delay:.6s}
 @keyframes dotBounce{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1.2)}}
 
-/* ===== Desktop — Win7 wallpaper ===== */
+/* ===== Desktop — Win7 default "harmony" wallpaper ===== */
 .desktop{
     position:fixed;inset:0;bottom:48px;
     background:
-        radial-gradient(ellipse 120% 80% at 80% 90%, rgba(255,255,255,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 60% at 50% 110%, rgba(100,180,255,0.15) 0%, transparent 50%),
-        linear-gradient(170deg, #0b3d91 0%, #1565c0 25%, #1e88e5 45%, #2196f3 55%, #0d47a1 80%, #0a2e6e 100%);
+        radial-gradient(ellipse 60% 45% at 50% 102%, rgba(180,225,255,0.55) 0%, rgba(90,170,255,0.18) 35%, transparent 62%),
+        radial-gradient(ellipse 120% 70% at 78% 8%, rgba(40,120,210,0.45) 0%, transparent 55%),
+        linear-gradient(178deg, #021024 0%, #062a5a 22%, #0a4690 44%, #0e63c4 64%, #1d7fe0 82%, #2f93ec 100%);
     opacity:0;transition:opacity .6s;overflow:hidden;
 }
-/* Light sweep arc at bottom — like Win7 */
+/* Glowing Windows flag emblem (Win7 desktop signature) */
+.desktop::before{
+    content:'';position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);
+    width:300px;height:300px;pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 122'%3E%3Cg transform='skewY(-7)'%3E%3Crect x='6' y='12' width='50' height='50' rx='9' fill='%23f25022'/%3E%3Crect x='64' y='8' width='50' height='50' rx='9' fill='%237fba00'/%3E%3Crect x='6' y='68' width='50' height='50' rx='9' fill='%2300a4ef'/%3E%3Crect x='64' y='64' width='50' height='50' rx='9' fill='%23ffb900'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+    opacity:.42;
+    filter:drop-shadow(0 0 34px rgba(150,210,255,.85)) drop-shadow(0 0 10px rgba(255,255,255,.5));
+}
+/* Light sweep arc + aurora streams at bottom — like Win7 */
 .desktop::after{
-    content:'';position:absolute;bottom:-30%;left:-10%;
-    width:120%;height:70%;
-    background:radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.07) 0%, transparent 70%);
-    pointer-events:none;
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 108%, rgba(255,255,255,0.14) 0%, transparent 65%),
+        linear-gradient(108deg, transparent 30%, rgba(150,210,255,0.06) 45%, transparent 52%),
+        linear-gradient(72deg, transparent 48%, rgba(120,190,255,0.05) 62%, transparent 70%);
 }
 .desktop.visible{opacity:1}
 
@@ -47,36 +56,60 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .desktop-icon span{color:#fff;font-size:11px;text-align:center;text-shadow:1px 1px 4px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.5);line-height:1.3;word-break:break-word}
 .di-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center}
 
-/* ===== Windows ===== */
-.window{position:absolute;display:none;background:#f1f1f1;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(0,0,0,0.15);flex-direction:column;min-width:300px;min-height:200px;overflow:hidden;z-index:10}
+/* ===== Windows — Aero glass ===== */
+.window{
+    position:absolute;display:none;background:#f0f0f0;
+    border-radius:8px 8px 6px 6px;
+    /* translucent Aero glass frame */
+    border:1px solid rgba(120,170,225,0.55);
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.45) inset,
+        0 18px 50px rgba(0,0,0,0.55),
+        0 0 22px rgba(70,140,220,0.28);
+    flex-direction:column;min-width:300px;min-height:200px;overflow:hidden;z-index:10;
+}
 .window.open{display:flex;animation:winOpen .2s ease-out}
-.window.maximized{top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;border-radius:0}
+.window.maximized{top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;border-radius:0;border:none}
 @keyframes winOpen{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* Titlebar — glass effect */
+/* Titlebar — Aero glass */
 .window-titlebar{
     display:flex;align-items:center;justify-content:space-between;
-    padding:6px 8px;min-height:32px;cursor:move;
-    background:linear-gradient(180deg,rgba(220,232,248,0.95),rgba(190,210,240,0.9));
-    border-bottom:1px solid #b0c4de;
-    border-radius:6px 6px 0 0;
+    padding:0 4px 0 9px;min-height:30px;cursor:move;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(228,240,252,0.72) 45%, rgba(198,222,248,0.66) 55%, rgba(214,232,250,0.72) 100%);
+    border-bottom:1px solid rgba(140,180,225,0.55);
+    border-radius:7px 7px 0 0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -8px 12px -8px rgba(120,170,225,0.5);
 }
-.window.focused .window-titlebar{background:linear-gradient(180deg,rgba(200,220,248,0.98),rgba(170,200,240,0.95))}
-.window:not(.focused) .window-titlebar{background:linear-gradient(180deg,rgba(230,230,230,0.95),rgba(215,215,215,0.9))}
-.titlebar-dark{background:linear-gradient(180deg,#444,#333)!important;border-bottom-color:#222}
-.window.focused .titlebar-dark{background:linear-gradient(180deg,#444,#333)!important}
+.window.focused .window-titlebar{background:linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(214,234,253,0.82) 45%, rgba(178,210,246,0.78) 55%, rgba(200,226,250,0.82) 100%)}
+.window:not(.focused) .window-titlebar{background:linear-gradient(180deg, rgba(248,250,253,0.85), rgba(228,234,242,0.78));box-shadow:inset 0 1px 0 rgba(255,255,255,0.8)}
+.titlebar-dark{background:linear-gradient(180deg,rgba(70,70,74,0.96),rgba(40,40,44,0.95))!important;border-bottom-color:rgba(0,0,0,0.5)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,0.12)!important}
+.window.focused .titlebar-dark{background:linear-gradient(180deg,rgba(78,78,84,0.97),rgba(44,44,48,0.96))!important}
 
-.window-title{display:flex;align-items:center;gap:6px;font-size:12px;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.titlebar-dark .window-title{color:#ddd}
+.window-title{display:flex;align-items:center;gap:6px;font-size:12px;color:#0a2a55;font-weight:500;text-shadow:0 1px 1px rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titlebar-dark .window-title{color:#e8e8e8;text-shadow:0 1px 2px rgba(0,0,0,0.6)}
 .wt-icon{font-size:14px}
 
-/* Win buttons */
-.window-controls{display:flex;gap:1px;flex-shrink:0}
-.win-btn{width:28px;height:22px;border:none;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;transition:background .1s}
-.win-minimize:hover{background:rgba(0,0,0,0.08)}
-.win-maximize:hover{background:rgba(0,0,0,0.08)}
-.win-close{background:transparent}
-.win-close:hover{background:#e81123}
+/* Win7 Aero caption buttons — pinned to top edge */
+.window-controls{display:flex;gap:0;flex-shrink:0;align-self:flex-start;margin-top:-1px}
+.win-btn{
+    width:29px;height:21px;border:1px solid rgba(255,255,255,0.55);border-top:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(232,243,253,0.65) 0%, rgba(200,222,246,0.5) 50%, rgba(178,206,238,0.45) 100%);
+    box-shadow:inset 0 0 6px rgba(255,255,255,0.55);transition:background .12s,box-shadow .12s;
+}
+.win-minimize{border-radius:0 0 0 4px;border-left:none}
+.win-maximize{border-right:none}
+.win-minimize:hover,.win-maximize:hover{background:linear-gradient(180deg, rgba(210,236,255,0.95), rgba(150,200,245,0.85));box-shadow:inset 0 0 8px rgba(120,200,255,0.8)}
+.win-close{
+    width:46px;border-radius:0 6px 0 4px;border-right:none;
+    background:linear-gradient(180deg, rgba(243,150,140,0.85) 0%, rgba(225,80,62,0.85) 50%, rgba(205,45,30,0.85) 100%);
+    box-shadow:inset 0 1px 2px rgba(255,255,255,0.45);
+}
+.win-close svg line{stroke:#fff}
+.win-close:hover{background:linear-gradient(180deg, #ff8d7c 0%, #ef4a36 50%, #d62614 100%);box-shadow:inset 0 1px 3px rgba(255,255,255,0.6),0 0 8px rgba(232,30,20,0.5)}
+.win-minimize svg line,.win-maximize svg line,.win-maximize svg rect{stroke:#143a66}
 
 /* Toolbar */
 .window-toolbar{display:flex;align-items:center;gap:6px;padding:4px 8px;background:#f8f9fb;border-bottom:1px solid #ddd;min-height:30px}
@@ -177,44 +210,64 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .notepad-body{background:#fff!important}
 .notepad-text{font-family:'Consolas','Courier New',monospace;font-size:13px;color:#222;padding:12px 16px;line-height:1.5;white-space:pre;margin:0}
 
-/* ===== Taskbar ===== */
+/* ===== Taskbar — Aero glass ===== */
 .taskbar{
     position:fixed;bottom:0;left:0;right:0;height:48px;
-    background:linear-gradient(180deg,rgba(50,80,130,0.92),rgba(30,60,110,0.95));
-    backdrop-filter:blur(20px);
+    background:
+        linear-gradient(180deg, rgba(120,165,225,0.42) 0%, rgba(40,75,140,0.62) 7%, rgba(16,40,92,0.78) 46%, rgba(10,26,64,0.86) 54%, rgba(8,20,52,0.92) 100%);
+    backdrop-filter:blur(22px) saturate(150%);
+    -webkit-backdrop-filter:blur(22px) saturate(150%);
     display:flex;align-items:center;padding:0 6px;z-index:50;
-    border-top:1px solid rgba(255,255,255,0.1);
-    opacity:0;transition:opacity .5s;
+    border-top:1px solid rgba(180,215,255,0.55);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 9px 14px -9px rgba(190,225,255,0.45), 0 -1px 6px rgba(0,0,0,0.35);
+    opacity:0;transition:opacity .5s;overflow:visible;
 }
 .taskbar.visible{opacity:1}
 
-/* Start button */
+/* Start orb — round glossy Win7 pearl */
 .start-btn{
-    width:44px;height:44px;border:none;border-radius:0;cursor:pointer;
+    width:48px;height:48px;border:none;cursor:pointer;flex-shrink:0;
     background:transparent;display:flex;align-items:center;justify-content:center;
-    transition:background .15s;padding:0;
+    transition:filter .15s;padding:0;position:relative;
 }
-.start-btn:hover{background:rgba(255,255,255,0.1)}
-.start-btn:active{background:rgba(255,255,255,0.15)}
-.start-win-logo{display:grid;grid-template-columns:1fr 1fr;gap:1.5px}
-.sw-q{width:9px;height:9px;border-radius:1.5px}
-.sw-r{background:#f25022}
-.sw-g{background:#7fba00}
-.sw-b{background:#00a4ef}
-.sw-y{background:#ffb900}
+.start-btn::before{
+    content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);
+    width:46px;height:46px;border-radius:50%;
+    background:radial-gradient(circle at 50% 32%, #8fd6ff 0%, #3a9ce8 32%, #1466c4 56%, #0a3f8e 78%, #06285e 100%);
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.7),
+        inset 0 -4px 8px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(0,0,0,0.35),
+        0 1px 4px rgba(0,0,0,0.4),
+        0 0 12px rgba(70,170,255,0.45);
+}
+/* glossy highlight on top of orb */
+.start-btn::after{
+    content:'';position:absolute;left:50%;top:6px;transform:translateX(-50%);
+    width:30px;height:16px;border-radius:50%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0));
+    pointer-events:none;
+}
+.start-btn:hover{filter:brightness(1.18) saturate(1.1)}
+.start-btn:active{filter:brightness(0.95)}
+/* White waving Windows flag inside the orb */
+.start-win-logo{display:grid;grid-template-columns:1fr 1fr;gap:2px;position:relative;z-index:1;transform:skewY(-9deg) rotate(0deg)}
+.sw-q{width:8px;height:8px;border-radius:1.5px;background:rgba(255,255,255,0.96)!important;box-shadow:0 0 2px rgba(0,0,0,0.35)}
 
-/* Taskbar items */
-.taskbar-items{flex:1;display:flex;gap:2px;padding:0 6px;overflow:hidden}
+/* Taskbar items — glassy raised buttons */
+.taskbar-items{flex:1;display:flex;gap:3px;padding:0 8px;overflow:hidden;align-items:center}
 .taskbar-item{
     display:flex;align-items:center;gap:6px;
-    padding:4px 12px;height:36px;border-radius:4px;
-    background:rgba(255,255,255,0.08);
-    color:#fff;font-size:11px;cursor:pointer;
-    max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-    transition:background .15s;
+    padding:4px 12px;height:38px;border-radius:4px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
+    border:1px solid rgba(255,255,255,0.28);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.35);
+    color:#fff;font-size:11px;cursor:pointer;text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    transition:background .15s,box-shadow .15s;
 }
-.taskbar-item:hover{background:rgba(255,255,255,0.16)}
-.taskbar-item.active{background:rgba(255,255,255,0.2);border-bottom:2px solid #76b9ed}
+.taskbar-item:hover{background:linear-gradient(180deg, rgba(190,225,255,0.42), rgba(120,180,240,0.18));box-shadow:inset 0 1px 0 rgba(255,255,255,0.5),inset 0 0 12px rgba(150,210,255,0.4)}
+.taskbar-item.active{background:linear-gradient(180deg, rgba(210,235,255,0.5), rgba(140,195,245,0.22));border-color:rgba(190,225,255,0.6);box-shadow:inset 0 1px 0 rgba(255,255,255,0.6),inset 0 0 14px rgba(160,215,255,0.5)}
 .taskbar-item-icon{width:16px;height:16px;border-radius:2px;flex-shrink:0}
 
 /* System tray */
@@ -485,10 +538,11 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .mac-desktop{
     position:fixed;inset:0;
     background:
-        radial-gradient(ellipse at 18% 82%, rgba(238,96,32,.52) 0%, transparent 40%),
-        radial-gradient(ellipse at 82% 18%, rgba(56,80,240,.44) 0%, transparent 42%),
-        radial-gradient(ellipse at 50% 50%, rgba(150,32,110,.28) 0%, transparent 55%),
-        linear-gradient(155deg,#06061a 0%,#0e0e3c 15%,#280e56 30%,#5e1848 50%,#a82820 68%,#c84e0e 82%,#de8622 100%);
+        radial-gradient(120% 85% at 50% 122%, rgba(255,184,96,.55) 0%, transparent 52%),
+        radial-gradient(95% 75% at 10% 80%, rgba(236,98,40,.5) 0%, transparent 46%),
+        radial-gradient(85% 75% at 86% 20%, rgba(72,92,238,.46) 0%, transparent 50%),
+        radial-gradient(65% 55% at 52% 44%, rgba(170,42,122,.34) 0%, transparent 56%),
+        linear-gradient(159deg,#04031a 0%,#0c0a38 14%,#241050 28%,#4e1652 44%,#8a2440 60%,#c2461a 76%,#e88a2a 92%,#f3b454 100%);
     display:none;overflow:hidden;
 }
 .mac-desktop.visible{display:block}
@@ -740,13 +794,14 @@ body{font-family:'Segoe UI Variable','Segoe UI',Tahoma,sans-serif;font-size:13px
 .ub-boot-dots span:nth-child(4){animation-delay:.45s}
 .ub-boot-dots span:nth-child(5){animation-delay:.6s}
 
-/* Ubuntu Desktop */
+/* Ubuntu Desktop — Noble Numbat aubergine + concentric arcs */
 .ub-desktop{
     position:fixed;inset:0;
     background:
-        radial-gradient(ellipse at 20% 80%, rgba(233,84,32,.35) 0%, transparent 45%),
-        radial-gradient(ellipse at 80% 20%, rgba(120,40,140,.3) 0%, transparent 45%),
-        linear-gradient(155deg,#1a0a00 0%,#300a24 30%,#2d1b4e 60%,#1a1a2e 100%);
+        repeating-radial-gradient(circle at 82% 26%, transparent 0 46px, rgba(233,84,32,.07) 46px 47px, transparent 47px 92px),
+        radial-gradient(ellipse 70% 60% at 82% 24%, rgba(233,84,32,.42) 0%, rgba(221,72,44,.14) 32%, transparent 56%),
+        radial-gradient(ellipse 80% 70% at 14% 88%, rgba(119,50,30,.4) 0%, transparent 50%),
+        linear-gradient(158deg,#2c001e 0%,#380826 26%,#48123a 50%,#5a1c34 72%,#772e1f 100%);
     display:none;overflow:hidden;
 }
 .ub-desktop.visible{display:block}
