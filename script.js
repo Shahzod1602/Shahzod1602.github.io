@@ -1035,6 +1035,66 @@ const projects = [
             'projects/simpletrucking/simpletrucking-1.webp',
             'projects/simpletrucking/simpletrucking-2.webp'
         ]
+    },
+    {
+        name: 'SatWay',
+        desc: 'Raqamli SAT (Digital SAT) imtihoniga tayyorlanish platformasi. Bluebook uslubidagi haqiqiy test-day interfeysi, moslashuvchan (adaptive) mock imtihonlar, 200–800 ball baholash va o\'rnatilgan Desmos kalkulyatori.',
+        tags: ['Education', 'SAT', 'Platform'],
+        github: '#', demo: 'https://satway.online',
+        images: [
+            'projects/satway/satway-1.webp',
+            'projects/satway/satway-2.webp'
+        ]
+    },
+    {
+        name: 'IELTSway',
+        desc: 'IELTS imtihoniga haqiqiy kompyuter interfeysida tayyorlanish platformasi. Reading, Listening hamda AI baholaydigan Writing va Speaking. Cambridge materiallari asosida, darhol band ball va progress kuzatuvi.',
+        tags: ['Education', 'IELTS', 'AI', 'Platform'],
+        github: '#', demo: 'https://ieltsway.online',
+        images: [
+            'projects/ieltsway/ieltsway-1.webp',
+            'projects/ieltsway/ieltsway-2.webp'
+        ]
+    },
+    {
+        name: 'Tasvir',
+        desc: 'Onlayn kino va seriallar platformasi. Filmlar, seriallar va multfilmlarni o\'zbek tilida tomosha qilish. Janrlar bo\'yicha qidiruv, mashhurlar bo\'limi va qulay pleer.',
+        tags: ['Streaming', 'Movies', 'Web'],
+        github: '#', demo: 'https://tasvir.online',
+        images: [
+            'projects/tasvir/tasvir-1.webp',
+            'projects/tasvir/tasvir-2.webp'
+        ]
+    },
+    {
+        name: 'Storage Identify',
+        desc: 'O\'z serveringizda joylashtiriladigan Backend-as-a-Service. Postgres, autentifikatsiya, fayl saqlash va real vaqt yangilanishlari — avtomatik REST API bilan. Supabase\'ga mos, Docker orqali deploy.',
+        tags: ['BaaS', 'Backend', 'Self-hosted', 'SaaS'],
+        github: '#', demo: 'https://storage.identify.uz',
+        images: [
+            'projects/storage/storage-1.webp',
+            'projects/storage/storage-2.webp'
+        ]
+    },
+    {
+        name: 'SMS Identify',
+        desc: 'O\'z SIM kartangiz orqali ishlovchi SMS shlyuzi. QR kod bilan 30 soniyada ulanib, API yoki dashboard\'dan SMS, OTP va guruh xabarlarini yuboring. Avtomatik kampaniyalar va real vaqt yetkazib berish hisobotlari.',
+        tags: ['SMS', 'API', 'SaaS'],
+        github: '#', demo: 'https://sms.identify.uz',
+        images: [
+            'projects/sms/sms-1.webp',
+            'projects/sms/sms-2.webp'
+        ]
+    },
+    {
+        name: 'PayNote',
+        desc: 'Qarz va nasiyani kuzatish ilovasi. Mijozlar, qarzlar va to\'lovlarni boshqarish, to\'lov muddatlarini nazorat qilish va avtomatik SMS eslatmalar yuborish. Qog\'oz daftarsiz, raqamli qarz savdosi.',
+        tags: ['Fintech', 'SaaS', 'Web'],
+        github: '#', demo: 'https://paynote.identify.uz',
+        images: [
+            'projects/paynote/paynote-1.webp',
+            'projects/paynote/paynote-2.webp'
+        ]
     }
 ];
 
